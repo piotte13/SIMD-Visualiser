@@ -1,0 +1,27 @@
+.App {
+    text-align: center;
+}
+
+.react-codemirror2 {
+    font-size: 24px;
+    -ms-flex: 1 1;
+    flex: 1 1;
+}
+
+.react-codemirror2 .CodeMirror {
+    height: 100%;
+}
+
+.editor-highlighted-background {
+    background-color: #44535a;
+}
+
+@media (max-width: 700px) {
+    .react-codemirror2 {
+        font-size: 13px;
+    }
+}
+
+strong {
+    font-weight: 500;
+}

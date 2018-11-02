@@ -3,9 +3,17 @@
   "version": "0.1.0",
   "private": true,
   "dependencies": {
+    "acorn": "^6.0.2",
+    "c-ast": "^1.0.0",
+    "codemirror": "^5.41.0",
+    "lodash": "^4.17.11",
     "react": "^16.6.0",
+    "react-anime": "^2.2.0",
+    "react-codemirror2": "^5.1.0",
     "react-dom": "^16.6.0",
-    "react-scripts": "2.0.5"
+    "react-scripts": "2.0.5",
+    "react-sortable-tree": "^2.3.0",
+    "styled-components": "^4.0.2"
   },
   "scripts": {
     "start": "react-scripts start",

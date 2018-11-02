@@ -1,0 +1,50 @@
+@import "GlobalVariables.css";
+
+.rst__rowContents {
+    color: var(--clear-text-color);
+    background-color: var(--main);
+    border: none;
+    border-radius: 10px;
+    min-width: 0px;
+    padding: 0 5px 0 25px;
+}
+
+.rst__rowTitle {
+    font-weight: normal;
+}
+
+.Program .rst__rowContents {
+    background-color: var(--dark-main);
+}
+
+.VariableDeclarator .rst__rowContents {
+    background-color: var(--five);
+}
+
+.arguments .rst__rowContents {
+    background-color: var(--three);
+}
+
+.BinaryExpression .rst__rowContents {
+    background-color: var(--four);
+    color: var(--dark-text-color);
+}
+
+.UnaryExpression .rst__rowContents {
+    background-color: var(--four);
+    color: var(--dark-text-color);
+}
+
+.AssignmentExpression .rst__rowContents {
+    background-color: var(--four);
+    color: var(--dark-text-color);
+}
+
+.Identifier .rst__rowContents {
+    background-color: var(--one);
+}
+
+.Literal .rst__rowContents {
+    background-color: var(--two);
+}
+
