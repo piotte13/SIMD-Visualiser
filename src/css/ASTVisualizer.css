@@ -48,3 +48,7 @@
     background-color: var(--two);
 }
 
+.highlighted-code {
+    background-color: #44535a;
+}
+

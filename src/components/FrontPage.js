@@ -2,12 +2,13 @@ import React from 'react';
 import Anime from 'react-anime';
 import '../css/WaitingScreen.css'
 import styled from 'styled-components'
+import Img from 'react-image'
 import CLogo from "../Images/c-programming.png";
 
 const Image = styled.div`
     content: ${({url}) => 'url(' + url + ');'}
-    width: 500px;
-    margin: 100px auto;
+    width: 40vmin;
+    margin: 10vh auto;
 `
 const AppTitle = styled.div`
     text-align: center;
@@ -36,14 +37,15 @@ export default function FrontPage() {
                 <div>
                     <Anime rotate={"360deg"}
                            loop={true}
-                           delay={5000}
-                           duration={2500}>
+                           delay={6000}
+                           duration={4000}>
                         <Image url={CLogo}/>
                     </Anime>
                 </div>
             </Anime>
-            <AppTitle>The Ultimate C code visualizer</AppTitle>
-            <AppDescription>Built by <strong>Jérémie Piotte</strong> and <strong>Pierre-Marie</strong></AppDescription>
+            <AppTitle>The Ultimate SIMD visualizer</AppTitle>
+            <AppDescription>Built by <strong>Jérémie Piotte</strong> and <strong>Pierre Marie
+                Ntang</strong></AppDescription>
         </div>
     );
 }

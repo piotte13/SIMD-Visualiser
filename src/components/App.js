@@ -4,13 +4,17 @@ import 'codemirror/lib/codemirror.css'
 import 'codemirror/theme/material.css'
 import 'codemirror/mode/clike/clike.js'
 import 'codemirror/addon/selection/mark-selection.js'
+import {Tab, Tabs, TabList, TabPanel} from 'react-tabs';
+import 'react-tabs/style/react-tabs.css';
 import '../css/App.css';
 import styled from 'styled-components'
 import ButtonPanel from "./ButtonPanel";
 import {generateAST} from "../Utils/Parser";
 import WaitingScreen from "./WaitingScreen";
-import AstVisualizer from "../Utils/ASTVisualizer";
+import AstVisualizer from "./ASTVisualizer";
 import FrontPage from "./FrontPage";
+import {compile} from "../Utils/Compiler";
+import ErrorHandler from "./ErrorHandler";
 
 const Container = styled.div`
   display: flex;
@@ -32,11 +36,14 @@ const RightContainer = styled.div`
 
 class App extends Component {
     state = {
-        code: 'int32_t a = g(k);\nint32_t b = 600;\nint32_t c = a + b;',
+        code: `#include <x86intrin.h>\n\n__m128i PrefixSum(__m128i curr) {\n    __m128i Add = _mm_slli_si128(curr, 4);\n    curr = _mm_add_epi32(curr, Add);\n    Add = _mm_slli_si128(curr, 8);\n    return _mm_add_epi32(curr, Add);\n}`,
         disableButtons: false,
         status: 'compiles',
         compiling: false,
-        ast: {}
+        ast: {},
+        clangAst: {},
+        asm: {},
+        error: []
     };
 
     constructor(props) {
@@ -56,8 +63,15 @@ class App extends Component {
 
     visualize = () => {
         this.setState({compiling: true});
-        let ast = generateAST(this.cm.editor);
-        this.setState({compiling: false, ast});
+        this.setState({ast: generateAST(this.cm.editor)});
+        compile(this.cm.editor.getValue(), (error, asm, ast) => {
+            if (error.length === 0) {
+                this.setState({compiling: false, status: 'compiles', error, clangAst: ast, asm});
+            }
+            else {
+                this.setState({compiling: false, status: 'error', error, clangAst: {}, asm: {}});
+            }
+        })
     };
 
     serialize = () => {
@@ -65,7 +79,13 @@ class App extends Component {
     };
 
     restart = () => {
-        this.setState({compiling: false, ast: {}});
+        this.setState({
+            compiling: false,
+            ast: {},
+            clangAst: {},
+            asm: {},
+            error: []
+        });
     };
 
     render() {
@@ -74,8 +94,11 @@ class App extends Component {
         if (compiling) {
             rightPage = this.waitingScreen;
         }
+        else if (this.state.error.length > 0) {
+            rightPage = <ErrorHandler cm={this.cm} error={this.state.error}/>
+        }
         else if (Object.keys(this.state.ast).length > 0) {
-            rightPage = <AstVisualizer cm={this.cm} ast={this.state.ast}/>;
+            rightPage = <AstVisualizer cm={this.cm} ast={this.state.ast}/>
         }
 
         return (

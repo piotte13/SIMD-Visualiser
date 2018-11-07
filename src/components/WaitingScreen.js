@@ -7,7 +7,7 @@ const Circle = styled.div`
     border-radius: 50%;
     height: ${({radius}) => radius + "px"};
     width: ${({radius}) => radius + "px"};
-    background:#1F292E;
+    background: var(--main);
     position: absolute;
     top: 50%;
     left: 75%;
@@ -17,7 +17,7 @@ const DottedCircle = styled.div`
     border-radius: 50%;
     height: ${({radius}) => radius + "px"};
     width: ${({radius}) => radius + "px"};
-    border: ${({dotSize}) => dotSize + "px dashed #1F292E"};
+    border: ${({dotSize}) => dotSize + "px dashed var(--main);"};
     position: absolute;
     top: 50%;
     left: 50%;
@@ -30,7 +30,8 @@ const CenteredText = styled.div`
     left: 50%;
     transform: translate(-50%, -50%);
     color: #fff;
-    font: 3em bold;
+    font-size: 55px;
+    font-family: -apple-system, BlinkMacSystemFont;
 `
 export default function WaitingScreen() {
 

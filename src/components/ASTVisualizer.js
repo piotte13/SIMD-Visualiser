@@ -1,19 +1,8 @@
 import React, {Component} from 'react';
-import * as ReactDOM from "react-dom";
 import * as _ from "lodash";
 import SortableTree from "react-sortable-tree";
 import 'react-sortable-tree/style.css';
 import '../css/ASTVisualizer.css'
-
-
-function highlightRange(range, codeEditor) {
-    if (!range) return null;
-    var fromIndex = codeEditor.posFromIndex(range[0]);
-    var toIndex = codeEditor.posFromIndex(range[1]);
-    return codeEditor.markText(fromIndex, toIndex, {
-        className: 'syntax-token'
-    });
-}
 
 let getChildren = (node) => {
 
@@ -136,16 +125,44 @@ class AstVisualizer extends Component {
         if (children === [])
             return children;
         children.forEach((child) => {
-            tree.push({title: getLabel(child), children: this.recursiveBuilder(child), type: child.type});
+            tree.push({
+                title: getLabel(child),
+                children: this.recursiveBuilder(child),
+                expanded: true,
+                type: child.type,
+                start: child.start,
+                end: child.end
+            });
         });
         return tree
     };
 
     buildTree = (ast) => {
         let tree = [];
-        console.log(ast);
-        tree.push({title: getLabel(ast), children: this.recursiveBuilder(ast), expanded: true, type: ast.type});
+        tree.push({
+            title: getLabel(ast),
+            children: this.recursiveBuilder(ast),
+            expanded: true,
+            type: ast.type,
+            start: ast.start,
+            end: ast.end
+        });
         return tree
+    };
+
+    highlightCode = (start, end) => {
+        let codeEditor = this.props.cm.editor.doc;
+        const fromIndex = codeEditor.posFromIndex(start);
+        const toIndex = codeEditor.posFromIndex(end);
+        codeEditor.markText(fromIndex, toIndex, {
+            className: 'highlighted-code'
+        });
+    };
+
+    clearHighlightedCode = () => {
+        this.props.cm.editor.doc.getAllMarks().forEach((m) => {
+            m.clear()
+        })
     };
 
     render() {
@@ -156,7 +173,9 @@ class AstVisualizer extends Component {
                 canDrag={false}
                 generateNodeProps={({node}) => {
                     return {
-                        className: node.type
+                        className: node.type,
+                        onMouseEnter: () => this.highlightCode(node.start, node.end),
+                        onMouseLeave: () => this.clearHighlightedCode()
                     };
                 }}
             />
