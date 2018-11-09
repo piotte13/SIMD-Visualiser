@@ -1,8 +1,6 @@
 import React from 'react';
 import Anime from 'react-anime';
-import '../css/WaitingScreen.css'
 import styled from 'styled-components'
-import Img from 'react-image'
 import CLogo from "../Images/c-programming.png";
 
 const Image = styled.div`
@@ -25,10 +23,13 @@ const AppDescription = styled.div`
     margin: 0px auto;
     font-size: calc(8px + 0.91vw);
 `
+const Container = styled.div`
+`
+
 export default function FrontPage() {
 
     return (
-        <div>
+        <Container>
             <Anime easing="easeOutCubic"
                    duration={2000}
                    direction="alternate"
@@ -46,6 +47,6 @@ export default function FrontPage() {
             <AppTitle>The Ultimate SIMD visualizer</AppTitle>
             <AppDescription>Built by <strong>Jérémie Piotte</strong> and <strong>Pierre Marie
                 Ntang</strong></AppDescription>
-        </div>
+        </Container>
     );
 }

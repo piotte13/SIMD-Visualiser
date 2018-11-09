@@ -7,6 +7,7 @@
     "acorn": "^6.0.4",
     "codemirror": "^5.41.0",
     "lodash": "^4.17.11",
+    "prop-types": "^15.6.2",
     "react": "^16.6.0",
     "react-anime": "^2.2.0",
     "react-codemirror2": "^5.1.0",
@@ -14,7 +15,7 @@
     "react-image": "^1.5.1",
     "react-scripts": "2.0.5",
     "react-sortable-tree": "^2.3.0",
-    "react-tabs": "^2.3.0",
+    "react-transition-group": "^1.2.1",
     "request": "^2.88.0",
     "styled-components": "^4.0.2"
   },

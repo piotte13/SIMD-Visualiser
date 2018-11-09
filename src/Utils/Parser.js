@@ -1,13 +1,12 @@
-import * as acorn from "acorn";
+//import * as acorn from "acorn";
 
 
-const testASR = `{\n    "type": "Program",\n    "start": 0,\n    "end": 38,\n    "body": [\n        {\n            "type": "VariableDeclaration",\n            "start": 0,\n            "end": 12,\n            "declarations": [\n                {\n                    "type": "VariableDeclarator",\n                    "start": 4,\n                    "end": 12,\n                    "id": {\n                        "type": "Identifier",\n                        "start": 4,\n                        "end": 5,\n                        "name": "a"\n                    },\n                    "init": {\n                        "type": "CallExpression",\n                        "start": 8,\n                        "end": 12,\n                        "callee": {\n                            "type": "Identifier",\n                            "start": 8,\n                            "end": 9,\n                            "name": "g"\n                        },\n                        "arguments": [\n                            {\n                                "type": "Identifier",\n                                "start": 10,\n                                "end": 11,\n                                "name": "k"\n                            }\n                        ]\n                    }\n                }\n            ],\n            "kind": "var"\n        },\n        {\n            "type": "VariableDeclaration",\n            "start": 13,\n            "end": 24,\n            "declarations": [\n                {\n                    "type": "VariableDeclarator",\n                    "start": 17,\n                    "end": 24,\n                    "id": {\n                        "type": "Identifier",\n                        "start": 17,\n                        "end": 18,\n                        "name": "b"\n                    },\n                    "init": {\n                        "type": "Literal",\n                        "start": 21,\n                        "end": 24,\n                        "value": 600,\n                        "raw": "600"\n                    }\n                }\n            ],\n            "kind": "var"\n        },\n        {\n            "type": "VariableDeclaration",\n            "start": 25,\n            "end": 38,\n            "declarations": [\n                {\n                    "type": "VariableDeclarator",\n                    "start": 29,\n                    "end": 38,\n                    "id": {\n                        "type": "Identifier",\n                        "start": 29,\n                        "end": 30,\n                        "name": "c"\n                    },\n                    "init": {\n                        "type": "BinaryExpression",\n                        "start": 33,\n                        "end": 38,\n                        "left": {\n                            "type": "Identifier",\n                            "start": 33,\n                            "end": 34,\n                            "name": "a"\n                        },\n                        "operator": "+",\n                        "right": {\n                            "type": "Identifier",\n                            "start": 37,\n                            "end": 38,\n                            "name": "b"\n                        }\n                    }\n                }\n            ],\n            "kind": "var"\n        }\n    ],\n    "sourceType": "module"\n}`;
-
+const testASR = `{"type": "Program",\n  "start": 0,\n  "end": 198,\n  "body": [\n    {\n      "type": "ImportDeclaration",\n      "start": 0,\n      "end": 20,\n      "specifiers": [],\n      "source": {\n        "type": "Literal",\n        "start": 7,\n        "end": 20,\n        "value": "x86intrin.h",\n        "raw": "\\"x86intrin.h\\""\n      }\n    },\n    {\n      "type": "FunctionDeclaration",\n      "start": 22,\n      "end": 198,\n      "id": {\n        "type": "Identifier",\n        "start": 31,\n        "end": 40,\n        "name": "PrefixSum"\n      },\n      "generator": false,\n      "expression": false,\n      "params": [\n        {\n          "type": "Identifier",\n          "start": 41,\n          "end": 45,\n          "name": "curr"\n        }\n      ],\n      "body": {\n        "type": "BlockStatement",\n        "start": 47,\n        "end": 198,\n        "body": [\n          {\n            "type": "VariableDeclaration",\n            "start": 53,\n            "end": 87,\n            "declarations": [\n              {\n                "type": "VariableDeclarator",\n                "start": 57,\n                "end": 86,\n                "id": {\n                  "type": "Identifier",\n                  "start": 57,\n                  "end": 60,\n                  "name": "Add"\n                },\n                "init": {\n                  "type": "CallExpression",\n                  "start": 63,\n                  "end": 86,\n                  "callee": {\n                    "type": "Identifier",\n                    "start": 63,\n                    "end": 77,\n                    "name": "_mm_slli_si128"\n                  },\n                  "arguments": [\n                    {\n                      "type": "Identifier",\n                      "start": 78,\n                      "end": 82,\n                      "name": "curr"\n                    },\n                    {\n                      "type": "Literal",\n                      "start": 84,\n                      "end": 85,\n                      "value": 4,\n                      "raw": "4"\n                    }\n                  ]\n                }\n              }\n            ],\n            "kind": "let"\n          },\n          {\n            "type": "ExpressionStatement",\n            "start": 92,\n            "end": 124,\n            "expression": {\n              "type": "AssignmentExpression",\n              "start": 92,\n              "end": 123,\n              "operator": "=",\n              "left": {\n                "type": "Identifier",\n                "start": 92,\n                "end": 96,\n                "name": "curr"\n              },\n              "right": {\n                "type": "CallExpression",\n                "start": 99,\n                "end": 123,\n                "callee": {\n                  "type": "Identifier",\n                  "start": 99,\n                  "end": 112,\n                  "name": "_mm_add_epi32"\n                },\n                "arguments": [\n                  {\n                    "type": "Identifier",\n                    "start": 113,\n                    "end": 117,\n                    "name": "curr"\n                  },\n                  {\n                    "type": "Identifier",\n                    "start": 119,\n                    "end": 122,\n                    "name": "Add"\n                  }\n                ]\n              }\n            }\n          },\n          {\n            "type": "ExpressionStatement",\n            "start": 129,\n            "end": 159,\n            "expression": {\n              "type": "AssignmentExpression",\n              "start": 129,\n              "end": 158,\n              "operator": "=",\n              "left": {\n                "type": "Identifier",\n                "start": 129,\n                "end": 132,\n                "name": "Add"\n              },\n              "right": {\n                "type": "CallExpression",\n                "start": 135,\n                "end": 158,\n                "callee": {\n                  "type": "Identifier",\n                  "start": 135,\n                  "end": 149,\n                  "name": "_mm_slli_si128"\n                },\n                "arguments": [\n                  {\n                    "type": "Identifier",\n                    "start": 150,\n                    "end": 154,\n                    "name": "curr"\n                  },\n                  {\n                    "type": "Literal",\n                    "start": 156,\n                    "end": 157,\n                    "value": 8,\n                    "raw": "8"\n                  }\n                ]\n              }\n            }\n          },\n          {\n            "type": "ReturnStatement",\n            "start": 164,\n            "end": 196,\n            "argument": {\n              "type": "CallExpression",\n              "start": 171,\n              "end": 195,\n              "callee": {\n                "type": "Identifier",\n                "start": 171,\n                "end": 184,\n                "name": "_mm_add_epi32"\n              },\n              "arguments": [\n                {\n                  "type": "Identifier",\n                  "start": 185,\n                  "end": 189,\n                  "name": "curr"\n                },\n                {\n                  "type": "Identifier",\n                  "start": 191,\n                  "end": 194,\n                  "name": "Add"\n                }\n              ]\n            }\n          }\n        ]\n      }\n    }\n  ],\n  "sourceType": "module"\n}`
 class Node {
-    constructor(type, start, end) {
+    constructor(type, name, line) {
         this.type = type;
-        this.start = start;
-        this.end = end;
+        this.name = name;
+        this.line = line;
     }
 }
 
@@ -24,6 +23,34 @@ export function generateAST(editor) {
     //Temporary.. We disable AST parsing.. We"ll come back to AST later.
     return JSON.parse(testASR)
 }
+
+const functionName = /([a-zA-Z]+): # @.*/;
+
+
+export function generateASM(rawAsm) {
+    let asm = [];
+    let currentFunction = {};
+    rawAsm.forEach(line => {
+        if (functionName.test(line.text)) {
+            let name = functionName.exec(line.text)[1];
+            currentFunction = new Node("Function", name, 0);
+            currentFunction.body = [];
+            asm.push(currentFunction);
+        }
+        else if (line.text.length > 0) {
+            // Remove comments, commas, trim it and then split
+            let command = line.text.trim().replace(/,| #.*/g, '').split(" ");
+            let name = command[0];
+            let params = command.slice(1, command.length);
+
+            let node = new Node("Command", name, line.source.line);
+            node.params = params;
+            currentFunction.body.push(node);
+        }
+    });
+    return asm
+}
+
 
 // function recursiveASTBuilder(code, start) {
 //     let ast = [];

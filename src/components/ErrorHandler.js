@@ -1,5 +1,6 @@
 import React, {Component} from 'react';
 import styled from "styled-components";
+import SadRobot from "../Images/cryingboy.svg";
 
 const ErrorPageContainer = styled.div`
     padding: 50px;
@@ -26,6 +27,12 @@ const ErrorPosition = styled.div`
     color: #767676;
     margin-bottom: 15px;
     margin-top: 25px;
+`
+const Robot = styled.img`
+    position: absolute;
+    bottom: 0;
+    right: 0;
+    width: 50vh;
 `
 
 class ErrorHandler extends Component {
@@ -77,6 +84,7 @@ class ErrorHandler extends Component {
                 <ErrorPosition>
                     {this.getErrorPosition()}
                 </ErrorPosition>
+                <Robot src={SadRobot}/>
             </ErrorPageContainer>
         );
     }

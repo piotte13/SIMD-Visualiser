@@ -91,11 +91,11 @@ let getLabel = (node) => {
 
         case 'FunctionDeclaration':
             var params1 = _.map(node.params, 'name').join(',');
-            return 'function ' + (node.id && node.id.name || '') + '(' + params1 + ')';
+            return 'function ' + (!(!(node.id && node.id.name) && !'')) + '(' + params1 + ')';
 
         case 'FunctionExpression':
             var params2 = _.map(node.params, 'name').join(',');
-            return 'function ' + (node.id && node.id.name || '') + '(' + params2 + ')';
+            return 'function ' + (!(!(node.id && node.id.name) && !'')) + '(' + params2 + ')';
 
         default:
             return node.type;

@@ -4,17 +4,17 @@ import 'codemirror/lib/codemirror.css'
 import 'codemirror/theme/material.css'
 import 'codemirror/mode/clike/clike.js'
 import 'codemirror/addon/selection/mark-selection.js'
-import {Tab, Tabs, TabList, TabPanel} from 'react-tabs';
-import 'react-tabs/style/react-tabs.css';
 import '../css/App.css';
 import styled from 'styled-components'
 import ButtonPanel from "./ButtonPanel";
-import {generateAST} from "../Utils/Parser";
+import {generateASM, generateAST} from "../Utils/Parser";
 import WaitingScreen from "./WaitingScreen";
 import AstVisualizer from "./ASTVisualizer";
 import FrontPage from "./FrontPage";
 import {compile} from "../Utils/Compiler";
 import ErrorHandler from "./ErrorHandler";
+import {Pane, Tabs} from "../Utils/Tabs";
+import AsmVisualizer from "./ASMVisualizer";
 
 const Container = styled.div`
   display: flex;
@@ -36,23 +36,20 @@ const RightContainer = styled.div`
 
 class App extends Component {
     state = {
-        code: `#include <x86intrin.h>\n\n__m128i PrefixSum(__m128i curr) {\n    __m128i Add = _mm_slli_si128(curr, 4);\n    curr = _mm_add_epi32(curr, Add);\n    Add = _mm_slli_si128(curr, 8);\n    return _mm_add_epi32(curr, Add);\n}`,
+        code: `#include <x86intrin.h>\n\n__m128i PrefixSum(__m128i curr) {\n  __m128i Add = _mm_slli_si128(curr, 4); \n  curr = _mm_add_epi32(curr, Add);   \n  Add = _mm_slli_si128(curr, 8);    \n  return _mm_add_epi32(curr, Add);       \n}\n\nint abc(void){\n    return 10;\n}`,
         disableButtons: false,
         status: 'compiles',
         compiling: false,
         ast: {},
         clangAst: {},
         asm: {},
-        error: []
+        error: [],
     };
 
     constructor(props) {
         super(props)
         this.frontPage = <FrontPage/>;
         this.waitingScreen = <WaitingScreen/>;
-    }
-
-    componentDidMount() {
     }
 
     handleClear = (clearCode = true) => {
@@ -66,6 +63,7 @@ class App extends Component {
         this.setState({ast: generateAST(this.cm.editor)});
         compile(this.cm.editor.getValue(), (error, asm, ast) => {
             if (error.length === 0) {
+                asm = generateASM(asm);
                 this.setState({compiling: false, status: 'compiles', error, clangAst: ast, asm});
             }
             else {
@@ -98,7 +96,15 @@ class App extends Component {
             rightPage = <ErrorHandler cm={this.cm} error={this.state.error}/>
         }
         else if (Object.keys(this.state.ast).length > 0) {
-            rightPage = <AstVisualizer cm={this.cm} ast={this.state.ast}/>
+            rightPage =
+                <Tabs selected={0}>
+                    <Pane label="Graphical">
+                        <AsmVisualizer cm={this.cm} asm={this.state.asm}/>
+                    </Pane>
+                    <Pane label="AST">
+                        <AstVisualizer cm={this.cm} ast={this.state.ast}/>
+                    </Pane>
+                </Tabs>
         }
 
         return (

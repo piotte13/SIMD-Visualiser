@@ -35,7 +35,6 @@ export function compile(code, callback) {
         }
     };
     request(options, (error, response, body) => {
-        console.log(body)
         callback(body.stderr, body.asm, body.astOutput)
     })
 }
