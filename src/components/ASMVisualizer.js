@@ -4,7 +4,6 @@ import Vpaddd from "../ASMComponents/vpaddd";
 import Ret from "../ASMComponents/ret";
 import UnsupportedCommand from "../ASMComponents/UnsupportedCommand";
 import Function from "../ASMComponents/Function";
-import {TransitionGroup, Transition} from 'react-transition-group';
 import SequentialComponent from "../ASMComponents/SequentialComponent";
 
 
@@ -25,7 +24,9 @@ class AsmVisualizer extends Component {
     constructor(props) {
         super(props);
         this.state = {
-            idx: 0
+            idx: 0,
+            play: true,
+            restart: false
         };
 
     }
@@ -43,29 +44,27 @@ class AsmVisualizer extends Component {
         return stack;
     };
 
+    componentDonePlaying(isReverse = false) {
+        let increment = isReverse ? -1 : 1;
+        this.setState({idx: this.state.idx + increment});
+    }
+
     render() {
-        console.log(this.props)
         return (
-            <TransitionGroup>
+            <div>
+                <button className="play" onClick={() => this.setState({play: true})}>Play</button>
+                <button className="pause" onClick={() => this.setState({play: false})}>Pause</button>
                 {
                     this.buildGraphicStack().map((func, index) => (
-                        <Transition
+                        <SequentialComponent
                             key={index}
-                            timeout={0}
-                            appear={true}
-                            mountOnEnter
-                            unmountOnExit>
-                            {
-                                (status) => (
-                                    <SequentialComponent status={status}>
-                                        {func}
-                                    </SequentialComponent>
-                                )
-                            }
-                        </Transition>
+                            component={func}
+                            shouldPlay={this.state.idx === index && this.state.play}
+                            onComplete={this.componentDonePlaying.bind(this)}
+                        />
                     ))
                 }
-            </TransitionGroup>
+            </div>
         );
     }
 }

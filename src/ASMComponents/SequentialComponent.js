@@ -4,7 +4,7 @@ import anime from 'animejs';
 
 const Container = styled.div`
   margin: 20px 0;
-  transform: translateY(100vh);
+  opacity: 0;
 `
 
 export default class SequentialComponent extends React.Component {
@@ -13,28 +13,45 @@ export default class SequentialComponent extends React.Component {
         super();
         // create li DOM reference
         this.container = React.createRef();
+        this.component = React.createRef();
     }
 
 
-    componentDidUpdate() {
+    componentDidMount() {
         this.animeRef = anime({
             targets: this.container.current,
-            translateY: () => {
-                if (this.props.status === 'entered') {
-                    return ['30vh', '0px'];
-                } else if (this.props.status === 'exiting') {
-                    return '100vh';
+            easing: "easeOutCubic",
+            autoplay: false,
+            translateY: ['5vh', 0],
+            duration: 500,
+            delay: 800,
+            opacity: 1,
+            complete: () => {
+                let c = this.component.current;
+                if (c && c.timeline) {
+                    c.timeline.finished.then(this.props.onComplete);
+                    c.timeline.restart();
                 }
-            },
-            duration: 1000
+                else
+                    this.props.onComplete()
+            }
         });
+
+        if (this.props.shouldPlay) {
+            this.animeRef.restart()
+        }
+    }
+
+    componentWillUpdate(nextProps) {
+        if (nextProps.shouldPlay) {
+            this.animeRef.restart();
+        }
     }
 
     render() {
-        console.log(this.props.status);
         return (
             <Container ref={this.container}>
-                {this.props.children}
+                {React.cloneElement(this.props.component, {ref: this.component})}
             </Container>
         );
     }

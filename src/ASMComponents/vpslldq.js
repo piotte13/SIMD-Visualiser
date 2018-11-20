@@ -62,7 +62,7 @@ export default class Vpslldq extends Component {
     }
 
     componentDidUpdate() {
-        this.timeline.play();
+        // this.timeline.play();
     }
 
     createTimeline() {
@@ -77,7 +77,7 @@ export default class Vpslldq extends Component {
                 targets: this.numbersRef.current,
                 translateX: () => -this.state.shiftLen * this.state.colLen,
                 duration: 2000,
-                delay: 1000
+                delay: 300
             })
             .add({
                 targets: this.zeroesRef.current,
