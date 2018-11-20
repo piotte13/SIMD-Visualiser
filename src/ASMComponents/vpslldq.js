@@ -1,105 +1,131 @@
-import React from "react";
+import React, {Component} from "react";
 import styled from "styled-components";
 import Anime from "react-anime";
+import * as Registry from "../Utils/Registry";
+import Vector from "./Vector";
 import * as _ from "lodash";
+import anime from 'animejs';
 
 
-const NB_COLS = 16;
-const COL_SIZE = 50;
-
-const Container = styled.div`
-  margin: 20px auto;
-  width: calc(${NB_COLS} * ${COL_SIZE}px);
-  overflow: hidden;
-  height: ${COL_SIZE + 4}px;
-  box-shadow: 3px 3px 2px rgba(0,0,0,.4);
-  background-color: var(--main);
-  color: var(--clear-text-color);
-  border-radius: 3px;
-`
-
-const TD = styled.td`
-    border-right: 1px solid var(--gray);
-    width: ${COL_SIZE}px;
-    height: ${COL_SIZE}px;
-    // color: var(--clear-text-color);
-    text-align: center;
-    
-    :last-child{
-        border-right: none;
-    }
-`
 
 const TdNumbers = styled.td`
-    width: ${COL_SIZE}px;
-    height: ${COL_SIZE}px;
+    width: ${({colLen}) => colLen}px;
+    height: ${({colHeight}) => colHeight}px;
     text-align: center;
 `
 
 const TdZeroes = styled.td`
-    width: ${COL_SIZE}px;
-    height: ${COL_SIZE}px;
+    width: ${({colLen}) => colLen}px;
+    height: ${({colHeight}) => colHeight}px;
     text-align: center;
     color: var(--two);
 `
 
 const TrNumbers = styled.tr`
     position: relative;
-    top: -${COL_SIZE + 1}px;
+    top: ${({colHeight}) => -(colHeight + 5)}px;
     font-size: 24px;
     font-family: monospace;
 `
 
-function getCells() {
-    let cells = []
-    for (let i = 0; i < NB_COLS; i++) {
-        cells.push(<TD key={i}></TD>)
-    }
-    return cells
-}
 
-function getNumbers() {
-    let cells = []
-    for (let i = 0; i < NB_COLS; i++) {
-        cells.push(<TdNumbers key={i}>{_.random(0, 9)}</TdNumbers>)
-    }
-    return cells
-}
+export default class Vpslldq extends Component {
 
-function getZeroes(qty) {
-    let cells = []
-    for (let i = 0; i < NB_COLS; i++) {
-        cells.push(<TdZeroes key={i}>{(i < NB_COLS - qty) ? "" : 0}</TdZeroes>)
-    }
-    return cells
-}
+    constructor(props) {
+        super(props);
 
-export default function Vpslldq({name, params}) {
-    return (
-        <Container>
-            <tbody>
-            <tr>
-                {getCells()}
-            </tr>
-            <Anime easing="easeOutCubic"
-                   duration={2000}
-                   loop={false}
-                   translateX={-params[2] * COL_SIZE}
-                   delay={1000}>
-                <TrNumbers>
-                    {getNumbers()}
+        let registry = Registry.default;
+        let shiftLen = (props.params[2] * 8) / Registry.VAR_SIZE;
+        let input = registry.get(props.params[1]);
+        let nbCols = input.length;
+
+        this.state = {
+            colLen: 50,
+            colHeight: 50,
+            nbCols,
+            shiftLen,
+            input,
+            output: [],
+            numbers: [],
+            zeroes: []
+        };
+
+        this.numbersRef = React.createRef();
+        this.zeroesRef = React.createRef();
+    }
+
+    componentDidMount() {
+        console.log("mounted");
+        this.computeCommand();
+        this.createContent();
+        this.timeline = this.createTimeline();
+    }
+
+    componentDidUpdate() {
+        this.timeline.play();
+    }
+
+    createTimeline() {
+        let timeline = anime.timeline({
+            easing: "easeOutCubic",
+            loop: false,
+            autoplay: false
+        });
+
+        timeline
+            .add({
+                targets: this.numbersRef.current,
+                translateX: () => -this.state.shiftLen * this.state.colLen,
+                duration: 2000,
+                delay: 1000
+            })
+            .add({
+                targets: this.zeroesRef.current,
+                translateY: () => -54,
+                duration: 500,
+            });
+        return timeline;
+    }
+
+    createContent() {
+        let {nbCols, colLen, colHeight, input, shiftLen} = this.state;
+        let numbers = [];
+        for (let i = 0; i < nbCols; i++) {
+            numbers.push(<TdNumbers colLen={colLen} colHeight={colHeight} key={i}>{input[i].toString(16)}</TdNumbers>)
+        }
+
+        let zeroes = [];
+        for (let i = 0; i < nbCols; i++) {
+            zeroes.push(<TdZeroes colLen={colLen} colHeight={colHeight}
+                                  key={i}>{(i < nbCols - shiftLen) ? "" : 0}</TdZeroes>)
+        }
+
+        this.setState({numbers, zeroes});
+    }
+
+    //Compute the command and set the registry.
+    computeCommand() {
+        let registry = Registry.default;
+        let {input, shiftLen} = this.state;
+        let output = _.cloneDeep(input);
+        output.splice(output.length - shiftLen, shiftLen, ...new Array(shiftLen).fill(0));
+        registry.set(this.props.params[0], output);
+
+        this.setState({output});
+    }
+
+    render() {
+        let {nbCols, colLen, colHeight, numbers, zeroes} = this.state;
+
+        return (
+            <Vector colLen={colLen} colHeight={colHeight} nbCols={nbCols}>
+                <TrNumbers colHeight={colHeight} ref={this.numbersRef}>
+                    {numbers}
                 </TrNumbers>
-            </Anime>
-            <Anime easing="easeOutCubic"
-                   duration={500}
-                   loop={false}
-                   translateY={-52}
-                   delay={3000}>
-                <TrNumbers>
-                    {getZeroes(params[2])}
+                <TrNumbers colHeight={colHeight} ref={this.zeroesRef}>
+                    {zeroes}
                 </TrNumbers>
-            </Anime>
-            </tbody>
-        </Container>
-    );
+            </Vector>
+        );
+    }
 }

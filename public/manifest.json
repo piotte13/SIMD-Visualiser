@@ -1,6 +1,6 @@
 {
-  "short_name": "React App",
-  "name": "Create React App Sample",
+  "short_name": "SIMD Visualizer",
+  "name": "The Ultimate SIMD Visualizer",
   "icons": [
     {
       "src": "favicon.ico",

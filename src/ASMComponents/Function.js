@@ -1,8 +1,9 @@
 import React from "react";
 import styled from "styled-components";
+import anime from 'animejs';
 
 const FunctionContainer = styled.div`
-  padding-bottom: 20px;
+  padding-top: 20px;
 `
 const FunctionName = styled.div`
     font-size: 32px;
@@ -14,14 +15,14 @@ const FunctionName = styled.div`
 
 const FunctionBody = styled.div`
     //padding-left: 20px;
+    //transform: translateY(100vh);
 `
 
-export default function Function({name, body}) {
+export default function Function({name}) {
+
     return (
         <FunctionContainer>
             <FunctionName>{name}</FunctionName>
-            <FunctionBody>{body}</FunctionBody>
         </FunctionContainer>
-
     );
 }

@@ -5,6 +5,7 @@
   "homepage": "http://piotte13.github.io/intrinsec-visualiser",
   "dependencies": {
     "acorn": "^6.0.4",
+    "animejs": "^2.2.0",
     "codemirror": "^5.41.0",
     "lodash": "^4.17.11",
     "prop-types": "^15.6.2",
@@ -15,7 +16,7 @@
     "react-image": "^1.5.1",
     "react-scripts": "2.0.5",
     "react-sortable-tree": "^2.3.0",
-    "react-transition-group": "^1.2.1",
+    "react-transition-group": "^2.5.0",
     "request": "^2.88.0",
     "styled-components": "^4.0.2"
   },

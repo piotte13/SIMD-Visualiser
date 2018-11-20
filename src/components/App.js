@@ -42,7 +42,7 @@ class App extends Component {
         compiling: false,
         ast: {},
         clangAst: {},
-        asm: {},
+        asm: [],
         error: [],
     };
 
@@ -50,6 +50,8 @@ class App extends Component {
         super(props)
         this.frontPage = <FrontPage/>;
         this.waitingScreen = <WaitingScreen/>;
+        this.asmVisualizer = [];
+        this.astVisualizer = [];
     }
 
     handleClear = (clearCode = true) => {
@@ -71,6 +73,15 @@ class App extends Component {
             }
         })
     };
+
+    componentWillUpdate(nextProps, nextState) {
+        if (nextState.asm !== this.state.asm) {
+            this.asmVisualizer = <AsmVisualizer cm={this.cm} asm={nextState.asm}/>;
+        }
+        if (nextState.ast !== this.state.ast) {
+            this.astVisualizer = <AstVisualizer cm={this.cm} ast={nextState.ast}/>;
+        }
+    }
 
     serialize = () => {
 
@@ -95,16 +106,15 @@ class App extends Component {
         else if (this.state.error.length > 0) {
             rightPage = <ErrorHandler cm={this.cm} error={this.state.error}/>
         }
-        else if (Object.keys(this.state.ast).length > 0) {
-            rightPage =
-                <Tabs selected={0}>
-                    <Pane label="Graphical">
-                        <AsmVisualizer cm={this.cm} asm={this.state.asm}/>
-                    </Pane>
-                    <Pane label="AST">
-                        <AstVisualizer cm={this.cm} ast={this.state.ast}/>
-                    </Pane>
-                </Tabs>
+        else if (Object.keys(this.state.asm).length > 0) {
+            rightPage = <Tabs selected={0}>
+                <Pane label="Graphical">
+                    {this.asmVisualizer}
+                </Pane>
+                <Pane label="AST">
+                    {this.astVisualizer}
+                </Pane>
+            </Tabs>
         }
 
         return (

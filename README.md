@@ -1,5 +1,5 @@
 # Live Version found here
-[http://piotte13.github.io/intrinsec-visualiser](http://piotte13.github.io/intrinsec-visualiser)
+[http://piotte13.github.io/SIMD-Visualiser](http://piotte13.github.io/SIMD-Visualiser)
 
 ## Available Scripts
 
