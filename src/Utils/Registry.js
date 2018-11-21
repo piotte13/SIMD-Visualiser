@@ -21,14 +21,14 @@ class Registry {
         const idx = +register.substring(3);
         const type = register[0];
 
-        this._keys[idx].splice(this._keys[idx].length - TYPE_LENGTH[type], TYPE_LENGTH[type], ...array);
+        this._keys[idx].splice(0, TYPE_LENGTH[type], ...array);
     };
 
     get = (register) => {
         const idx = +register.substring(3);
         const type = register[0];
         //return the last n elements of the register.
-        return this._keys[idx].slice(this._keys[idx].length - TYPE_LENGTH[type])
+        return this._keys[idx].slice(0, TYPE_LENGTH[type])
     };
 
     clear = () => {

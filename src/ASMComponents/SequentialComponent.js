@@ -42,7 +42,7 @@ export default class SequentialComponent extends React.Component {
         }
     }
 
-    componentWillUpdate(nextProps) {
+    componentWillReceiveProps(nextProps) {
         if (nextProps.shouldPlay) {
             this.animeRef.restart();
         }

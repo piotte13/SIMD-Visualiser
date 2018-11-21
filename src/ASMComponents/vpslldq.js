@@ -1,6 +1,5 @@
 import React, {Component} from "react";
 import styled from "styled-components";
-import Anime from "react-anime";
 import * as Registry from "../Utils/Registry";
 import Vector from "./Vector";
 import * as _ from "lodash";
@@ -24,10 +23,12 @@ const TdZeroes = styled.td`
 const TrNumbers = styled.tr`
     position: relative;
     top: ${({colHeight}) => -(colHeight + 5)}px;
-    font-size: 24px;
+    //font-size: 24px;
     font-family: monospace;
 `
-
+const SHIFT_INDEX = 2;
+const INPUT_INDEX = 1;
+const OUTPUT_INDEX = 0;
 
 export default class Vpslldq extends Component {
 
@@ -35,8 +36,8 @@ export default class Vpslldq extends Component {
         super(props);
 
         let registry = Registry.default;
-        let shiftLen = (props.params[2] * 8) / Registry.VAR_SIZE;
-        let input = registry.get(props.params[1]);
+        let shiftLen = (props.params[SHIFT_INDEX] * 8) / Registry.VAR_SIZE;
+        let input = registry.get(props.params[INPUT_INDEX]);
         let nbCols = input.length;
 
         this.state = {
@@ -46,23 +47,14 @@ export default class Vpslldq extends Component {
             shiftLen,
             input,
             output: [],
-            numbers: [],
-            zeroes: []
         };
-
+        this.computeCommand();
         this.numbersRef = React.createRef();
         this.zeroesRef = React.createRef();
     }
 
     componentDidMount() {
-        console.log("mounted");
-        this.computeCommand();
-        this.createContent();
         this.timeline = this.createTimeline();
-    }
-
-    componentDidUpdate() {
-        // this.timeline.play();
     }
 
     createTimeline() {
@@ -87,43 +79,34 @@ export default class Vpslldq extends Component {
         return timeline;
     }
 
-    createContent() {
-        let {nbCols, colLen, colHeight, input, shiftLen} = this.state;
-        let numbers = [];
-        for (let i = 0; i < nbCols; i++) {
-            numbers.push(<TdNumbers colLen={colLen} colHeight={colHeight} key={i}>{input[i].toString(16)}</TdNumbers>)
-        }
-
-        let zeroes = [];
-        for (let i = 0; i < nbCols; i++) {
-            zeroes.push(<TdZeroes colLen={colLen} colHeight={colHeight}
-                                  key={i}>{(i < nbCols - shiftLen) ? "" : 0}</TdZeroes>)
-        }
-
-        this.setState({numbers, zeroes});
-    }
-
     //Compute the command and set the registry.
     computeCommand() {
         let registry = Registry.default;
-        let {input, shiftLen} = this.state;
+        let shiftLen = (this.props.params[SHIFT_INDEX] * 8) / Registry.VAR_SIZE;
+        let input = registry.get(this.props.params[INPUT_INDEX]);
         let output = _.cloneDeep(input);
-        output.splice(output.length - shiftLen, shiftLen, ...new Array(shiftLen).fill(0));
-        registry.set(this.props.params[0], output);
+        output.push(...new Array(shiftLen).fill(0));
+        output = output.slice(-input.length);
+        registry.set(this.props.params[OUTPUT_INDEX], output);
 
-        this.setState({output});
+        //this.setState({output, input, shiftLen});
     }
 
     render() {
-        let {nbCols, colLen, colHeight, numbers, zeroes} = this.state;
+        let {nbCols, colLen, colHeight, shiftLen, input} = this.state;
 
         return (
             <Vector colLen={colLen} colHeight={colHeight} nbCols={nbCols}>
                 <TrNumbers colHeight={colHeight} ref={this.numbersRef}>
-                    {numbers}
+                    {input.map((e, i) =>
+                        <TdNumbers colLen={colLen} colHeight={colHeight} key={i}>{e.toString(16)}</TdNumbers>
+                    )}
                 </TrNumbers>
                 <TrNumbers colHeight={colHeight} ref={this.zeroesRef}>
-                    {zeroes}
+                    {input.map((e, i) =>
+                        <TdZeroes colLen={colLen} colHeight={colHeight}
+                                  key={i}>{(i < nbCols - shiftLen) ? "" : 0}</TdZeroes>
+                    )}
                 </TrNumbers>
             </Vector>
         );

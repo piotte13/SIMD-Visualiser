@@ -4,8 +4,11 @@
     <list default="true" id="d93bb96c-a6c2-4df9-9ab0-9872ebe56e56" name="Default Changelist" comment="">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/ASMComponents/SequentialComponent.js" beforeDir="false" afterPath="$PROJECT_DIR$/src/ASMComponents/SequentialComponent.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/ASMComponents/ret.js" beforeDir="false" afterPath="$PROJECT_DIR$/src/ASMComponents/ret.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/ASMComponents/vpaddd.js" beforeDir="false" afterPath="$PROJECT_DIR$/src/ASMComponents/vpaddd.js" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/ASMComponents/vpslldq.js" beforeDir="false" afterPath="$PROJECT_DIR$/src/ASMComponents/vpslldq.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/components/ASMVisualizer.js" beforeDir="false" afterPath="$PROJECT_DIR$/src/components/ASMVisualizer.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/Utils/Registry.js" beforeDir="false" afterPath="$PROJECT_DIR$/src/Utils/Registry.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/components/App.js" beforeDir="false" afterPath="$PROJECT_DIR$/src/components/App.js" afterDir="false" />
     </list>
     <ignored path="$PROJECT_DIR$/.tmp/" />
     <ignored path="$PROJECT_DIR$/temp/" />
@@ -31,7 +34,7 @@
         <counts>
           <entry key="css" value="23" />
           <entry key="html" value="1" />
-          <entry key="js" value="81" />
+          <entry key="js" value="83" />
           <entry key="json" value="6" />
           <entry key="md" value="3" />
           <entry key="png" value="2" />
@@ -44,7 +47,7 @@
           <entry key="HTML" value="1" />
           <entry key="Image" value="2" />
           <entry key="JSON" value="6" />
-          <entry key="JavaScript" value="81" />
+          <entry key="JavaScript" value="83" />
           <entry key="PLAIN_TEXT" value="3" />
           <entry key="SVG" value="3" />
         </counts>
@@ -58,11 +61,11 @@
         <counts>
           <entry key="css" value="689" />
           <entry key="html" value="15" />
-          <entry key="js" value="19583" />
+          <entry key="js" value="22241" />
           <entry key="json" value="62" />
           <entry key="md" value="153" />
           <entry key="svg" value="14" />
-          <entry key="txt" value="150" />
+          <entry key="txt" value="178" />
         </counts>
       </usages-collector>
       <usages-collector id="statistics.file.types.edit">
@@ -70,8 +73,8 @@
           <entry key="CSS" value="689" />
           <entry key="HTML" value="17" />
           <entry key="JSON" value="62" />
-          <entry key="JavaScript" value="19581" />
-          <entry key="PLAIN_TEXT" value="303" />
+          <entry key="JavaScript" value="22239" />
+          <entry key="PLAIN_TEXT" value="331" />
           <entry key="SVG" value="14" />
         </counts>
       </usages-collector>
@@ -83,11 +86,11 @@
       <file pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/src/components/App.js">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="506">
-              <caret line="67" column="39" selection-start-line="67" selection-start-column="39" selection-end-line="67" selection-end-column="39" />
+            <state relative-caret-position="184">
+              <caret line="29" lean-forward="true" selection-start-line="29" selection-end-line="29" />
               <folding>
                 <element signature="e#0#39#0" expanded="true" />
-                <marker date="1542741698655" expanded="true" signature="176:270" ph="..." />
+                <marker date="1542815028546" expanded="true" signature="176:270" ph="..." />
               </folding>
             </state>
           </provider>
@@ -96,10 +99,10 @@
       <file pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/src/ASMComponents/vpaddd.js">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="128">
-              <caret line="49" column="30" lean-forward="true" selection-start-line="49" selection-start-column="30" selection-end-line="49" selection-end-column="30" />
+            <state relative-caret-position="519">
+              <caret line="61" column="5" selection-start-line="61" selection-start-column="5" selection-end-line="61" selection-end-column="5" />
               <folding>
-                <element signature="e#0#26#0" expanded="true" />
+                <element signature="e#0#39#0" expanded="true" />
               </folding>
             </state>
           </provider>
@@ -108,13 +111,10 @@
       <file pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/src/ASMComponents/vpslldq.js">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="358">
-              <caret line="79" column="26" selection-start-line="79" selection-start-column="26" selection-end-line="79" selection-end-column="26" />
+            <state relative-caret-position="565">
+              <caret line="55" selection-start-line="55" selection-end-line="57" selection-end-column="5" />
               <folding>
                 <element signature="e#0#39#0" expanded="true" />
-                <element signature="e#792#1716#0" />
-                <element signature="e#1984#2509#0" />
-                <element signature="e#2579#2889#0" />
               </folding>
             </state>
           </provider>
@@ -132,8 +132,8 @@
       <file pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/src/ASMComponents/Vector.js">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="299">
-              <caret line="37" column="6" selection-start-line="37" selection-start-column="6" selection-end-line="37" selection-end-column="6" />
+            <state relative-caret-position="1449">
+              <caret line="63" column="24" lean-forward="true" selection-start-line="63" selection-start-column="24" selection-end-line="63" selection-end-column="24" />
               <folding>
                 <element signature="e#0#26#0" expanded="true" />
               </folding>
@@ -141,7 +141,7 @@
           </provider>
         </entry>
       </file>
-      <file pinned="false" current-in-tab="true">
+      <file pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/src/components/ASMVisualizer.js">
           <provider selected="true" editor-type-id="text-editor">
             <state relative-caret-position="404">
@@ -156,11 +156,32 @@
       <file pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/src/ASMComponents/SequentialComponent.js">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="565">
-              <caret line="47" column="9" selection-start-line="47" selection-start-column="9" selection-end-line="47" selection-end-column="9" />
+            <state relative-caret-position="542">
+              <caret line="38" lean-forward="true" selection-start-line="38" selection-end-line="38" />
               <folding>
                 <element signature="e#0#26#0" expanded="true" />
               </folding>
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file pinned="false" current-in-tab="true">
+        <entry file="file://$PROJECT_DIR$/src/ASMComponents/ret.js">
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="289">
+              <caret line="72" lean-forward="true" selection-start-line="72" selection-end-line="72" />
+              <folding>
+                <element signature="e#0#39#0" expanded="true" />
+              </folding>
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/src/Utils/Registry.js">
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="368">
+              <caret line="16" column="10" selection-start-line="16" selection-start-column="10" selection-end-line="16" selection-end-column="10" />
             </state>
           </provider>
         </entry>
@@ -173,24 +194,6 @@
               <folding>
                 <element signature="e#0#26#0" expanded="true" />
               </folding>
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/src/components/ButtonPanel.js">
-          <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="115">
-              <caret line="25" column="17" lean-forward="true" selection-start-line="25" selection-start-column="17" selection-end-line="25" selection-end-column="17" />
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/src/components/CodeStatus.js">
-          <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="69">
-              <caret line="5" column="30" lean-forward="true" selection-start-line="5" selection-start-column="14" selection-end-line="5" selection-end-column="30" />
             </state>
           </provider>
         </entry>
@@ -244,7 +247,6 @@
         <option value="$PROJECT_DIR$/src/Utils/Parser.js" />
         <option value="$PROJECT_DIR$/src/Utils/Tabs.js" />
         <option value="$PROJECT_DIR$/src/ASMComponents/UnsupportedCommand.js" />
-        <option value="$PROJECT_DIR$/src/ASMComponents/ret.js" />
         <option value="$PROJECT_DIR$/src/css/Tabs.css" />
         <option value="$PROJECT_DIR$/src/css/App.css" />
         <option value="$PROJECT_DIR$/src/components/FrontPage.js" />
@@ -254,14 +256,15 @@
         <option value="$PROJECT_DIR$/public/manifest.json" />
         <option value="$PROJECT_DIR$/src/Utils/Compiler.js" />
         <option value="$PROJECT_DIR$/README.md" />
-        <option value="$PROJECT_DIR$/src/Utils/Registry.js" />
-        <option value="$PROJECT_DIR$/src/ASMComponents/vpaddd.js" />
-        <option value="$PROJECT_DIR$/src/components/App.js" />
         <option value="$PROJECT_DIR$/src/ASMComponents/Vector.js" />
         <option value="$PROJECT_DIR$/src/ASMComponents/Function.js" />
-        <option value="$PROJECT_DIR$/src/ASMComponents/vpslldq.js" />
-        <option value="$PROJECT_DIR$/src/ASMComponents/SequentialComponent.js" />
         <option value="$PROJECT_DIR$/src/components/ASMVisualizer.js" />
+        <option value="$PROJECT_DIR$/src/components/App.js" />
+        <option value="$PROJECT_DIR$/src/Utils/Registry.js" />
+        <option value="$PROJECT_DIR$/src/ASMComponents/vpslldq.js" />
+        <option value="$PROJECT_DIR$/src/ASMComponents/vpaddd.js" />
+        <option value="$PROJECT_DIR$/src/ASMComponents/SequentialComponent.js" />
+        <option value="$PROJECT_DIR$/src/ASMComponents/ret.js" />
       </list>
     </option>
   </component>
@@ -406,7 +409,7 @@
       <workItem from="1540841221868" duration="27013000" />
       <workItem from="1541084139496" duration="126236000" />
       <workItem from="1542212829333" duration="14015000" />
-      <workItem from="1542381761678" duration="21057000" />
+      <workItem from="1542381761678" duration="42249000" />
     </task>
     <task id="LOCAL-00001" summary="First Version">
       <created>1541192536019</created>
@@ -457,11 +460,18 @@
       <option name="project" value="LOCAL" />
       <updated>1542741699043</updated>
     </task>
-    <option name="localTasksCounter" value="8" />
+    <task id="LOCAL-00008" summary="sequencial animation working">
+      <created>1542750929919</created>
+      <option name="number" value="00008" />
+      <option name="presentableId" value="LOCAL-00008" />
+      <option name="project" value="LOCAL" />
+      <updated>1542750929919</updated>
+    </task>
+    <option name="localTasksCounter" value="9" />
     <servers />
   </component>
   <component name="TimeTrackingManager">
-    <option name="totallyTimeSpent" value="188321000" />
+    <option name="totallyTimeSpent" value="209513000" />
   </component>
   <component name="ToolWindowManager">
     <frame x="0" y="25" width="1720" height="1348" extended-state="4" />
@@ -504,7 +514,8 @@
     <MESSAGE value="Supporting the first ASM command" />
     <MESSAGE value="new images" />
     <MESSAGE value="new architecture for animations" />
-    <option name="LAST_COMMIT_MESSAGE" value="new architecture for animations" />
+    <MESSAGE value="sequencial animation working" />
+    <option name="LAST_COMMIT_MESSAGE" value="sequencial animation working" />
     <option name="REFORMAT_BEFORE_PROJECT_COMMIT" value="true" />
   </component>
   <component name="editorHistoryManager">
@@ -532,13 +543,6 @@
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="506">
           <caret line="23" column="32" lean-forward="true" selection-start-line="23" selection-start-column="32" selection-end-line="23" selection-end-column="32" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/ASMComponents/ret.js">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="46">
-          <caret line="2" column="42" lean-forward="true" selection-start-line="2" selection-start-column="28" selection-end-line="2" selection-end-column="42" />
         </state>
       </provider>
     </entry>
@@ -633,13 +637,6 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/src/Utils/Registry.js">
-      <provider selected="true" editor-type-id="text-editor">
-        <state>
-          <caret selection-end-line="1" />
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/README.md">
       <provider editor-type-id="text-editor">
         <state relative-caret-position="207">
@@ -690,37 +687,6 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/src/ASMComponents/Vector.js">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="299">
-          <caret line="37" column="6" selection-start-line="37" selection-start-column="6" selection-end-line="37" selection-end-column="6" />
-          <folding>
-            <element signature="e#0#26#0" expanded="true" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/components/App.js">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="506">
-          <caret line="67" column="39" selection-start-line="67" selection-start-column="39" selection-end-line="67" selection-end-column="39" />
-          <folding>
-            <element signature="e#0#39#0" expanded="true" />
-            <marker date="1542741698655" expanded="true" signature="176:270" ph="..." />
-          </folding>
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/ASMComponents/vpaddd.js">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="128">
-          <caret line="49" column="30" lean-forward="true" selection-start-line="49" selection-start-column="30" selection-end-line="49" selection-end-column="30" />
-          <folding>
-            <element signature="e#0#26#0" expanded="true" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/src/ASMComponents/Function.js">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="483">
@@ -731,33 +697,78 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/src/ASMComponents/vpslldq.js">
+    <entry file="file://$PROJECT_DIR$/src/components/ASMVisualizer.js">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="358">
-          <caret line="79" column="26" selection-start-line="79" selection-start-column="26" selection-end-line="79" selection-end-column="26" />
+        <state relative-caret-position="404">
+          <caret line="51" column="14" lean-forward="true" selection-start-line="51" selection-start-column="14" selection-end-line="51" selection-end-column="14" />
           <folding>
             <element signature="e#0#39#0" expanded="true" />
-            <element signature="e#792#1716#0" />
-            <element signature="e#1984#2509#0" />
-            <element signature="e#2579#2889#0" />
           </folding>
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/src/ASMComponents/SequentialComponent.js">
+    <entry file="file://$PROJECT_DIR$/src/ASMComponents/Vector.js">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="565">
-          <caret line="47" column="9" selection-start-line="47" selection-start-column="9" selection-end-line="47" selection-end-column="9" />
+        <state relative-caret-position="1449">
+          <caret line="63" column="24" lean-forward="true" selection-start-line="63" selection-start-column="24" selection-end-line="63" selection-end-column="24" />
           <folding>
             <element signature="e#0#26#0" expanded="true" />
           </folding>
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/src/components/ASMVisualizer.js">
+    <entry file="file://$PROJECT_DIR$/src/components/App.js">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="404">
-          <caret line="51" column="14" lean-forward="true" selection-start-line="51" selection-start-column="14" selection-end-line="51" selection-end-column="14" />
+        <state relative-caret-position="184">
+          <caret line="29" lean-forward="true" selection-start-line="29" selection-end-line="29" />
+          <folding>
+            <element signature="e#0#39#0" expanded="true" />
+            <marker date="1542815028546" expanded="true" signature="176:270" ph="..." />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/Utils/Registry.js">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="368">
+          <caret line="16" column="10" selection-start-line="16" selection-start-column="10" selection-end-line="16" selection-end-column="10" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/ASMComponents/vpslldq.js">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="565">
+          <caret line="55" selection-start-line="55" selection-end-line="57" selection-end-column="5" />
+          <folding>
+            <element signature="e#0#39#0" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/ASMComponents/vpaddd.js">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="519">
+          <caret line="61" column="5" selection-start-line="61" selection-start-column="5" selection-end-line="61" selection-end-column="5" />
+          <folding>
+            <element signature="e#0#39#0" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/ASMComponents/SequentialComponent.js">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="542">
+          <caret line="38" lean-forward="true" selection-start-line="38" selection-end-line="38" />
+          <folding>
+            <element signature="e#0#26#0" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/ASMComponents/ret.js">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="289">
+          <caret line="72" lean-forward="true" selection-start-line="72" selection-end-line="72" />
           <folding>
             <element signature="e#0#39#0" expanded="true" />
           </folding>

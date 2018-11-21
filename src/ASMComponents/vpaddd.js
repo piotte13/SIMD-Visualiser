@@ -1,78 +1,153 @@
-import React from "react";
+import React, {Component} from "react";
 import Vector from "./Vector";
 import * as Registry from "../Utils/Registry";
 import styled from "styled-components";
-import Anime from "react-anime";
+import anime from "animejs";
+import * as _ from "lodash";
+import {TYPE_LENGTH} from "../Utils/Registry";
 
-export default function Vpaddd({name, params}) {
-    let registry = Registry.default;
-    let input1 = registry.get(params[1]);
-    let input2 = registry.get(params[2]);
-    let output = registry.get(params[0]);
-    let nbCols = input1.length;
-    const colLen = 50;
-    const colHeight = 50;
-
-    const TdNumbers = styled.td`
-    width: ${colLen}px;
-    height: ${colHeight}px;
+const TdNumbers = styled.td`
+    width: ${({colLen}) => colLen}px;
+    height: ${({colHeight}) => colHeight}px;
     text-align: center;
-    `
+`
 
-    const TrNumbers = styled.tr`
+const TrNumbers = styled.tr`
     position: relative;
-    top: -${colHeight + 5}px;
-    font-size: 24px;
+    top: ${({colHeight}) => -(colHeight + 5)}px;
+    //font-size: 24px;
     font-family: monospace;
-    `
+`
 
-    const Operator = styled.div`
+const Operator = styled.div`
         text-align: center;
         font-size: 24px;
         font-family: monospace;
     `
 
-    let numbers1 = [];
-    for (let i = 0; i < nbCols; i++) {
-        numbers1.push(<TdNumbers key={i}>{input1[i].toString(16)}</TdNumbers>)
+const INPUT1_INDEX = 1;
+const INPUT2_INDEX = 2;
+const OUTPUT_INDEX = 0;
+
+export default class Vpaddd extends Component {
+
+    constructor(props) {
+        super(props);
+
+        let registry = Registry.default;
+        let input1 = registry.get(props.params[INPUT1_INDEX]);
+        let input2 = registry.get(props.params[INPUT2_INDEX]);
+        let nbCols = input1.length;
+
+        this.state = {
+            colLen: 50,
+            colHeight: 50,
+            nbCols,
+            input1,
+            input2,
+            output: [],
+        };
+
+        //This will compute the output
+        this.computeCommand();
+        this.state.output = registry.get(props.params[OUTPUT_INDEX]);
+
+        this.numbers1Ref = React.createRef();
+        this.numbers2Ref = React.createRef();
+        this.actualNumbersRef = React.createRef();
     }
 
-    let numbers2 = [];
-    for (let i = 0; i < nbCols; i++) {
-        numbers2.push(<TdNumbers key={i}>{input2[i].toString(16)}</TdNumbers>)
+    componentDidMount() {
+        this.timeline = this.createTimeline();
+    }
+
+    createTimeline() {
+        let timeline = anime.timeline({
+            easing: "easeOutCubic",
+            loop: false,
+            autoplay: false
+        });
+        let {output} = this.state;
+        let input2 = _.cloneDeep(this.state.input2);
+
+        timeline
+            .add({
+                targets: this.numbers1Ref.current,
+                translateY: 70,
+                duration: 1000,
+                offset: 500
+            })
+            .add({
+                targets: this.numbers2Ref.current,
+                translateY: -70,
+                duration: 1000,
+                offset: 500
+            })
+            .add({
+                targets: this.numbers1Ref.current,
+                opacity: 0,
+                duration: 500
+            })
+
+        this.actualNumbersRef.current.childNodes.forEach((e, i) => {
+            timeline.add({
+                targets: e,
+                easing: 'easeInOutExpo',
+                title: output[i],
+                round: 1,
+                duration: 1000,
+                offset: 1500,
+                update: (a) => {
+                    if (a.progress > 0) {
+                        e.innerHTML = (+e.title).toString(16)
+                    }
+                }
+            });
+        });
+
+
+        return timeline;
+    }
+
+    //Compute the command and set the registry.
+    computeCommand() {
+        let {input1, input2} = this.state;
+        let registry = Registry.default;
+        let output = _.cloneDeep(input1);
+
+        input2.forEach((e, i) => {
+            output[i] += e;
+        });
+        registry.set(this.props.params[OUTPUT_INDEX], output);
     }
 
 
-    return (
-        <div>
-            {/*<Anime easing="easeOutCubic"*/}
-            {/*duration={2000}*/}
-            {/*loop={false}*/}
-            {/*translateY={"-100px"}*/}
-            {/*delay={1000}>*/}
-            <div>
-                <Vector colLen={colLen} colHeight={colHeight} nbCols={nbCols}>
-                    <TrNumbers>
-                        {numbers1}
-                    </TrNumbers>
-                </Vector>
-            </div>
-            {/*</Anime>*/}
-            <Operator>+</Operator>
-            {/*<Anime easing="easeOutCubic"*/}
-            {/*duration={2000}*/}
-            {/*loop={false}*/}
-            {/*translateY={"100px"}*/}
-            {/*delay={1000}>*/}
-            <div>
-                <Vector colLen={colLen} colHeight={colHeight} nbCols={nbCols}>
-                    <TrNumbers>
-                        {numbers2}
-                    </TrNumbers>
-                </Vector>
-            </div>
-            {/*</Anime>*/}
-        </div>
+    render() {
+        let {nbCols, colLen, colHeight, input1, input2} = this.state;
 
-    );
+        return (
+            <div>
+                <div ref={this.numbers1Ref}>
+                    <Vector colLen={colLen} colHeight={colHeight} nbCols={nbCols}>
+                        <TrNumbers colHeight={colHeight}>
+                            {input1.map((e, i) =>
+                                <TdNumbers colLen={colLen} colHeight={colHeight} key={i}>{e.toString(16)}</TdNumbers>
+                            )}
+                        </TrNumbers>
+                    </Vector>
+                </div>
+                <Operator>+</Operator>
+                <div ref={this.numbers2Ref}>
+                    <Vector colLen={colLen} colHeight={colHeight} nbCols={nbCols}>
+                        <TrNumbers colHeight={colHeight} ref={this.actualNumbersRef}>
+                            {input2.map((e, i) =>
+                                <TdNumbers colLen={colLen} colHeight={colHeight} key={i}
+                                           title={e.toString()}>{e.toString(16)}</TdNumbers>
+                            )}
+                        </TrNumbers>
+                    </Vector>
+                </div>
+            </div>
+        );
+    }
 }
