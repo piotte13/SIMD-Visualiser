@@ -1,6 +1,7 @@
-import React from "react";
+import React, {Component} from "react";
 import styled from "styled-components";
 import anime from 'animejs';
+import * as Registry from "../Utils/Registry";
 
 const FunctionContainer = styled.div`
   padding-top: 20px;
@@ -18,11 +19,22 @@ const FunctionBody = styled.div`
     //transform: translateY(100vh);
 `
 
-export default function Function({name}) {
+export default class Function extends Component {
 
-    return (
-        <FunctionContainer>
-            <FunctionName>{name}</FunctionName>
-        </FunctionContainer>
-    );
+    constructor(props) {
+        super(props);
+
+        //Reset the registry because this is a new function!
+        let registry = Registry.default;
+        registry.clear()
+    }
+
+
+    render() {
+        return (
+            <FunctionContainer>
+                <FunctionName>{this.props.name}</FunctionName>
+            </FunctionContainer>
+        );
+    }
 }

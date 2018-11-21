@@ -32,11 +32,10 @@ class Registry {
     };
 
     clear = () => {
-        this._keys = new Array(NB_REGISTERS).fill(0).map(() =>
+        this._keys.map(() =>
             new Array(TYPE_LENGTH["z"]).fill(0).map(() =>
                 _.random(1, 255)
-            )
-        );
+            ));
     }
 }
 
