@@ -9,6 +9,7 @@ const TdNumbers = styled.td`
     width: ${({colLen}) => colLen}px;
     height: ${({colHeight}) => colHeight}px;
     text-align: center;
+    line-height: ${({colHeight}) => colHeight}px;
 `
 
 const TrNumbers = styled.tr`
@@ -16,6 +17,7 @@ const TrNumbers = styled.tr`
     top: ${({colHeight}) => -(colHeight)}px;
     //font-size: 24px;
     font-family: monospace;
+    display: inline-flex;
 `
 
 const Operator = styled.div`

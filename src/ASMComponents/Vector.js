@@ -19,7 +19,7 @@ const TD = styled.td`
     border-right: 1px solid var(--gray);
     width: ${({colLen}) => colLen + 'px;'}
     height: ${({colHeight}) => colHeight + 'px;'}
-    
+    display: inline-flex;
     // color: var(--clear-text-color);
     text-align: center;
     

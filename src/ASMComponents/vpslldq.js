@@ -11,6 +11,7 @@ const TdNumbers = styled.td`
     width: ${({colLen}) => colLen}px;
     height: ${({colHeight}) => colHeight}px;
     text-align: center;
+    line-height: ${({colHeight}) => colHeight}px;
 `
 
 const TdZeroes = styled.td`
@@ -18,6 +19,7 @@ const TdZeroes = styled.td`
     height: ${({colHeight}) => colHeight}px;
     text-align: center;
     color: var(--two);
+    line-height: ${({colHeight}) => colHeight}px;
 `
 
 const TrNumbers = styled.tr`
@@ -25,6 +27,7 @@ const TrNumbers = styled.tr`
     top: ${({colHeight}) => -(colHeight)}px;
     //font-size: 24px;
     font-family: monospace;
+    display: inline-flex;
 `
 const SHIFT_INDEX = 2;
 const INPUT_INDEX = 1;
