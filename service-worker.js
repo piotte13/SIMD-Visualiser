@@ -14,7 +14,7 @@
 importScripts("https://storage.googleapis.com/workbox-cdn/releases/3.6.3/workbox-sw.js");
 
 importScripts(
-  "/intrinsec-visualiser/precache-manifest.c0e77158217c34b40533548e79e1b96b.js"
+  "/SIMD-Visualiser/precache-manifest.a37fb7fe230c8468ac9f4d97d649f593.js"
 );
 
 workbox.clientsClaim();
@@ -28,7 +28,7 @@ self.__precacheManifest = [].concat(self.__precacheManifest || []);
 workbox.precaching.suppressWarnings();
 workbox.precaching.precacheAndRoute(self.__precacheManifest, {});
 
-workbox.routing.registerNavigationRoute("/intrinsec-visualiser/index.html", {
+workbox.routing.registerNavigationRoute("/SIMD-Visualiser/index.html", {
   
   blacklist: [/^\/_/,/\/[^\/]+\.[^\/]+$/],
 });
