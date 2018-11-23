@@ -1,8 +1,8 @@
 {
-  "name": "intrinsec-visualizer",
+  "name": "SIMD-Visualiser",
   "version": "0.1.0",
   "private": true,
-  "homepage": "http://piotte13.github.io/intrinsec-visualiser",
+  "homepage": "http://piotte13.github.io/SIMD-Visualiser",
   "dependencies": {
     "@fortawesome/fontawesome-svg-core": "^1.2.8",
     "@fortawesome/free-solid-svg-icons": "^5.5.0",
