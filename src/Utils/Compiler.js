@@ -35,6 +35,12 @@ export function compile(code, callback) {
         }
     };
     request(options, (error, response, body) => {
-        callback(body.stderr, body.asm, body.astOutput)
+        if (error) {
+            alert("oops! https://godbolt.org/ seems to be down! \n You will have to wait my friend.")
+            callback({}, [], "")
+        }
+        else {
+            callback(body.stderr, body.asm, body.astOutput)
+        }
     })
 }

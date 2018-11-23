@@ -22,7 +22,7 @@ const TdZeroes = styled.td`
 
 const TrNumbers = styled.tr`
     position: relative;
-    top: ${({colHeight}) => -(colHeight + 5)}px;
+    top: ${({colHeight}) => -(colHeight)}px;
     //font-size: 24px;
     font-family: monospace;
 `
@@ -73,7 +73,7 @@ export default class Vpslldq extends Component {
             })
             .add({
                 targets: this.zeroesRef.current,
-                translateY: () => -54,
+                translateY: () => -50,
                 duration: 500,
             });
         return timeline;

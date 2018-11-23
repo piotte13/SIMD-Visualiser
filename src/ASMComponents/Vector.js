@@ -2,11 +2,11 @@ import React, {Component} from "react";
 import styled from "styled-components";
 import * as _ from "lodash";
 
-const Container = styled.table`
+const VectorContainer = styled.table`
       margin: 30px auto;
       width: ${({nbCols, colLen}) => (nbCols * colLen) + 'px;' }
       overflow: hidden;
-      height: ${({colHeight}) => (colHeight + 4) + 'px;'}
+      height: ${({colHeight}) => (colHeight) + 'px;'}
       box-shadow: 3px 3px 2px rgba(0,0,0,.4);
       background-color: var(--main);
       color: var(--clear-text-color);
@@ -53,16 +53,16 @@ export default class Vector extends Component {
 
     render() {
         return (
-            <Container nbCols={this.props.nbCols}
-                       colLen={this.props.colLen}
-                       colHeight={this.props.colHeight}>
+            <VectorContainer nbCols={this.props.nbCols}
+                             colLen={this.props.colLen}
+                             colHeight={this.props.colHeight}>
                 <tbody>
                 <tr>
                     {this.cols}
                 </tr>
                 {this.props.children}
                 </tbody>
-            </Container>
+            </VectorContainer>
         );
     }
 }

@@ -4,7 +4,6 @@ import * as Registry from "../Utils/Registry";
 import styled from "styled-components";
 import anime from "animejs";
 import * as _ from "lodash";
-import {TYPE_LENGTH} from "../Utils/Registry";
 
 const TdNumbers = styled.td`
     width: ${({colLen}) => colLen}px;
@@ -14,14 +13,16 @@ const TdNumbers = styled.td`
 
 const TrNumbers = styled.tr`
     position: relative;
-    top: ${({colHeight}) => -(colHeight + 5)}px;
+    top: ${({colHeight}) => -(colHeight)}px;
     //font-size: 24px;
     font-family: monospace;
 `
 
 const Operator = styled.div`
         text-align: center;
+        color: var(--main);
         font-size: 24px;
+        font-weight: 700;
         font-family: monospace;
     `
 
@@ -68,7 +69,6 @@ export default class Vpaddd extends Component {
             autoplay: false
         });
         let {output} = this.state;
-        let input2 = _.cloneDeep(this.state.input2);
 
         timeline
             .add({

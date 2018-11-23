@@ -29,28 +29,57 @@ export default class SequentialComponent extends React.Component {
             complete: () => {
                 let c = this.component.current;
                 if (c && c.timeline) {
-                    c.timeline.finished.then(this.props.onComplete);
                     c.timeline.restart();
+                    c.timeline.finished.then(this.props.onComplete);
                 }
                 else
                     this.props.onComplete()
             }
         });
 
-        if (this.props.shouldPlay) {
+        if (this.props.shouldBeVisible) {
             this.animeRef.restart()
         }
     }
 
     componentWillReceiveProps(nextProps) {
-        if (nextProps.shouldPlay) {
+        if (nextProps.shouldBeVisible && !this.props.shouldBeVisible) {
             this.animeRef.restart();
+        }
+        if (!nextProps.shouldBeVisible && this.props.shouldBeVisible) {
+            this.animeRef.seek(0);
+        }
+    }
+
+    onEnter = () => {
+        if (this.component.current.props.line) {
+            this.props.highlightCode(this.component.current.props.line);
+        }
+        let c = this.component.current;
+        if (c && c.timeline) {
+            this.isLoop = c.timeline.loop;
+            c.timeline.loop = true;
+            c.timeline.restart();
+        }
+    }
+
+    onLeave = () => {
+        this.props.clearHighlightedCode(this.component.current.props.line);
+        let c = this.component.current;
+        if (c && c.timeline) {
+            c.timeline.loop = this.isLoop;
+            c.timeline.restart();
+            c.timeline.seek(Infinity);
         }
     }
 
     render() {
         return (
-            <Container ref={this.container}>
+            <Container
+                ref={this.container}
+                onMouseEnter={this.onEnter}
+                onMouseLeave={this.onLeave}
+            >
                 {React.cloneElement(this.props.component, {ref: this.component})}
             </Container>
         );

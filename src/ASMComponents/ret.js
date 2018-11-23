@@ -13,7 +13,7 @@ const TdNumbers = styled.td`
 
 const TrNumbers = styled.tr`
     position: relative;
-    top: ${({colHeight}) => -(colHeight + 5)}px;
+    top: ${({colHeight}) => -(colHeight)}px;
     //font-size: 24px;
     font-family: monospace;
 `
@@ -51,19 +51,33 @@ export default class Ret extends Component {
     }
 
     createTimeline() {
+
+        //We make an empty timeline because sequentialComponent needs to know when to jump to the next command.
         let timeline = anime.timeline({
             easing: "linear",
-            loop: true,
             autoplay: false,
-            direction: 'alternate'
         });
 
         timeline
             .add({
                 targets: this.ref.current,
-                boxShadow: ["0px 0px 20px 5px var(--main)", "0px 0px 2px 1px var(--main)"],
-                duration: 1000,
+                duration: 1000
             });
+
+        let eternalGlow = anime.timeline({
+            easing: "linear",
+            loop: true,
+            autoplay: true,
+            direction: 'alternate'
+        });
+
+        eternalGlow
+            .add({
+                targets: this.ref.current,
+                boxShadow: ["0px 0px 20px 5px var(--main)", "0px 0px 2px 1px var(--main)"],
+                duration: 1000
+            });
+
         return timeline;
     }
 
