@@ -84,7 +84,7 @@ class AsmVisualizer extends Component {
     }
 
     backward() {
-        this.setState({idx: this.state.idx - 1});
+        this.setState({idx: this.state.idx - 1, play: false});
     }
 
     restart() {
@@ -129,6 +129,7 @@ class AsmVisualizer extends Component {
                         <SequentialComponent
                             key={index}
                             component={func}
+                            play={this.state.play}
                             shouldBeVisible={this.state.idx >= index}
                             onComplete={this.componentDonePlaying.bind(this)}
                             cm={this.props.cm}

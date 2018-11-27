@@ -30,7 +30,7 @@ export default class SequentialComponent extends React.Component {
                 let c = this.component.current;
                 if (c && c.timeline) {
                     c.timeline.restart();
-                    c.timeline.finished.then(this.props.onComplete);
+                    this.timelineFinished = c.timeline.finished.then(this.props.onComplete);
                 }
                 else
                     this.props.onComplete()
@@ -43,6 +43,20 @@ export default class SequentialComponent extends React.Component {
     }
 
     componentWillReceiveProps(nextProps) {
+        if (!nextProps.shouldBeVisible && this.props.shouldBeVisible) {
+            //Component is being hidden. Rewind animation.
+            this.animeRef.seek(0);
+            let c = this.component.current;
+            if (c && c.timeline) {
+                c.timeline.seek(0);
+                setTimeout(function () {
+                    this.timelineFinished = c.timeline.finished.then(() => {
+                    });
+                    console.log(c.timeline.finished)
+                });
+
+            }
+        }
         if (nextProps.shouldBeVisible && !this.props.shouldBeVisible) {
             //Start Animation.
             this.animeRef.restart();
@@ -54,10 +68,7 @@ export default class SequentialComponent extends React.Component {
         else if (this.sequentialHighlight) {
             this.sequentialHighlight.clear();
         }
-        if (!nextProps.shouldBeVisible && this.props.shouldBeVisible) {
-            //Component is being hidden. Rewind animation.
-            this.animeRef.seek(0);
-        }
+
     }
 
     highlightCode = (isHover = false) => {
