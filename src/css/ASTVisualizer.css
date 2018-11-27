@@ -47,8 +47,3 @@
 .Literal .rst__rowContents {
     background-color: var(--two);
 }
-
-.highlighted-code {
-    background-color: #44535a;
-}
-

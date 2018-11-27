@@ -23,5 +23,13 @@
 }
 
 strong {
-    font-weight: 500;
+    font-weight: 700 !important;
+}
+
+.highlighted-code {
+    background-color: #44535a;
+}
+
+.sequential-highlighted-code {
+    background-color: #44535a;
 }

@@ -39,18 +39,11 @@ class AsmVisualizer extends Component {
 
     }
 
-    highlightCode(line) {
-        const lineLength = this.props.cm.editor.getLine(line).length;
-        this.props.cm.editor.doc.markText({line, ch: 0}, {line, ch: lineLength}, {
-            className: 'highlighted-code'
-        });
-    };
-
-    clearHighlightedCode() {
+    componentDidMount() {
         this.props.cm.editor.doc.getAllMarks().forEach((m) => {
             m.clear()
         })
-    };
+    }
 
     buildGraphicStack = () => {
         let stack = [];
@@ -138,8 +131,7 @@ class AsmVisualizer extends Component {
                             component={func}
                             shouldBeVisible={this.state.idx >= index}
                             onComplete={this.componentDonePlaying.bind(this)}
-                            highlightCode={this.highlightCode.bind(this)}
-                            clearHighlightedCode={this.clearHighlightedCode.bind(this)}
+                            cm={this.props.cm}
                         />
                     ))
                 }

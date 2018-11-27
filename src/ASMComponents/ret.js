@@ -22,6 +22,8 @@ const TrNumbers = styled.tr`
 
 const RetContainer = styled.div`
         border-radius: 3px;
+        width: ${({width}) => width}px;
+        margin: 0 auto;
 }
 `
 
@@ -92,7 +94,7 @@ export default class Ret extends Component {
         let {nbCols, colLen, colHeight, returnValue} = this.state;
 
         return (
-            <RetContainer ref={this.ref}>
+            <RetContainer ref={this.ref} width={colLen * nbCols}>
                 <Vector colLen={colLen} colHeight={colHeight} nbCols={nbCols}>
                     <TrNumbers colHeight={colHeight}>
                         {returnValue.map((e, i) =>

@@ -44,17 +44,35 @@ export default class SequentialComponent extends React.Component {
 
     componentWillReceiveProps(nextProps) {
         if (nextProps.shouldBeVisible && !this.props.shouldBeVisible) {
+            //Start Animation.
             this.animeRef.restart();
+            //Highlight code to show user, which part of the code is being represented by this animation.
+            this.sequentialHighlight = this.highlightCode();
+
+        }
+        //Remove sequential highlight since the component is done animating.
+        else if (this.sequentialHighlight) {
+            this.sequentialHighlight.clear();
         }
         if (!nextProps.shouldBeVisible && this.props.shouldBeVisible) {
+            //Component is being hidden. Rewind animation.
             this.animeRef.seek(0);
         }
     }
 
-    onEnter = () => {
-        if (this.component.current.props.line) {
-            this.props.highlightCode(this.component.current.props.line);
+    highlightCode = (isHover = false) => {
+        let line = this.component.current.props.line;
+        if (line) {
+            const lineLength = this.props.cm.editor.getLine(line).length;
+            return this.props.cm.editor.doc.markText({line, ch: 0}, {line, ch: lineLength}, {
+                className: isHover ? 'highlighted-code' : 'sequential-highlighted-code'
+            });
         }
+        return null
+    };
+
+    onEnter = () => {
+        this.hoverHighlight = this.highlightCode(true);
         let c = this.component.current;
         if (c && c.timeline) {
             this.isLoop = c.timeline.loop;
@@ -64,7 +82,7 @@ export default class SequentialComponent extends React.Component {
     }
 
     onLeave = () => {
-        this.props.clearHighlightedCode(this.component.current.props.line);
+        if (this.hoverHighlight) this.hoverHighlight.clear();
         let c = this.component.current;
         if (c && c.timeline) {
             c.timeline.loop = this.isLoop;
