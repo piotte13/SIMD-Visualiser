@@ -14,7 +14,7 @@
 importScripts("https://storage.googleapis.com/workbox-cdn/releases/3.6.3/workbox-sw.js");
 
 importScripts(
-  "/SIMD-Visualiser/precache-manifest.a37fb7fe230c8468ac9f4d97d649f593.js"
+  "/SIMD-Visualiser/precache-manifest.8844a09260a0c65f98c8ddce4f761a3a.js"
 );
 
 workbox.clientsClaim();
