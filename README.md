@@ -2,6 +2,8 @@
 # Live Version found here
 [http://piotte13.github.io/SIMD-Visualiser](http://piotte13.github.io/SIMD-Visualiser)
 
+![SIMD-Visualizer-Demo](https://github.com/piotte13/SIMD-Visualiser/tree/master/doc/SIMD-Visualizer-demo.gif)
+
 # But wait, what is SIMD?
 SIMD (pronounced "seem-dee") is short for **Single Instruction/Multiple Data** which is one [classification of computer architectures](https://en.wikipedia.org/wiki/Flynn%27s_taxonomy "classification of computer architectures"). SIMD allows one same operation to be performed on multiple data points resulting in data level parallelism and thus performance gains, for example for 3D graphics and video processing, physics simulations or cryptography, and other domains.
 
@@ -33,7 +35,7 @@ Okay, now that we have compiled SIMD code, what do we do?
  2. Draw it.
  3. Animate it.
 
-Although we skipped the C code parsing using Clang, we still need to parse the assembly code, or else it it useless to us.  One particularity of assembly code is that it's easy to parse. In JavaScript jargon, it's as simple as String.split(). But what about the complexity of the code, doesn't assembly add a lot of junk? Well, an interesting feature of compiled SIMD code is that it's quite simple, there is no additional complexity like we would find in assembly generated from traditional C code.
+Although we skipped the C code parsing using Clang, we still need to parse the assembly code, or else it's useless to us.  One particularity of assembly code is that it's easy to parse. In JavaScript jargon, it's as simple as String.split(). But what about the complexity of the code, doesn't assembly add a lot of junk? Well, an interesting feature of compiled SIMD code is that it's quite simple, there is no additional complexity like we would find in assembly generated from traditional C code.
 
 Here's an example: 
 
