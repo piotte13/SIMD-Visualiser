@@ -1,3 +1,4 @@
+
 # Live Version found here
 [http://piotte13.github.io/SIMD-Visualiser](http://piotte13.github.io/SIMD-Visualiser)
 
@@ -63,25 +64,26 @@ Let me explain. The first column of every row represents the name of the command
 Now that we have parsed every command and their parameters, we can finally start drawing and animating them!  To do so, we used [React](https://reactjs.org/) as a JavaScript user interface library and [Anime.js](http://animejs.com/) for the animations.
 
 
-# Development
+# Development/Contributing
+SIMD-Visualizer is a research project and for now, we are a small team! We actively encourage and support contributions. The SIMD-Visualizer source code is released under the BSD License. This license is very simple, and is friendly to all kinds of projects, whether open source or not. 
+
+Feel free to fork and improve/enhance SIMD-Visualizer any way you want. If you feel that the application or the research team will benefit from your changes, please open a pull request.  😊❤️
+
 ## Available Scripts
 
 In the project directory, you can run:
-
 ### `npm start`
 
-Runs the app in the development mode.<br>
+Runs the app in the development mode.
 Open [http://localhost:3000](http://localhost:3000) to view it in the browser.
-
-The page will reload if you make edits.<br>
+The page will reload if you make edits.
 You will also see any lint errors in the console.
-
 ### `npm run build`
 
-Builds the app for production to the `build` folder.<br>
+Builds the app for production to the `build` folder.
 It correctly bundles React in production mode and optimizes the build for the best performance.
 
-The build is minified and the filenames include the hashes.<br>
+The build is minified and the filenames include the hashes.
 Your app is ready to be deployed!
 
 ### `npm run deploy`
@@ -90,5 +92,17 @@ Deploys application to github-pages.  It will build, then push the code to gh-pa
 
 ### `npm test`
 
-Launches the test runner in the interactive watch mode.<br>
+Launches the test runner in the interactive watch mode.
 See the section about [running tests](#running-tests) for more information.
+
+# Credits
+
+This project is made possible by [Pierre Marie Ntang](https://github.com/pmntang).  It is part of his PhD thesis in congnitive computing at [Université du Québec (TELUQ)](https://www.teluq.ca/site/en/).  Many ideas came from his brilliant mind.
+
+Thanks to [Daniel Lemire](https://github.com/lemire) for his many ideas and his deep knowledge and expertise in SIMD software.  He is well known in the open source world as well as the big data community. His work is used by companies such as eBay, Facebook, LinkedIn and Netflix in their data warehouses. Git also uses his techniques to accelerate queries.
+
+Big thanks to [Matt Godbolt](https://github.com/mattgodbolt/compiler-explorer) for his free and open source REST API of the [Compiler Explorer](https://godbolt.org/), which allows us to use Clang and many other compilers from the browser.
+
+
+# License
+The [BSD 3-clause](https://tldrlegal.com/license/bsd-3-clause-license-(revised)) license allows you almost unlimited freedom with the software so long as you include the BSD copyright and license notice in it (found in Fulltext).
