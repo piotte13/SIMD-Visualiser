@@ -1,9 +1,11 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <project version="4">
   <component name="ChangeListManager">
-    <list default="true" id="d93bb96c-a6c2-4df9-9ab0-9872ebe56e56" name="Default Changelist" comment="playback update but not complete">
+    <list default="true" id="d93bb96c-a6c2-4df9-9ab0-9872ebe56e56" name="Default Changelist" comment="">
+      <change afterPath="$PROJECT_DIR$/doc/SIMD-Visualizer-Demo.gif" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/README.md" beforeDir="false" afterPath="$PROJECT_DIR$/README.md" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/doc/SIMD-Visualizer-demo.gif" beforeDir="false" />
     </list>
     <ignored path="$PROJECT_DIR$/.tmp/" />
     <ignored path="$PROJECT_DIR$/temp/" />
@@ -92,21 +94,22 @@
         <counts>
           <entry key="css" value="31" />
           <entry key="js" value="886" />
-          <entry key="md" value="29" />
-          <entry key="txt" value="46" />
+          <entry key="md" value="35" />
+          <entry key="txt" value="70" />
         </counts>
       </usages-collector>
       <usages-collector id="statistics.file.types.edit">
         <counts>
           <entry key="CSS" value="31" />
           <entry key="JavaScript" value="886" />
-          <entry key="Markdown" value="29" />
-          <entry key="PLAIN_TEXT" value="46" />
+          <entry key="Markdown" value="35" />
+          <entry key="PLAIN_TEXT" value="70" />
         </counts>
       </usages-collector>
       <usages-collector id="statistics.file.extensions.open">
         <counts>
           <entry key="css" value="3" />
+          <entry key="gif" value="1" />
           <entry key="js" value="6" />
           <entry key="md" value="1" />
         </counts>
@@ -114,6 +117,7 @@
       <usages-collector id="statistics.file.types.open">
         <counts>
           <entry key="CSS" value="3" />
+          <entry key="Image" value="1" />
           <entry key="JavaScript" value="6" />
           <entry key="Markdown" value="1" />
         </counts>
@@ -171,8 +175,8 @@
         <entry file="file://$PROJECT_DIR$/README.md">
           <provider selected="true" editor-type-id="split-provider[text-editor;MarkdownPreviewEditor]">
             <state split_layout="SPLIT">
-              <first_editor relative-caret-position="414">
-                <caret line="18" column="31" lean-forward="true" selection-start-line="18" selection-start-column="31" selection-end-line="18" selection-end-column="31" />
+              <first_editor relative-caret-position="368">
+                <caret line="16" column="16" lean-forward="true" selection-start-line="16" selection-start-column="16" selection-end-line="16" selection-end-column="16" />
               </first_editor>
               <second_editor>
                 <markdownNavigatorState />
@@ -207,18 +211,6 @@
           <provider selected="true" editor-type-id="text-editor">
             <state relative-caret-position="258">
               <caret line="2190" column="4" selection-start-line="2190" selection-start-column="4" selection-end-line="2190" selection-end-column="4" />
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/src/components/ASTVisualizer.js">
-          <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="542">
-              <caret line="164" column="10" selection-start-line="162" selection-start-column="8" selection-end-line="164" selection-end-column="10" />
-              <folding>
-                <element signature="e#0#39#0" expanded="true" />
-              </folding>
             </state>
           </provider>
         </entry>
@@ -568,7 +560,7 @@
       <workItem from="1542212829333" duration="14015000" />
       <workItem from="1542381761678" duration="44120000" />
       <workItem from="1542923893616" duration="25290000" />
-      <workItem from="1543267109632" duration="10368000" />
+      <workItem from="1543267109632" duration="11704000" />
     </task>
     <task id="LOCAL-00001" summary="First Version">
       <created>1541192536019</created>
@@ -675,11 +667,32 @@
       <option name="project" value="LOCAL" />
       <updated>1543357976976</updated>
     </task>
-    <option name="localTasksCounter" value="16" />
+    <task id="LOCAL-00016" summary="New gif demo! woohoo!">
+      <created>1543519248250</created>
+      <option name="number" value="00016" />
+      <option name="presentableId" value="LOCAL-00016" />
+      <option name="project" value="LOCAL" />
+      <updated>1543519248250</updated>
+    </task>
+    <task id="LOCAL-00017" summary="New gif demo! woohoo!">
+      <created>1543519284231</created>
+      <option name="number" value="00017" />
+      <option name="presentableId" value="LOCAL-00017" />
+      <option name="project" value="LOCAL" />
+      <updated>1543519284231</updated>
+    </task>
+    <task id="LOCAL-00018" summary="New gif demo! woohoo!">
+      <created>1543519602534</created>
+      <option name="number" value="00018" />
+      <option name="presentableId" value="LOCAL-00018" />
+      <option name="project" value="LOCAL" />
+      <updated>1543519602534</updated>
+    </task>
+    <option name="localTasksCounter" value="19" />
     <servers />
   </component>
   <component name="TimeTrackingManager">
-    <option name="totallyTimeSpent" value="247042000" />
+    <option name="totallyTimeSpent" value="248378000" />
   </component>
   <component name="ToolWindowManager">
     <frame x="0" y="25" width="1720" height="1348" extended-state="4" />
@@ -733,7 +746,8 @@
     <MESSAGE value="renaming project" />
     <MESSAGE value="css update" />
     <MESSAGE value="playback update but not complete" />
-    <option name="LAST_COMMIT_MESSAGE" value="playback update but not complete" />
+    <MESSAGE value="New gif demo! woohoo!" />
+    <option name="LAST_COMMIT_MESSAGE" value="New gif demo! woohoo!" />
     <option name="REFORMAT_BEFORE_PROJECT_COMMIT" value="true" />
   </component>
   <component name="editorHistoryManager">
@@ -982,11 +996,14 @@
         </state>
       </provider>
     </entry>
+    <entry file="file://$PROJECT_DIR$/doc/SIMD-Visualizer-demo.gif">
+      <provider selected="true" editor-type-id="images" />
+    </entry>
     <entry file="file://$PROJECT_DIR$/README.md">
       <provider selected="true" editor-type-id="split-provider[text-editor;MarkdownPreviewEditor]">
         <state split_layout="SPLIT">
-          <first_editor relative-caret-position="414">
-            <caret line="18" column="31" lean-forward="true" selection-start-line="18" selection-start-column="31" selection-end-line="18" selection-end-column="31" />
+          <first_editor relative-caret-position="368">
+            <caret line="16" column="16" lean-forward="true" selection-start-line="16" selection-start-column="16" selection-end-line="16" selection-end-column="16" />
           </first_editor>
           <second_editor>
             <markdownNavigatorState />
