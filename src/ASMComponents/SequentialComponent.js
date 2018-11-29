@@ -16,8 +16,20 @@ export default class SequentialComponent extends React.Component {
         this.component = React.createRef();
     }
 
+    allAnimationCompleted() {
+        this.props.onComplete(this.props.index);
+        //Remove sequential highlight since the component is done animating.
+        if (this.sequentialHighlight)
+            this.sequentialHighlight.clear();
+    }
 
     componentDidMount() {
+        this.childAnimation = false;
+        let c = this.component.current;
+        if (c && c.getAnimation) {
+            this.childAnimation = c.getAnimation();
+        }
+
         this.animeRef = anime({
             targets: this.container.current,
             easing: "easeOutCubic",
@@ -27,13 +39,12 @@ export default class SequentialComponent extends React.Component {
             delay: 800,
             opacity: 1,
             complete: () => {
-                let c = this.component.current;
-                if (c && c.timeline) {
-                    c.timeline.restart();
-                    this.timelineFinished = c.timeline.finished.then(this.props.onComplete);
+                if (this.childAnimation) {
+                    this.childAnimation.restart();
+                    this.timelineFinished = this.childAnimation.finished.then(() => this.allAnimationCompleted());
                 }
                 else
-                    this.props.onComplete()
+                    this.props.onComplete(this.props.index)
             }
         });
 
@@ -43,18 +54,26 @@ export default class SequentialComponent extends React.Component {
     }
 
     componentWillReceiveProps(nextProps) {
+
+        if (this.props.play === true && !nextProps.play) {
+            if (this.childAnimation) {
+                this.childAnimation.pause()
+            }
+        }
+        else if (!this.props.play === true && nextProps.play && nextProps.shouldBeVisible) {
+            if (this.childAnimation) {
+                this.childAnimation.play()
+            }
+        }
+
         if (!nextProps.shouldBeVisible && this.props.shouldBeVisible) {
             //Component is being hidden. Rewind animation.
+            if (this.sequentialHighlight)
+                this.sequentialHighlight.clear();
             this.animeRef.seek(0);
-            let c = this.component.current;
-            if (c && c.timeline) {
-                c.timeline.seek(0);
-                setTimeout(function () {
-                    this.timelineFinished = c.timeline.finished.then(() => {
-                    });
-                    console.log(c.timeline.finished)
-                });
-
+            if (this.childAnimation) {
+                this.childAnimation.seek(0);
+                this.childAnimation = this.component.current.getAnimation()
             }
         }
         if (nextProps.shouldBeVisible && !this.props.shouldBeVisible) {
@@ -64,11 +83,6 @@ export default class SequentialComponent extends React.Component {
             this.sequentialHighlight = this.highlightCode();
 
         }
-        //Remove sequential highlight since the component is done animating.
-        else if (this.sequentialHighlight) {
-            this.sequentialHighlight.clear();
-        }
-
     }
 
     highlightCode = (isHover = false) => {

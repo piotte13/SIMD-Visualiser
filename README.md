@@ -69,7 +69,7 @@ Now that we have parsed every command and their parameters, we can finally start
 # Development/Contributing
 SIMD-Visualizer is a research project and for now, we are a small team! We actively encourage and support contributions. The SIMD-Visualizer source code is released under the BSD License. This license is very simple, and is friendly to all kinds of projects, whether open source or not. 
 
-Feel free to fork and improve/enhance SIMD-Visualizer any way you want. If you feel that the application or the research team will benefit from your changes, please open a pull request.  😊❤️
+Feel free to fork and improve/enhance SIMD-Visualizer any way you want. If you feel that the application or the research team will benefit from your changes, please open a pull request.
 
 ## Available Scripts
 

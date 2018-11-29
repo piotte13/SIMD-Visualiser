@@ -53,14 +53,10 @@ export default class Vpslldq extends Component {
         };
         this.computeCommand();
         this.numbersRef = React.createRef();
-        this.zeroesRef = React.createRef();
+        this.zeroesRef = React.createRef()
     }
 
-    componentDidMount() {
-        this.timeline = this.createTimeline();
-    }
-
-    createTimeline() {
+    getAnimation() {
         let timeline = anime.timeline({
             easing: "easeOutCubic",
             loop: false,

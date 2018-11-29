@@ -61,17 +61,17 @@ class AsmVisualizer extends Component {
         return stack;
     };
 
-    componentDonePlaying(isReverse = false) {
+    componentDonePlaying(key) {
         if (this.state.play) {
-            let increment = isReverse ? -1 : 1;
+            let increment = key === this.state.idx ? 1 : 0;
             this.setState({idx: this.state.idx + increment});
         }
     }
 
     play() {
-        if (!this.state.play) {
-            this.setState({idx: this.state.idx + 1});
-        }
+        // if (!this.state.play) {
+        //     this.setState({idx: this.state.idx + 1});
+        // }
         this.setState({play: true})
     }
 
@@ -81,26 +81,34 @@ class AsmVisualizer extends Component {
 
     forward() {
         this.setState({idx: this.state.idx + 1});
+        //this.componentDonePlaying(this.state.idx - 1);
     }
 
     backward() {
-        this.setState({idx: this.state.idx - 1, play: false});
+        this.setState({idx: this.state.idx - 1});
+        setTimeout(() => {
+            this.componentDonePlaying(this.state.idx);
+        })
     }
 
     restart() {
         this.setState({idx: -1});
         setTimeout(() => {
             this.setState({play: true});
-            this.componentDonePlaying();
+            this.componentDonePlaying(-1);
         })
     }
 
-    getButtons = () => {
+    getButtons = (play) => {
         let buttons = [];
-        buttons.push(<FontAwesomeIcon icon="backward" onClick={this.backward.bind(this)}/>);
-        buttons.push(<FontAwesomeIcon icon="pause" onClick={this.pause.bind(this)}/>);
-        buttons.push(<FontAwesomeIcon icon="play" onClick={this.play.bind(this)}/>);
-        buttons.push(<FontAwesomeIcon icon="forward" onClick={this.forward.bind(this)}/>);
+        //buttons.push(<FontAwesomeIcon icon="backward" onClick={this.backward.bind(this)}/>);
+
+        play === true ?
+            buttons.push(<FontAwesomeIcon icon="pause" onClick={this.pause.bind(this)}/>)
+            :
+            buttons.push(<FontAwesomeIcon icon="play" onClick={this.play.bind(this)}/>);
+
+        //buttons.push(<FontAwesomeIcon icon="forward" onClick={this.forward.bind(this)}/>);
         buttons.push(<FontAwesomeIcon icon="sync-alt" onClick={this.restart.bind(this)}/>);
 
         return (
@@ -122,12 +130,13 @@ class AsmVisualizer extends Component {
         return (
             <div>
 
-                {this.getButtons()}
+                {this.getButtons(this.state.play)}
 
                 {
                     this.buildGraphicStack().map((func, index) => (
                         <SequentialComponent
                             key={index}
+                            index={index}
                             component={func}
                             play={this.state.play}
                             shouldBeVisible={this.state.idx >= index}

@@ -50,11 +50,7 @@ export default class Ret extends Component {
 
     }
 
-    componentDidMount() {
-        this.timeline = this.createTimeline();
-    }
-
-    createTimeline() {
+    getAnimation() {
 
         //We make an empty timeline because sequentialComponent needs to know when to jump to the next command.
         let timeline = anime.timeline({
