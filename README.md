@@ -1,5 +1,5 @@
 
-# Live Version found here
+# Live Version found here (Proof of concept)
 [http://piotte13.github.io/SIMD-Visualiser](http://piotte13.github.io/SIMD-Visualiser)
 
 ![](doc/SIMD-Visualizer-Demo.gif)
