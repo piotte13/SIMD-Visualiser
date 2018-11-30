@@ -7,7 +7,8 @@ import Function from "../ASMComponents/Function";
 import SequentialComponent from "../ASMComponents/SequentialComponent";
 import {FontAwesomeIcon} from '@fortawesome/react-fontawesome'
 import styled from "styled-components";
-import {Row, Col} from 'reactstrap';
+import {Row, Col, Button} from 'reactstrap';
+import '../css/ASMVisualizer.css'
 
 
 const ButtonContainer = styled.div`
@@ -104,12 +105,12 @@ class AsmVisualizer extends Component {
         //buttons.push(<FontAwesomeIcon icon="backward" onClick={this.backward.bind(this)}/>);
 
         play === true ?
-            buttons.push(<FontAwesomeIcon icon="pause" onClick={this.pause.bind(this)}/>)
+            buttons.push({icon: <FontAwesomeIcon icon="pause"/>, onClick: this.pause.bind(this)})
             :
-            buttons.push(<FontAwesomeIcon icon="play" onClick={this.play.bind(this)}/>);
+            buttons.push({icon: <FontAwesomeIcon icon="play"/>, onClick: this.play.bind(this)});
 
         //buttons.push(<FontAwesomeIcon icon="forward" onClick={this.forward.bind(this)}/>);
-        buttons.push(<FontAwesomeIcon icon="sync-alt" onClick={this.restart.bind(this)}/>);
+        buttons.push({icon: <FontAwesomeIcon icon="sync-alt"/>, onClick: this.restart.bind(this)});
 
         return (
             <Row>
@@ -117,7 +118,9 @@ class AsmVisualizer extends Component {
                     buttons.map((button, i) => (
                         <Col key={i}>
                             <ButtonContainer>
-                                {button}
+                                <Button outline color="primary" onClick={button.onClick} className={'playback-button'}>
+                                    {button.icon}
+                                </Button>
                             </ButtonContainer>
                         </Col>
                     ))

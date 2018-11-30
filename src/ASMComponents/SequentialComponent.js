@@ -98,21 +98,19 @@ export default class SequentialComponent extends React.Component {
 
     onEnter = () => {
         this.hoverHighlight = this.highlightCode(true);
-        let c = this.component.current;
-        if (c && c.timeline) {
-            this.isLoop = c.timeline.loop;
-            c.timeline.loop = true;
-            c.timeline.restart();
+        if (this.childAnimation) {
+            this.isLoop = this.childAnimation.loop;
+            this.childAnimation.loop = true;
+            this.childAnimation.restart();
         }
-    }
+    };
 
     onLeave = () => {
         if (this.hoverHighlight) this.hoverHighlight.clear();
-        let c = this.component.current;
-        if (c && c.timeline) {
-            c.timeline.loop = this.isLoop;
-            c.timeline.restart();
-            c.timeline.seek(Infinity);
+        if (this.childAnimation) {
+            this.childAnimation.loop = this.isLoop;
+            this.childAnimation.restart();
+            this.childAnimation.seek(Infinity);
         }
     }
 

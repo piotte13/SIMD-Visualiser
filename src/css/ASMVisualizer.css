@@ -1,0 +1,19 @@
+.playback-button {
+    width: 150px;
+    /*background-color: var(--three) !important;*/
+    /*border-color: var(--five) !important;*/
+    /*color: var(--five) !important;*/
+    /*#273890*/
+}
+
+.btn-outline-primary {
+    /*background-color: var(--three) !important;*/
+    border-color: var(--main) !important;
+    color: var(--main) !important;
+}
+
+.btn-outline-primary:hover {
+    color: #fff !important;
+    background-color: var(--main) !important;
+    border-color: var(--main) !important;
+}
