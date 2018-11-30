@@ -18,7 +18,6 @@
     "prop-types": "^15.6.2",
     "react": "^16.6.0",
     "react-anime": "^2.2.0",
-    "react-awesome-button": "^5.0.0",
     "react-codemirror2": "^5.1.0",
     "react-dom": "^16.6.0",
     "react-image": "^1.5.1",
