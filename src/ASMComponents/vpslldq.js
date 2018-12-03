@@ -98,13 +98,13 @@ export default class Vpslldq extends Component {
             <Vector colLen={colLen} colHeight={colHeight} nbCols={nbCols}>
                 <TrNumbers colHeight={colHeight} ref={this.numbersRef}>
                     {input.map((e, i) =>
-                        <TdNumbers colLen={colLen} colHeight={colHeight} key={i}>{e.toString(16)}</TdNumbers>
+                        <TdNumbers colLen={colLen} colHeight={colHeight} key={i}>{('0'+e.toString(16)).substr(-2)}</TdNumbers>
                     )}
                 </TrNumbers>
                 <TrNumbers colHeight={colHeight} ref={this.zeroesRef}>
                     {input.map((e, i) =>
                         <TdZeroes colLen={colLen} colHeight={colHeight}
-                                  key={i}>{(i < nbCols - shiftLen) ? "" : 0}</TdZeroes>
+                                  key={i}>{(i < nbCols - shiftLen) ? "" : '00'}</TdZeroes>
                     )}
                 </TrNumbers>
             </Vector>
