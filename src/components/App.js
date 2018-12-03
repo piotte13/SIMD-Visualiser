@@ -35,23 +35,30 @@ const RightContainer = styled.div`
 `
 
 class App extends Component {
-    state = {
-        code: `#include <x86intrin.h>\n\n__m128i PrefixSum(__m128i curr) {\n  __m128i Add = _mm_slli_si128(curr, 4); \n  curr = _mm_add_epi32(curr, Add);   \n  Add = _mm_slli_si128(curr, 8);    \n  return _mm_add_epi32(curr, Add);       \n}`,
-        disableButtons: false,
-        status: 'compiles',
-        compiling: false,
-        ast: {},
-        clangAst: {},
-        asm: [],
-        error: [],
-    };
-
     constructor(props) {
-        super(props)
+        super(props);
+        let savedState = localStorage.getItem('app-state');
+        if (savedState) {
+            this.state = JSON.parse(savedState);
+        }
+        else {
+            this.state = {
+                code: `#include <x86intrin.h>\n\n__m128i PrefixSum(__m128i curr) {\n  __m128i Add = _mm_slli_si128(curr, 4); \n  curr = _mm_add_epi32(curr, Add);   \n  Add = _mm_slli_si128(curr, 8);    \n  return _mm_add_epi32(curr, Add);       \n}`,
+                codeWasModifiedSinceLastCompile: true,
+                disableButtons: false,
+                status: 'compiles',
+                compiling: false,
+                ast: {},
+                clangAst: {},
+                asm: [],
+                error: [],
+            };
+        }
+
         this.frontPage = <FrontPage/>;
         this.waitingScreen = <WaitingScreen/>;
-        this.asmVisualizer = [];
-        this.astVisualizer = [];
+        this.asmVisualizer = null
+        this.astVisualizer = null;
     }
 
     handleClear = (clearCode = true) => {
@@ -62,17 +69,38 @@ class App extends Component {
 
     visualize = () => {
         this.setState({compiling: true});
-        this.setState({ast: generateAST(this.cm.editor)});
-        compile(this.cm.editor.getValue(), (error, asm, ast) => {
-            if (error.length === 0) {
-                asm = generateASM(asm);
-                this.setState({compiling: false, status: 'compiles', error, clangAst: ast, asm});
-            }
-            else {
-                this.setState({compiling: false, status: 'error', error, clangAst: {}, asm: {}});
-            }
-        })
+        if (this.state.codeWasModifiedSinceLastCompile) {
+            this.setState({ast: generateAST(this.cm.editor)});
+            compile(this.cm.editor.getValue(), (error, asm, ast) => {
+                if (error.length === 0) {
+                    asm = generateASM(asm);
+                    this.setState({
+                        compiling: false,
+                        status: 'compiles',
+                        error,
+                        clangAst: ast,
+                        asm,
+                        codeWasModifiedSinceLastCompile: false
+                    });
+                }
+                else {
+                    this.setState({compiling: false, status: 'error', error, clangAst: {}, asm: {}});
+                }
+            })
+        }
+        else this.setState({compiling: false});
     };
+
+    componentDidMount() {
+        if (this.state.asm.length > 0) {
+            console.log("hello")
+            this.asmVisualizer = <AsmVisualizer cm={this.cm} asm={this.state.asm}/>;
+        }
+        if (this.state.ast) {
+            this.astVisualizer = <AstVisualizer cm={this.cm} ast={this.state.ast}/>;
+        }
+    }
+
 
     componentWillUpdate(nextProps, nextState) {
         if (nextState.asm !== this.state.asm) {
@@ -81,6 +109,7 @@ class App extends Component {
         if (nextState.ast !== this.state.ast) {
             this.astVisualizer = <AstVisualizer cm={this.cm} ast={nextState.ast}/>;
         }
+        localStorage.setItem("app-state", JSON.stringify(nextState));
     }
 
     serialize = () => {
@@ -88,12 +117,15 @@ class App extends Component {
     };
 
     restart = () => {
+        this.asmVisualizer = null;
+        this.astVisualizer = null;
         this.setState({
             compiling: false,
+            codeWasModifiedSinceLastCompile: true,
             ast: {},
             clangAst: {},
-            asm: {},
-            error: []
+            asm: [],
+            error: [],
         });
     };
 
@@ -106,7 +138,7 @@ class App extends Component {
         else if (this.state.error.length > 0) {
             rightPage = <ErrorHandler cm={this.cm} error={this.state.error}/>
         }
-        else if (Object.keys(this.state.asm).length > 0) {
+        else if (this.asmVisualizer && this.astVisualizer && this.state.asm.length > 0) {
             rightPage = <Tabs selected={0}>
                 <Pane label="Graphical">
                     {this.asmVisualizer}
@@ -138,14 +170,16 @@ class App extends Component {
                             gutters: ["CodeMirror-lint-markers"],
                         }}
                         onBeforeChange={(editor, data, code) => {
+                            this.setState({codeWasModifiedSinceLastCompile: true});
                             if (code === '') {
                                 this.handleClear(true)
                             } else {
-                                this.setState({code})
+                                this.setState({code});
                                 //this.myInterpreter = getInterpreter(code)
                             }
                         }}
                         onPaste={() => {
+                            this.setState({codeWasModifiedSinceLastCompile: true});
                             this.handleClear(false)
                         }}
                     />

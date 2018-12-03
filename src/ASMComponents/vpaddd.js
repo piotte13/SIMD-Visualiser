@@ -66,7 +66,7 @@ export default class Vpaddd extends Component {
             loop: false,
             autoplay: false
         });
-        let {input2,output} = this.state;
+        let {output, input2} = this.state;
 
         timeline
             .add({
@@ -91,10 +91,10 @@ export default class Vpaddd extends Component {
             timeline.add({
                 targets: e,
                 easing: 'easeInOutExpo',
-                title: [input2[i],output[i]],
+                title: [input2[i], output[i]],
                 round: 1,
                 duration: 1000,
-                offset: 1500,
+                offset: 1800,
                 update: (a) => {
                     if (a.progress > 0) {
                         e.innerHTML = ('0'+(+e.title).toString(16)).substr(-2)
