@@ -3,7 +3,7 @@ import Vector from "./Vector";
 import * as Registry from "../Utils/Registry";
 import styled from "styled-components";
 import anime from "animejs";
-import * as _ from "lodash";
+import uint32 from "uint32";
 
 const TdNumbers = styled.td`
     width: ${({colLen}) => colLen}px;
@@ -97,13 +97,11 @@ export default class Vpaddd extends Component {
                 offset: 1800,
                 update: (a) => {
                     if (a.progress > 0) {
-                        e.innerHTML = (+e.title).toString(16)
+                        e.innerHTML = ('0'+(+e.title).toString(16)).substr(-2)
                     }
                 }
             });
         });
-
-
         return timeline;
     }
 
@@ -111,25 +109,32 @@ export default class Vpaddd extends Component {
     computeCommand() {
         let {input1, input2} = this.state;
         let registry = Registry.default;
-        let output = _.cloneDeep(input1);
-
-        input2.forEach((e, i) => {
-            output[i] += e;
-        });
+        let output = new Array(16).fill(0);
+        // we have four bytes per 32-bit ints
+        for(var z = 0; z < input1.length / 4; z++) {
+            // little endian, so we do everything in reverse
+            let int1 = uint32.fromBytesBigEndian(input1[4 * z], input1[4 * z + 1], input1[4 * z + 2], input1[4 * z + 3]);
+            let int2 = uint32.fromBytesBigEndian(input2[4 * z], input2[4 * z + 1], input2[4 * z + 2], input2[4 * z + 3]);
+            let result = uint32.addMod32(int1,int2);
+            // we again write in reverse... least significant bit first
+            output[4 * z] = uint32.getByteBigEndian(result, 3);
+            output[4 * z + 1] = uint32.getByteBigEndian(result, 2);
+            output[4 * z + 2] = uint32.getByteBigEndian(result, 1);
+            output[4 * z + 3] = uint32.getByteBigEndian(result, 0);
+        }
         registry.set(this.props.params[OUTPUT_INDEX], output);
     }
 
 
     render() {
         let {nbCols, colLen, colHeight, input1, input2} = this.state;
-
         return (
             <div>
                 <div ref={this.numbers1Ref}>
                     <Vector colLen={colLen} colHeight={colHeight} nbCols={nbCols}>
                         <TrNumbers colHeight={colHeight}>
                             {input1.map((e, i) =>
-                                <TdNumbers colLen={colLen} colHeight={colHeight} key={i}>{e.toString(16)}</TdNumbers>
+                                <TdNumbers colLen={colLen} colHeight={colHeight} key={i}>{('0'+e.toString(16)).substr(-2)}</TdNumbers>
                             )}
                         </TrNumbers>
                     </Vector>
@@ -140,7 +145,7 @@ export default class Vpaddd extends Component {
                         <TrNumbers colHeight={colHeight} ref={this.actualNumbersRef}>
                             {input2.map((e, i) =>
                                 <TdNumbers colLen={colLen} colHeight={colHeight} key={i}
-                                           title={e.toString()}>{e.toString(16)}</TdNumbers>
+                                           title={e.toString()}>{('0'+e.toString(16)).substr(-2)}</TdNumbers>
                             )}
                         </TrNumbers>
                     </Vector>
@@ -149,3 +154,4 @@ export default class Vpaddd extends Component {
         );
     }
 }
+
