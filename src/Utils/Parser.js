@@ -29,7 +29,9 @@ const functionName = /([a-zA-Z]+): # @.*/;
 
 export function generateASM(rawAsm) {
     let asm = [];
-    let currentFunction = {};
+    let currentFunction = {
+        body: []
+    };
     rawAsm.forEach(line => {
         if (functionName.test(line.text)) {
             let name = functionName.exec(line.text)[1];
@@ -37,7 +39,7 @@ export function generateASM(rawAsm) {
             currentFunction.body = [];
             asm.push(currentFunction);
         }
-        else if (line.text.length > 0) {
+        else if (line.text.length > 0 && line.source) {
             // Remove comments, commas, trim it and then split
             let command = line.text.trim().replace(/,| #.*/g, '').split(" ");
             let name = command[0];
