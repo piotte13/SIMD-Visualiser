@@ -1,6 +1,7 @@
 import React, {Component} from 'react';
 import Vpslldq from "../ASMComponents/vpslldq";
 import Vpaddd from "../ASMComponents/vpaddd";
+import Vpsrldq from "../ASMComponents/vpsrldq";
 import Ret from "../ASMComponents/ret";
 import UnsupportedCommand from "../ASMComponents/UnsupportedCommand";
 import Function from "../ASMComponents/Function";
@@ -18,8 +19,10 @@ const ButtonContainer = styled.div`
 
 function commandFactory(c) {
     switch (c.name) {
+        case "vpsrldq":
+            return <Vpsrldq />;
         case "vpslldq":
-            return <Vpslldq/>;
+            return <Vpslldq />;
         case "vpaddd":
             return <Vpaddd/>;
         case "ret":

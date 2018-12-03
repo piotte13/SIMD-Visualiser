@@ -94,7 +94,8 @@ class App extends Component {
             clangAst: {},
             asm: {},
             error: []
-        });
+        });    
+        
     };
 
     render() {
