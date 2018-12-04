@@ -52,6 +52,7 @@ export default class Vector extends Component {
     }
 
     render() {
+        console.log(this.cols);
         return (
             <VectorContainer nbCols={this.props.nbCols}
                              colLen={this.props.colLen}
