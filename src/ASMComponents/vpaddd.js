@@ -191,7 +191,7 @@ export default class Vpaddd extends Component {
                 offset: 3000,
                 update: (a) => {
                     if (a.progress > 0) {
-                        e.innerHTML = ('0'+(+e.title).toString(16)).substr(-2)
+                        e.innerHTML = ('0'+(+e.title).toString(16).toUpperCase()).substr(-2)
                     }
                 }
             });
@@ -206,7 +206,7 @@ export default class Vpaddd extends Component {
                 offset: 3000,
                 update: (a) => {
                     if (a.progress > 0) {
-                        e.innerHTML = ('0000000'+(+e.title).toString(16)).substr(-8)
+                        e.innerHTML = ('0000000'+(+e.title).toString(16).toUpperCase()).substr(-8)
                     }
                 }
             });
@@ -246,7 +246,7 @@ export default class Vpaddd extends Component {
                     <Vector colLen={colLen} colHeight={colHeight} nbCols={nbCols}>
                         <TrNumbers colHeight={colHeight}>
                             {input1.map((e, i) =>
-                                <TdNumbers colLen={colLen} colHeight={colHeight} key={i}>{('0'+e.toString(16)).substr(-2)}</TdNumbers>
+                                <TdNumbers colLen={colLen} colHeight={colHeight} key={i}>{('0'+e.toString(16).toUpperCase()).substr(-2)}</TdNumbers>
                             )}
                         </TrNumbers>
                     </Vector>
@@ -255,7 +255,7 @@ export default class Vpaddd extends Component {
                     <Vector colLen={colLen32} colHeight={colHeight} nbCols={nbCols_32bits}>
                         <TrNumbers colHeight={colHeight}>
                             {input1_32bits.map((e, i) =>
-                                <TdNumbers colLen={colLen32}  colHeight={colHeight} key={i}>{('0000000'+e.toString(16)).substr(-8)}</TdNumbers>
+                                <TdNumbers colLen={colLen32}  colHeight={colHeight} key={i}>{('0000000'+e.toString(16).toUpperCase()).substr(-8)}</TdNumbers>
                             )}
                         </TrNumbers>
                     </Vector>
@@ -266,7 +266,7 @@ export default class Vpaddd extends Component {
                         <TrNumbers colHeight={colHeight} ref={this.actualNumbersRef2_32bits}>
                             {input2_32bits.map((e, i) =>
                                 <TdNumbers  colLen={colLen32}  colHeight={colHeight} key={i}
-                                           title={e.toString()}>{('00000'+e.toString(16)).substr(-8)}</TdNumbers>
+                                           title={e.toString()}>{('00000'+e.toString(16).toUpperCase()).substr(-8)}</TdNumbers>
                             )}
                         </TrNumbers>
                     </Vector>
@@ -276,7 +276,7 @@ export default class Vpaddd extends Component {
                         <TrNumbers colHeight={colHeight} ref={this.actualNumbersRef2}>
                             {input2.map((e, i) =>
                                 <TdNumbers colLen={colLen} colHeight={colHeight} key={i}
-                                           title={e.toString()}>{('0'+e.toString(16)).substr(-2)}</TdNumbers>
+                                           title={e.toString()}>{('0'+e.toString(16).toUpperCase()).substr(-2)}</TdNumbers>
                             )}
                         </TrNumbers>
                     </Vector>
