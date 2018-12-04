@@ -1,7 +1,7 @@
 {
   "main.css": "/SIMD-Visualiser/static/css/main.7435bc5e.chunk.css",
-  "main.js": "/SIMD-Visualiser/static/js/main.0c3e9098.chunk.js",
-  "main.js.map": "/SIMD-Visualiser/static/js/main.0c3e9098.chunk.js.map",
+  "main.js": "/SIMD-Visualiser/static/js/main.5585e54f.chunk.js",
+  "main.js.map": "/SIMD-Visualiser/static/js/main.5585e54f.chunk.js.map",
   "static/css/1.80bdf0b2.chunk.css": "/SIMD-Visualiser/static/css/1.80bdf0b2.chunk.css",
   "static/js/1.bc968c3c.chunk.js": "/SIMD-Visualiser/static/js/1.bc968c3c.chunk.js",
   "static/js/1.bc968c3c.chunk.js.map": "/SIMD-Visualiser/static/js/1.bc968c3c.chunk.js.map",
@@ -13,6 +13,6 @@
   "static/media/c-programming.png": "/SIMD-Visualiser/static/media/c-programming.b504359c.png",
   "static/css/1.80bdf0b2.chunk.css.map": "/SIMD-Visualiser/static/css/1.80bdf0b2.chunk.css.map",
   "index.html": "/SIMD-Visualiser/index.html",
-  "precache-manifest.27aaf76dc0b2120a6bf6412ec7075c46.js": "/SIMD-Visualiser/precache-manifest.27aaf76dc0b2120a6bf6412ec7075c46.js",
+  "precache-manifest.6575d79032b894325bd9465e2d634f08.js": "/SIMD-Visualiser/precache-manifest.6575d79032b894325bd9465e2d634f08.js",
   "service-worker.js": "/SIMD-Visualiser/service-worker.js"
 }
