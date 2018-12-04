@@ -71,7 +71,7 @@ export default class Ret extends Component {
             direction: 'alternate'
         });
 
-        eternalGlow
+        eternalGlow // Creates the glow arround the returned vector (glowing box shadow)
             .add({
                 targets: this.ref.current,
                 boxShadow: ["0px 0px 20px 5px var(--main)", "0px 0px 2px 1px var(--main)"],
