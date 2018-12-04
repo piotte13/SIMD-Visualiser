@@ -98,7 +98,7 @@ export default class Vpslldq extends Component {
             <Vector colLen={colLen} colHeight={colHeight} nbCols={nbCols}>
                 <TrNumbers colHeight={colHeight} ref={this.numbersRef}>
                     {input.map((e, i) =>
-                        <TdNumbers colLen={colLen} colHeight={colHeight} key={i}>{('0'+e.toString(16)).substr(-2)}</TdNumbers>
+                        <TdNumbers colLen={colLen} colHeight={colHeight} key={i}>{('0'+e.toString(16).toUpperCase()).substr(-2)}</TdNumbers>
                     )}
                 </TrNumbers>
                 <TrNumbers colHeight={colHeight} ref={this.zeroesRef}>
