@@ -5,7 +5,6 @@ import Ret from "../ASMComponents/ret";
 import UnsupportedCommand from "../ASMComponents/UnsupportedCommand";
 import Function from "../ASMComponents/Function";
 import SequentialComponent from "../ASMComponents/SequentialComponent";
-import {FontAwesomeIcon} from '@fortawesome/react-fontawesome'
 import styled from "styled-components";
 import {Row, Col, Button} from 'reactstrap';
 import '../css/ASMVisualizer.css'
@@ -105,12 +104,12 @@ class AsmVisualizer extends Component {
         //buttons.push(<FontAwesomeIcon icon="backward" onClick={this.backward.bind(this)}/>);
 
         play === true ?
-            buttons.push({icon: <FontAwesomeIcon icon="pause"/>, onClick: this.pause.bind(this)})
+            buttons.push({icon: <i className="fas fa-pause"></i>, onClick: this.pause.bind(this)})
             :
-            buttons.push({icon: <FontAwesomeIcon icon="play"/>, onClick: this.play.bind(this)});
+            buttons.push({icon: <i className="fas fa-play"></i>, onClick: this.play.bind(this)});
 
         //buttons.push(<FontAwesomeIcon icon="forward" onClick={this.forward.bind(this)}/>);
-        buttons.push({icon: <FontAwesomeIcon icon="sync-alt"/>, onClick: this.restart.bind(this)});
+        buttons.push({icon: <i className="fas fa-sync-alt"></i>, onClick: this.restart.bind(this)});
 
         return (
             <Row>

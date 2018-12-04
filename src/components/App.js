@@ -15,6 +15,8 @@ import {compile} from "../Utils/Compiler";
 import ErrorHandler from "./ErrorHandler";
 import {Pane, Tabs} from "../Utils/Tabs";
 import AsmVisualizer from "./ASMVisualizer";
+import {createBrowserHistory} from 'history';
+import * as qs from 'qs';
 
 const Container = styled.div`
   display: flex;
@@ -35,24 +37,28 @@ const RightContainer = styled.div`
 `
 
 class App extends Component {
-    constructor(props) {
+    constructor(props, match) {
         super(props);
         let savedState = localStorage.getItem('app-state');
-        if (savedState) {
-            this.state = JSON.parse(savedState);
+        this.history = createBrowserHistory();
+        console.log(this.history, this.props.match)
+        this.state = {
+            code: `#include <x86intrin.h>\n\n__m128i PrefixSum(__m128i curr) {\n  __m128i Add = _mm_slli_si128(curr, 4); \n  curr = _mm_add_epi32(curr, Add);   \n  Add = _mm_slli_si128(curr, 8);    \n  return _mm_add_epi32(curr, Add);       \n}`,
+            codeWasModifiedSinceLastCompile: true,
+            disableButtons: false,
+            status: 'compiles',
+            compiling: false,
+            ast: {},
+            clangAst: {},
+            asm: [],
+            error: [],
+            visualize: false
+        };
+        if (this.props.match.params.code) {
+            this.state.code = qs.parse(this.props.match.params.code).code
         }
-        else {
-            this.state = {
-                code: `#include <x86intrin.h>\n\n__m128i PrefixSum(__m128i curr) {\n  __m128i Add = _mm_slli_si128(curr, 4); \n  curr = _mm_add_epi32(curr, Add);   \n  Add = _mm_slli_si128(curr, 8);    \n  return _mm_add_epi32(curr, Add);       \n}`,
-                codeWasModifiedSinceLastCompile: true,
-                disableButtons: false,
-                status: 'compiles',
-                compiling: false,
-                ast: {},
-                clangAst: {},
-                asm: [],
-                error: [],
-            };
+        else if (savedState) {
+            this.state = JSON.parse(savedState);
         }
 
         this.frontPage = <FrontPage/>;
@@ -70,17 +76,24 @@ class App extends Component {
     visualize = () => {
         this.setState({compiling: true});
         if (this.state.codeWasModifiedSinceLastCompile) {
-            this.setState({ast: generateAST(this.cm.editor)});
+            this.setState((state) => {
+                Object.assign(state.ast, generateAST(this.cm.editor))
+            });
             compile(this.cm.editor.getValue(), (error, asm, ast) => {
                 if (error.length === 0) {
                     asm = generateASM(asm);
-                    this.setState({
-                        compiling: false,
-                        status: 'compiles',
-                        error,
-                        clangAst: ast,
-                        asm,
-                        codeWasModifiedSinceLastCompile: false
+                    this.setState((state) => {
+                        asm.forEach(e => {
+                            state.asm.push(e)
+                        });
+                        return {
+                            compiling: false,
+                            status: 'compiles',
+                            error,
+                            clangAst: ast,
+                            codeWasModifiedSinceLastCompile: false,
+                            visualize: true
+                        }
                     });
                 }
                 else {
@@ -93,7 +106,6 @@ class App extends Component {
 
     componentDidMount() {
         if (this.state.asm.length > 0) {
-            console.log("hello")
             this.asmVisualizer = <AsmVisualizer cm={this.cm} asm={this.state.asm}/>;
         }
         if (this.state.ast) {
@@ -103,30 +115,27 @@ class App extends Component {
 
 
     componentWillUpdate(nextProps, nextState) {
-        if (nextState.asm !== this.state.asm) {
-            this.asmVisualizer = <AsmVisualizer cm={this.cm} asm={nextState.asm}/>;
-        }
-        if (nextState.ast !== this.state.ast) {
-            this.astVisualizer = <AstVisualizer cm={this.cm} ast={nextState.ast}/>;
-        }
         localStorage.setItem("app-state", JSON.stringify(nextState));
     }
 
-    serialize = () => {
-
+    restart = () => {
+        this.setState((state) => {
+            Object.keys(state.ast).forEach(k => delete state.ast[k]);
+            state.asm.splice(0, state.asm.length);
+            return {
+                compiling: false,
+                codeWasModifiedSinceLastCompile: true,
+                clangAst: {},
+                error: [],
+                visualize: false
+            }
+        });
     };
 
-    restart = () => {
-        this.asmVisualizer = null;
-        this.astVisualizer = null;
-        this.setState({
-            compiling: false,
-            codeWasModifiedSinceLastCompile: true,
-            ast: {},
-            clangAst: {},
-            asm: [],
-            error: [],
-        });
+    getShareLink = () => {
+        //We need to specify the whole URL since we are in dev and bitly cannot work with localhost links.
+        return 'https://piotte13.github.io/SIMD-Visualiser/#/link/' + qs.stringify({code: this.state.code})
+        //return window.location.origin + "/link" + qs.stringify(this.state)
     };
 
     render() {
@@ -138,7 +147,7 @@ class App extends Component {
         else if (this.state.error.length > 0) {
             rightPage = <ErrorHandler cm={this.cm} error={this.state.error}/>
         }
-        else if (this.asmVisualizer && this.astVisualizer && this.state.asm.length > 0) {
+        else if (this.asmVisualizer && this.astVisualizer && this.state.visualize) {
             rightPage = <Tabs selected={0}>
                 <Pane label="Graphical">
                     {this.asmVisualizer}
@@ -154,8 +163,8 @@ class App extends Component {
                 <LeftContainer>
                     <ButtonPanel
                         visualize={this.visualize}
-                        serialize={this.serialize}
                         restart={this.restart}
+                        getShareLink={this.getShareLink}
                         disabled={disableButtons}
                         status={status}
                     />
@@ -171,6 +180,7 @@ class App extends Component {
                         }}
                         onBeforeChange={(editor, data, code) => {
                             this.setState({codeWasModifiedSinceLastCompile: true});
+                            this.history.push("/");
                             if (code === '') {
                                 this.handleClear(true)
                             } else {
