@@ -1,7 +1,7 @@
-import React from 'react';
-import Anime from 'react-anime';
+import React, {Component} from 'react';
 import styled from 'styled-components'
 import CLogo from "../Images/c-programming.png";
+import anime from "animejs";
 
 
 const Image = styled.div`
@@ -57,28 +57,45 @@ const GHButton = styled.button`
 `
 
 const ButtonGroup = styled.div`
-    margin-top: 20px;
+    margin-top: 50px;
     text-align: center;
 `
 
-export default function FrontPage() {
+export default class FrontPage extends Component {
+    constructor() {
+        super();
 
-    return (
-        <Container>
-            <Anime easing="easeOutCubic"
-                   duration={2000}
-                   direction="alternate"
-                   loop={true}
-                   scale={.9}>
-                <div>
-                    <Anime rotate={"360deg"}
-                           loop={true}
-                           delay={6000}
-                           duration={4000}>
-                        <Image url={CLogo}/>
-                    </Anime>
-                </div>
-            </Anime>
+        this.image = React.createRef();
+        this.imageContainer = React.createRef();
+    }
+
+    componentDidMount() {
+        let scaleAnime = anime({
+            easing: "easeOutCubic",
+            targets: this.imageContainer.current,
+            direction: 'alternate',
+            duration: 2000,
+            scale: '.9',
+            loop: true
+        });
+
+        let spinAnime = anime({
+            targets: this.image.current,
+            delay: 6000,
+            duration: 4000,
+            rotate: '360deg',
+            loop: true
+        })
+    }
+
+
+    render() {
+        return <Container>
+
+            <div ref={this.imageContainer}>
+                <Image url={CLogo} ref={this.image}/>
+            </div>
+
             <AppTitle>The Ultimate SIMD visualizer</AppTitle>
             <AppDescription>Built by <strong>Jérémie Piotte</strong>, <strong>Daniel Lemire</strong> and <strong>Pierre
                 Marie
@@ -88,8 +105,8 @@ export default function FrontPage() {
                 <GHButton>View on GitHub</GHButton>
                 <iframe
                     src="https://ghbtns.com/github-btn.html?user=piotte13&repo=SIMD-Visualiser&type=star&count=true&size=large"
-                    frameBorder="0" scrolling="0" width="160px" height="30px"></iframe>
+                    frameBorder="0" scrolling="0" width="160px" height="30px"/>
             </ButtonGroup>
-        </Container>
-    );
+        </Container>;
+    }
 }

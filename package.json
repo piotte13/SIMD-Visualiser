@@ -17,7 +17,6 @@
     "prop-types": "^15.6.2",
     "qs": "^6.6.0",
     "react": "^16.6.3",
-    "react-anime": "^2.2.0",
     "react-codemirror2": "^5.1.0",
     "react-copy-to-clipboard": "^5.0.1",
     "react-dom": "^16.6.0",

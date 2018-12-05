@@ -1,7 +1,7 @@
-import React from 'react';
-import Anime from 'react-anime';
+import React, {Component} from 'react';
 import styled from 'styled-components'
 import cog from "../Images/cog.svg";
+import anime from "animejs";
 
 const Cog = styled.div`
     content: ${({url}) => 'url(' + url + ');'}
@@ -10,14 +10,25 @@ const Cog = styled.div`
     color: var(--dark-main)
 `
 
-export default function WaitingScreen() {
+export default class WaitingScreen extends Component {
 
-    return (
-                <Anime loop={true}
-                       easing={"linear"}
-                       rotate='360deg'
-                       duration={4000}>
-                    <Cog url={cog}/>
-                </Anime>
-    );
+    constructor() {
+        super();
+
+        this.cog = React.createRef();
+    }
+
+    componentDidMount() {
+        this.cogAnim = anime({
+            targets: this.cog.current,
+            loop: true,
+            rotate: '360deg',
+            duration: 4000,
+            easing: 'linear'
+        })
+    }
+
+    render() {
+        return <Cog ref={this.cog} url={cog}/>
+    }
 }
