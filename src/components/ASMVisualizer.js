@@ -112,6 +112,7 @@ class AsmVisualizer extends Component {
         buttons.push({icon: <i className="fas fa-sync-alt"></i>, onClick: this.restart.bind(this)});
 
         return (
+
             <Row>
                 {
                     buttons.map((button, i) => (
@@ -130,7 +131,8 @@ class AsmVisualizer extends Component {
 
     render() {
         return (
-            <div>
+            this.props.asm.length > 0 ?
+                <div>
 
                 {this.getButtons(this.state.play)}
 
@@ -148,6 +150,8 @@ class AsmVisualizer extends Component {
                     ))
                 }
             </div>
+                :
+                []
         );
     }
 }

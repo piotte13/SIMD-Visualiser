@@ -37,11 +37,10 @@ const RightContainer = styled.div`
 `
 
 class App extends Component {
-    constructor(props, match) {
+    constructor(props) {
         super(props);
         let savedState = localStorage.getItem('app-state');
         this.history = createBrowserHistory();
-        console.log(this.history, this.props.match)
         this.state = {
             code: `#include <x86intrin.h>\n\n__m128i PrefixSum(__m128i curr) {\n  __m128i Add = _mm_slli_si128(curr, 4); \n  curr = _mm_add_epi32(curr, Add);   \n  Add = _mm_slli_si128(curr, 8);    \n  return _mm_add_epi32(curr, Add);       \n}`,
             codeWasModifiedSinceLastCompile: true,
@@ -59,6 +58,7 @@ class App extends Component {
         }
         else if (savedState) {
             this.state = JSON.parse(savedState);
+            this.state.visualize = false;
         }
 
         this.frontPage = <FrontPage/>;
@@ -101,16 +101,12 @@ class App extends Component {
                 }
             })
         }
-        else this.setState({compiling: false});
+        else this.setState({compiling: false, visualize: true});
     };
 
     componentDidMount() {
-        if (this.state.asm.length > 0) {
-            this.asmVisualizer = <AsmVisualizer cm={this.cm} asm={this.state.asm}/>;
-        }
-        if (this.state.ast) {
-            this.astVisualizer = <AstVisualizer cm={this.cm} ast={this.state.ast}/>;
-        }
+        this.asmVisualizer = <AsmVisualizer cm={this.cm} asm={this.state.asm}/>;
+        this.astVisualizer = <AstVisualizer cm={this.cm} ast={this.state.ast}/>;
     }
 
 
@@ -147,7 +143,7 @@ class App extends Component {
         else if (this.state.error.length > 0) {
             rightPage = <ErrorHandler cm={this.cm} error={this.state.error}/>
         }
-        else if (this.asmVisualizer && this.astVisualizer && this.state.visualize) {
+        else if (this.state.visualize) {
             rightPage = <Tabs selected={0}>
                 <Pane label="Graphical">
                     {this.asmVisualizer}
@@ -180,7 +176,7 @@ class App extends Component {
                         }}
                         onBeforeChange={(editor, data, code) => {
                             this.setState({codeWasModifiedSinceLastCompile: true});
-                            this.history.push("/");
+                            this.history.push(this.history.location.pathname);
                             if (code === '') {
                                 this.handleClear(true)
                             } else {

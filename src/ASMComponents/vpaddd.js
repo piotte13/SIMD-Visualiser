@@ -94,7 +94,7 @@ export default class Vpaddd extends Component {
         this.numbers2Ref = React.createRef();
         this.numbers1Ref_32bits = React.createRef();
         this.numbers2Ref_32bits = React.createRef();
-
+        this.operator = React.createRef();
         this.actualNumbersRef2 = React.createRef();
         this.actualNumbersRef2_32bits = React.createRef();
 
@@ -174,6 +174,11 @@ export default class Vpaddd extends Component {
                 translateY: 150,
                 duration: 1000,
                 offset: 2500
+            })
+            .add({
+                targets: this.operator.current,
+                opacity: 0,
+                duration: 1
             })
             // fade out the first ref
             .add({
@@ -260,7 +265,7 @@ export default class Vpaddd extends Component {
                         </TrNumbers>
                     </Vector>
                 </div>
-                <Operator>+</Operator>
+                <Operator ref={this.operator}>+</Operator>
                 <div ref={this.numbers2Ref_32bits} style={hiddenStyle}>
                     <Vector colLen={colLen32} colHeight={colHeight} nbCols={nbCols_32bits}>
                         <TrNumbers colHeight={colHeight} ref={this.actualNumbersRef2_32bits}>
