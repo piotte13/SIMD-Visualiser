@@ -94,7 +94,7 @@ export default class Ret extends Component {
                 <Vector colLen={colLen} colHeight={colHeight} nbCols={nbCols}>
                     <TrNumbers colHeight={colHeight}>
                         {returnValue.map((e, i) =>
-                            <TdNumbers colLen={colLen} colHeight={colHeight} key={i}>{('0'+e.toString(16)).substr(-2)}</TdNumbers>
+                            <TdNumbers colLen={colLen} colHeight={colHeight} key={i}>{('0'+e.toString(16).toUpperCase()).substr(-2)}</TdNumbers>
                         )}
                     </TrNumbers>
                 </Vector>
