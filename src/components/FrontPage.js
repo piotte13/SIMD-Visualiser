@@ -57,7 +57,7 @@ const GHButton = styled.button`
 `
 
 const ButtonGroup = styled.div`
-    margin-top: 50px;
+    margin-top: 40px;
     text-align: center;
 `
 
@@ -102,7 +102,9 @@ export default class FrontPage extends Component {
                 Ntang</strong>
             </AppDescription>
             <ButtonGroup>
-                <GHButton>View on GitHub</GHButton>
+                <a href="https://github.com/piotte13/SIMD-Visualiser" target="_blank" rel="noopener noreferrer">
+                    <GHButton>View on GitHub</GHButton>
+                </a>
                 <iframe
                     src="https://ghbtns.com/github-btn.html?user=piotte13&repo=SIMD-Visualiser&type=star&count=true&size=large"
                     frameBorder="0" scrolling="0" width="160px" height="30px"/>
