@@ -34,5 +34,5 @@
 }
 
 .tabs__content > div:first-child {
-    height: inherit;
+    height: 100%;
 }

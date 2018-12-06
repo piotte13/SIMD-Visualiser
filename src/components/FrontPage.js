@@ -1,6 +1,6 @@
 import React, {Component} from 'react';
 import styled from 'styled-components'
-import CLogo from "../Images/c-programming.png";
+import CLogo from "../Images/c-programming.svg";
 import anime from "animejs";
 
 
@@ -97,8 +97,8 @@ export default class FrontPage extends Component {
             </div>
 
             <AppTitle>The Ultimate SIMD visualizer</AppTitle>
-            <AppDescription>Built by <strong>Jérémie Piotte</strong>, <strong>Daniel Lemire</strong> and <strong>Pierre
-                Marie
+            <AppDescription>
+                Built by <strong>Jérémie Piotte</strong>, <strong>Daniel Lemire</strong> and <strong>Pierre Marie
                 Ntang</strong>
             </AppDescription>
             <ButtonGroup>
