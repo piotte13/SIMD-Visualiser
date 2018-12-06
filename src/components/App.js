@@ -77,12 +77,14 @@ class App extends Component {
         this.setState({compiling: true});
         if (this.state.codeWasModifiedSinceLastCompile) {
             this.setState((state) => {
+                Object.keys(state.ast).forEach(k => delete state.ast[k]);
                 Object.assign(state.ast, generateAST(this.cm.editor))
             });
             compile(this.cm.editor.getValue(), (error, asm, ast) => {
                 if (error.length === 0) {
                     asm = generateASM(asm);
                     this.setState((state) => {
+                        state.asm.splice(0, state.asm.length);
                         asm.forEach(e => {
                             state.asm.push(e)
                         });
