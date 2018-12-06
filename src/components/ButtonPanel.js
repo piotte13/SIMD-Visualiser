@@ -70,7 +70,7 @@ export default class ButtonPanel extends Component {
         this.toggleShare = this.toggleShare.bind(this);
         this.state = {
             popoverOpen: false,
-            shareLink: ''
+            shareLink: 'Loading...'
         };
 
         this.textAreaRef = React.createRef();
@@ -78,17 +78,18 @@ export default class ButtonPanel extends Component {
 
     toggleShare() {
         let longUrl = this.props.getShareLink();
+        this.setState({
+            popoverOpen: !this.state.popoverOpen
+        });
         this.bitly
             .shorten(longUrl)
             .then((result) => {
                 this.setState({
-                    popoverOpen: !this.state.popoverOpen,
                     shareLink: result.url
                 });
             })
             .catch((error) => {
                 this.setState({
-                    popoverOpen: !this.state.popoverOpen,
                     shareLink: longUrl
                 });
                 console.error(error);
