@@ -24,7 +24,7 @@ export function generateAST(editor) {
     return JSON.parse(testASR)
 }
 
-const functionName = /([a-zA-Z]+): # @.*/;
+const functionName = /([\w]+): # @.*/;
 
 
 export function generateASM(rawAsm) {

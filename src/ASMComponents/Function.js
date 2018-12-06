@@ -3,7 +3,6 @@ import styled from "styled-components";
 import * as Registry from "../Utils/Registry";
 
 const FunctionContainer = styled.div`
-  padding-top: 20px;
 `
 const FunctionName = styled.div`
     font-size: 32px;
