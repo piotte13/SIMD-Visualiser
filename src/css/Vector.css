@@ -1,0 +1,19 @@
+.vector-container {
+    fill: var(--main);
+}
+
+.vector-line {
+    stroke: var(--gray);
+    stroke-width: 1;
+    shape-rendering: crispEdges;
+}
+
+.vector-values {
+    fill: var(--clear-text-color);
+    text-anchor: middle;
+}
+
+svg {
+    width: 100%;
+    height: 100%;
+}

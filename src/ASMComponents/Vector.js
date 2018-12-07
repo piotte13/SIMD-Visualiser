@@ -1,68 +1,83 @@
 import React, {Component} from "react";
-import styled from "styled-components";
 import * as _ from "lodash";
-
-const VectorContainer = styled.table`
-      margin: 30px auto;
-      width: ${({nbCols, colLen}) => (nbCols * colLen) + 'px;' }
-      overflow: hidden;
-      height: ${({colHeight}) => (colHeight) + 'px;'}
-      box-shadow: 3px 3px 2px rgba(0,0,0,.4);
-      background-color: var(--main);
-      color: var(--clear-text-color);
-      border-radius: 3px;
-      display: block;
-      position: relative;
-`
-
-const TD = styled.td`
-    border-right: 1px solid var(--gray);
-    width: ${({colLen}) => colLen + 'px;'}
-    height: ${({colHeight}) => colHeight + 'px;'}
-    display: inline-flex;
-    // color: var(--clear-text-color);
-    text-align: center;
-    
-    :last-child{
-        border-right: none;
-    }
-`
+import "../css/Vector.css";
 
 export default class Vector extends Component {
 
     static defaultProps = {
-        nbCols: 4,
-        colLen: 50,
-        colHeight: 50,
-        children: []
+        type: "int32",
+        data: [],
+        numbersRef: () => {
+        },
+        vectorRef: () => {
+        }
     };
 
     constructor(props) {
         super(props)
-        this.cols = [];
-        _.times(props.nbCols, i => {
-            this.cols.push(
-                <TD colLen={props.colLen}
-                    colHeight={props.colHeight}
-                    key={i}>
-                    {}
-                </TD>
-            )
-        });
+
+    }
+
+    getValues() {
+        let numbers = [];
+        switch (this.props.type) {
+            case "int8":
+                numbers = this.props.data;
+                break;
+            case "int32":
+                numbers = this.props.data;
+                break;
+            default:
+                numbers = this.props.data;
+        }
+        return numbers;
+    }
+
+    getElementCount() {
+        let count = 0;
+        switch (this.props.type) {
+            case "int32":
+                count = this.props.data.length / 4;
+                break;
+            case "int8":
+                count = this.props.data.length;
+                break;
+            default:
+                count = this.props.data.length;
+        }
+        return count;
     }
 
     render() {
+        let elCount = this.getElementCount();
+        let values = this.getValues();
+        let rectHeight = 50;
+        let rectLen = 800;
+        let padding = 30;
+        //let vectorLen = elCount * 50;
+
         return (
-            <VectorContainer nbCols={this.props.nbCols}
-                             colLen={this.props.colLen}
-                             colHeight={this.props.colHeight}>
-                <tbody>
-                <tr>
-                    {this.cols}
-                </tr>
-                {this.props.children}
-                </tbody>
-            </VectorContainer>
+            <svg width={rectLen + padding} height={rectHeight + padding}
+                 viewBox={`0 0 ${rectLen + padding} ${rectHeight + padding}"`} xmlns="http://www.w3.org/2000/svg">
+                <rect x={padding / 2} y={padding / 2} width={rectLen} height={rectHeight} rx="3" ry="3"
+                      className="vector-container"/>
+                {
+                    _.times(elCount - 1, Number).map(i => {
+                        let x = padding / 2 + (rectLen / elCount) * (i + 1);
+                        return <line x1={x} y1={padding / 2} x2={x} y2={rectHeight + padding / 2}
+                                     className="vector-line"/>
+                    })
+                }
+                {
+                    values.map((number, i) => {
+                        let x = padding / 2 + (rectLen / elCount) * i;
+                        return <svg width={rectLen / elCount} height={rectHeight} x={x} y={padding / 2}>
+                            <text x="50%" y="50%" dy=".3em" className="vector-values">{number}</text>
+                        </svg>
+                        // <text x={x} y={( rectHeight + padding + 12 )/2} className="vector-values" textLength={rectLen / elCount} >{number}</text>
+                    })
+                }
+            </svg>
         );
     }
 }

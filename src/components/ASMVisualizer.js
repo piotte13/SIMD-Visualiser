@@ -14,6 +14,9 @@ const ButtonContainer = styled.div`
     text-align: center;
 `
 
+const AnimationContainer = styled.div`
+   // overflow: auto;
+`
 
 function commandFactory(c) {
     switch (c.name) {
@@ -118,7 +121,7 @@ class AsmVisualizer extends Component {
                     buttons.map((button, i) => (
                         <Col key={i}>
                             <ButtonContainer>
-                                <Button outline color="primary" onClick={button.onClick} className={'playback-button'}>
+                                <Button color="primary" outline onClick={button.onClick} className={'playback-button'}>
                                     {button.icon}
                                 </Button>
                             </ButtonContainer>
@@ -135,20 +138,21 @@ class AsmVisualizer extends Component {
                 <div>
 
                 {this.getButtons(this.state.play)}
-
-                {
-                    this.buildGraphicStack().map((func, index) => (
-                        <SequentialComponent
-                            key={index}
-                            index={index}
-                            component={func}
-                            play={this.state.play}
-                            shouldBeVisible={this.state.idx >= index}
-                            onComplete={this.componentDonePlaying.bind(this)}
-                            cm={this.props.cm}
-                        />
-                    ))
-                }
+                    <AnimationContainer>
+                        {
+                            this.buildGraphicStack().map((func, index) => (
+                                <SequentialComponent
+                                    key={index}
+                                    index={index}
+                                    component={func}
+                                    play={this.state.play}
+                                    shouldBeVisible={this.state.idx >= index}
+                                    onComplete={this.componentDonePlaying.bind(this)}
+                                    cm={this.props.cm}
+                                />
+                            ))
+                        }
+                    </AnimationContainer>
             </div>
                 :
                 []

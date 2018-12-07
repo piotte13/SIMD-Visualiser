@@ -17,6 +17,9 @@ import {Pane, Tabs} from "../Utils/Tabs";
 import AsmVisualizer from "./ASMVisualizer";
 import {createBrowserHistory} from 'history';
 import * as qs from 'qs';
+import Vector from "../ASMComponents/Vector";
+import * as _ from "lodash";
+import {TYPE_LENGTH} from "../Utils/Registry";
 
 const Container = styled.div`
   display: flex;
@@ -138,7 +141,17 @@ class App extends Component {
 
     render() {
         const {code, disableButtons, status, compiling} = this.state;
-        let rightPage = this.frontPage;
+        let numbersRef;
+        let vectorRef;
+        let rightPage = <Vector
+            type="int8"
+            data={
+                new Array(16).fill(0).map(() =>
+                    _.random(1, 255))
+            }
+            numbersRef={(ref) => numbersRef = ref}
+            vectorRef={(ref) => vectorRef = ref}
+        /> //this.frontPage;
         if (compiling) {
             rightPage = this.waitingScreen;
         }
