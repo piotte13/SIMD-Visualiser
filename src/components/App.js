@@ -20,6 +20,8 @@ import * as qs from 'qs';
 import Vector from "../ASMComponents/Vector";
 import * as _ from "lodash";
 import {TYPE_LENGTH} from "../Utils/Registry";
+import anime from 'animejs';
+
 
 const Container = styled.div`
   display: flex;
@@ -68,6 +70,7 @@ class App extends Component {
         this.waitingScreen = <WaitingScreen/>;
         this.asmVisualizer = null
         this.astVisualizer = null;
+
     }
 
     handleClear = (clearCode = true) => {
@@ -112,6 +115,28 @@ class App extends Component {
     componentDidMount() {
         this.asmVisualizer = <AsmVisualizer cm={this.cm} asm={this.state.asm}/>;
         this.astVisualizer = <AstVisualizer cm={this.cm} ast={this.state.ast}/>;
+
+        let laneLen = this.numbersRef.current.firstChild.width.baseVal.value
+
+        let timeline = anime.timeline({
+            easing: "easeOutCubic",
+            loop: false,
+            autoplay: true
+        });
+
+        timeline
+            .add({
+                targets: this.numbersRef.current,
+                translateX: laneLen * 8,
+                duration: 2000,
+                delay: 300
+            })
+            .add({
+                targets: this.numbersRef.current,
+                translateX: -laneLen * 8,
+                duration: 2000,
+                delay: 300
+            });
     }
 
 
@@ -141,16 +166,16 @@ class App extends Component {
 
     render() {
         const {code, disableButtons, status, compiling} = this.state;
-        let numbersRef;
-        let vectorRef;
+
         let rightPage = <Vector
-            type="int8"
+            type="uint"
+            bitWidth={8}
+            base={16}
             data={
                 new Array(16).fill(0).map(() =>
                     _.random(1, 255))
             }
-            numbersRef={(ref) => numbersRef = ref}
-            vectorRef={(ref) => vectorRef = ref}
+            numbersRef={(ref) => this.numbersRef = ref}
         /> //this.frontPage;
         if (compiling) {
             rightPage = this.waitingScreen;
