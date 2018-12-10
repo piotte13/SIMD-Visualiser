@@ -8,28 +8,36 @@ const SHIFT_INDEX = 2;
 const INPUT_INDEX = 1;
 const OUTPUT_INDEX = 0;
 
-export default class Vpslldq extends Component {
+export default class Shift extends Component {
+
+    static defaultProps = {
+        type: "uint",
+        bitWidth: 32,
+        base: 16,
+        direction: 'left',
+        // if no shiftData provided, default to zeroes.
+        shiftData: new Array(64).fill(0)
+    };
 
     constructor(props) {
         super(props);
 
         let registry = Registry.default;
-        let shiftLen = (props.params[SHIFT_INDEX] * 8) / Registry.VAR_SIZE;
+        let shiftLen = props.params[SHIFT_INDEX];
         let input = registry.get(props.params[INPUT_INDEX]);
 
         this.state = {
-            type: "uint",
-            bitWidth: 8,
-            base: 16,
             shiftLen,
             input,
-            output: [],
+            output: []
         };
         this.computeCommand();
     }
 
     getAnimation() {
         let laneLength = this.numbersRef.current.firstChild.width.baseVal.value;
+        let directionValue = {"right": 1, "left": -1};
+
         let timeline = anime.timeline({
             easing: "easeOutCubic",
             loop: false,
@@ -39,7 +47,7 @@ export default class Vpslldq extends Component {
         timeline
             .add({
                 targets: this.numbersRef.current,
-                translateX: () => -this.state.shiftLen * laneLength,
+                translateX: () => directionValue[this.props.direction] * this.state.shiftLen * laneLength,
                 duration: 2000,
                 delay: 300
             });
@@ -50,24 +58,27 @@ export default class Vpslldq extends Component {
     //Compute the command and set the registry.
     computeCommand() {
         let registry = Registry.default;
-        let shiftLen = (this.props.params[SHIFT_INDEX] * 8) / Registry.VAR_SIZE;
-        let input = registry.get(this.props.params[INPUT_INDEX]);
+        let {params, bitWidth} = this.props;
+        let shiftLen = params[SHIFT_INDEX] * (bitWidth / 8);
+        let input = registry.get(params[INPUT_INDEX]);
         let output = _.cloneDeep(input);
         output.push(...new Array(shiftLen).fill(0));
         output = output.slice(-input.length);
-        registry.set(this.props.params[OUTPUT_INDEX], output);
+        registry.set(params[OUTPUT_INDEX], output);
 
         //this.setState({output, input, shiftLen});
     }
 
     render() {
-        let {type, bitWidth, base, input} = this.state;
+        let {input} = this.state;
+        let {type, bitWidth, base, shiftData} = this.props;
 
         return (
             <Vector type={type}
                     bitWidth={bitWidth}
                     base={base}
                     data={input}
+                    shiftData={shiftData}
                     numbersRef={(ref) => this.numbersRef = ref}/>
         );
     }

@@ -19,8 +19,9 @@ import {createBrowserHistory} from 'history';
 import * as qs from 'qs';
 import Vector from "../ASMComponents/Vector";
 import * as _ from "lodash";
-import {TYPE_LENGTH} from "../Utils/Registry";
 import anime from 'animejs';
+import Vpslldq from "../ASMComponents/vpslldq";
+import Shift from "../ASMComponents/Shift";
 
 
 const Container = styled.div`
@@ -32,7 +33,7 @@ const LeftContainer = styled.div`
   flex-direction: column;
   height: 100vh
   width: 50vw;
-  overflow: scroll;
+  overflow: auto;
 `
 
 const RightContainer = styled.div`
@@ -116,29 +117,8 @@ class App extends Component {
         this.asmVisualizer = <AsmVisualizer cm={this.cm} asm={this.state.asm}/>;
         this.astVisualizer = <AstVisualizer cm={this.cm} ast={this.state.ast}/>;
 
-        let laneLen = this.numbersRef.current.firstChild.width.baseVal.value
-
-        let timeline = anime.timeline({
-            easing: "easeOutCubic",
-            loop: false,
-            autoplay: true
-        });
-
-        timeline
-            .add({
-                targets: this.numbersRef.current,
-                translateX: laneLen * 8,
-                duration: 2000,
-                delay: 300
-            })
-            .add({
-                targets: this.numbersRef.current,
-                translateX: -laneLen * 8,
-                duration: 2000,
-                delay: 300
-            });
+        this.refs.shiftVec.getAnimation().play()
     }
-
 
     componentWillUpdate(nextProps, nextState) {
         localStorage.setItem("app-state", JSON.stringify(nextState));
@@ -167,16 +147,9 @@ class App extends Component {
     render() {
         const {code, disableButtons, status, compiling} = this.state;
 
-        let rightPage = <Vector
-            type="uint"
-            bitWidth={8}
-            base={16}
-            data={
-                new Array(16).fill(0).map(() =>
-                    _.random(1, 255))
-            }
-            numbersRef={(ref) => this.numbersRef = ref}
-        /> //this.frontPage;
+        let rightPage = <Shift ref="shiftVec" direction="right" bitWidth={32} params={["xmm0", "xmm0", "2"]}/>;
+        //this.frontPage;
+
         if (compiling) {
             rightPage = this.waitingScreen;
         }

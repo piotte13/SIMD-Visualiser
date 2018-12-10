@@ -8,6 +8,7 @@ import SequentialComponent from "../ASMComponents/SequentialComponent";
 import styled from "styled-components";
 import {Row, Col, Button} from 'reactstrap';
 import '../css/ASMVisualizer.css'
+import Shift from "../ASMComponents/Shift";
 
 
 const ButtonContainer = styled.div`
@@ -21,7 +22,9 @@ const AnimationContainer = styled.div`
 function commandFactory(c) {
     switch (c.name) {
         case "vpslldq":
-            return <Vpslldq/>;
+            return <Shift direction="left" bitWidth={8}/>;
+        case "vpsrldq":
+            return <Shift direction="right" bitWidth={8}/>;
         case "vpaddd":
             return <Vpaddd/>;
         case "ret":
