@@ -148,7 +148,7 @@ class App extends Component {
     render() {
         const {code, disableButtons, status, compiling} = this.state;
 
-        let rightPage = <Arithmetic ref="shiftVec" bitWidth={8} params={["xmm0", "xmm1", "xmm0"]}/>;
+        let rightPage = <Arithmetic ref="shiftVec" bitWidth={32} base={10} params={["xmm0", "xmm1", "xmm0"]}/>;
         //this.frontPage;
 
         if (compiling) {

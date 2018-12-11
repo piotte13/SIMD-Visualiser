@@ -12,7 +12,10 @@ export default class Vector extends Component {
         base: 10,
         shiftData: [],
         numbersRef: () => {
+        },
+        vectorRef: () => {
         }
+
     };
 
     constructor(props) {
@@ -24,8 +27,8 @@ export default class Vector extends Component {
 
         this.numbersRef = React.createRef();
         this.vectorRef = React.createRef();
-        props.numbersRef(this.numbersRef)
-
+        props.numbersRef(this.numbersRef);
+        props.vectorRef(this.vectorRef);
     }
 
     componentDidMount() {
@@ -50,7 +53,6 @@ export default class Vector extends Component {
         let rectHeight = 50;
         let padding = 20;
         let rectLen = (this.state.width / 2) - padding;
-        console.log(shiftData)
         return (
             <svg width={rectLen + padding} height={rectHeight + padding} ref={this.vectorRef}
                  viewBox={`0 0 ${rectLen + padding} ${rectHeight + padding}`} xmlns="http://www.w3.org/2000/svg">
