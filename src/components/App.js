@@ -22,6 +22,7 @@ import * as _ from "lodash";
 import anime from 'animejs';
 import Vpslldq from "../ASMComponents/vpslldq";
 import Shift from "../ASMComponents/Shift";
+import Arithmetic from "../ASMComponents/Arithmetic";
 
 
 const Container = styled.div`
@@ -147,7 +148,7 @@ class App extends Component {
     render() {
         const {code, disableButtons, status, compiling} = this.state;
 
-        let rightPage = <Shift ref="shiftVec" direction="right" bitWidth={32} params={["xmm0", "xmm0", "2"]}/>;
+        let rightPage = <Arithmetic ref="shiftVec" bitWidth={8} params={["xmm0", "xmm1", "xmm0"]}/>;
         //this.frontPage;
 
         if (compiling) {

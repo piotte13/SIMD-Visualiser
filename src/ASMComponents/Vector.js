@@ -1,7 +1,7 @@
 import React, {Component} from "react";
 import * as _ from "lodash";
 import "../css/Vector.css";
-import {valuesToStrings} from "../Utils/Converter";
+import {convertToStrings} from "../Utils/Converter";
 
 export default class Vector extends Component {
 
@@ -19,40 +19,40 @@ export default class Vector extends Component {
         super(props);
 
         this.state = {
-            width: window.innerWidth,
-            height: window.innerHeight
+            width: window.innerWidth
         };
 
         this.numbersRef = React.createRef();
+        this.vectorRef = React.createRef();
         props.numbersRef(this.numbersRef)
 
     }
 
     componentDidMount() {
-        this.updateWindowDimensions();
-        window.addEventListener("resize", this.updateWindowDimensions);
+        this.updateWidth();
+        window.addEventListener("resize", this.updateWidth);
     }
 
     componentWillUnmount() {
-        window.removeEventListener("resize", this.updateWindowDimensions);
+        window.removeEventListener("resize", this.updateWidth);
     }
 
-    updateWindowDimensions = () => {
-        this.setState({width: window.innerWidth, height: window.innerHeight});
+    updateWidth = () => {
+        this.setState({width: window.innerWidth});
     };
 
     render() {
         let {data, shiftData, type, bitWidth, base} = this.props;
 
-        let values = valuesToStrings(data, type, bitWidth, base);
-        let shiftValues = valuesToStrings(shiftData, type, bitWidth, base);
+        let values = convertToStrings(data, type, bitWidth, base);
+        let shiftValues = convertToStrings(shiftData, type, bitWidth, base);
         let elCount = values.length;
         let rectHeight = 50;
         let padding = 20;
         let rectLen = (this.state.width / 2) - padding;
         console.log(shiftData)
         return (
-            <svg width={rectLen + padding} height={rectHeight + padding}
+            <svg width={rectLen + padding} height={rectHeight + padding} ref={this.vectorRef}
                  viewBox={`0 0 ${rectLen + padding} ${rectHeight + padding}`} xmlns="http://www.w3.org/2000/svg">
                 <rect x={padding / 2} y={padding / 2} width={rectLen} height={rectHeight} rx="3" ry="3"
                       className="vector-container"/>
