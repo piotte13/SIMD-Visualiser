@@ -52,7 +52,7 @@ export default class Vector extends Component {
         let elCount = values.length;
         let rectHeight = 50;
         let padding = 20;
-        let rectLen = (this.state.width / 2) - padding;
+        let rectLen = (this.state.width / 2) - padding - 80;
         return (
             <svg width={rectLen + padding} height={rectHeight + padding} ref={this.vectorRef}
                  viewBox={`0 0 ${rectLen + padding} ${rectHeight + padding}`} xmlns="http://www.w3.org/2000/svg">

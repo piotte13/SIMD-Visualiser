@@ -35,24 +35,27 @@ export default class Shift extends Component {
     }
 
     getAnimation() {
-        let laneLength = this.numbersRef.current.firstChild.width.baseVal.value;
         let directionValue = {"right": 1, "left": -1};
+        let {bitWidth} = this.props;
+        let {shiftLen, input} = this.state;
+        //In order to make it responsive, we have to calculate the shift in percentage of the vector length. Clever.
+        let shiftPercentage = 100 * directionValue[this.props.direction] * shiftLen * bitWidth / (input.length * 8);
 
-        let timeline = anime.timeline({
+        this.timeline = anime.timeline({
             easing: "easeOutCubic",
             loop: false,
             autoplay: false
         });
 
-        timeline
+        this.timeline
             .add({
                 targets: this.numbersRef.current,
-                translateX: () => directionValue[this.props.direction] * this.state.shiftLen * laneLength,
+                translateX: `${shiftPercentage}%`,
                 duration: 2000,
                 delay: 300
             });
 
-        return timeline;
+        return this.timeline;
     }
 
     //Compute the command and set the registry.

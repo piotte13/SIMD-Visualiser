@@ -20,7 +20,6 @@ import * as qs from 'qs';
 import Vector from "../ASMComponents/Vector";
 import * as _ from "lodash";
 import anime from 'animejs';
-import Vpslldq from "../ASMComponents/vpslldq";
 import Shift from "../ASMComponents/Shift";
 import Arithmetic from "../ASMComponents/Arithmetic";
 
@@ -118,7 +117,7 @@ class App extends Component {
         this.asmVisualizer = <AsmVisualizer cm={this.cm} asm={this.state.asm}/>;
         this.astVisualizer = <AstVisualizer cm={this.cm} ast={this.state.ast}/>;
 
-        this.refs.shiftVec.getAnimation().play()
+        this.refs.shiftVec && this.refs.shiftVec.getAnimation().play()
     }
 
     componentWillUpdate(nextProps, nextState) {
@@ -148,8 +147,9 @@ class App extends Component {
     render() {
         const {code, disableButtons, status, compiling} = this.state;
 
-        let rightPage = <Arithmetic ref="shiftVec" bitWidth={32} base={10} params={["xmm0", "xmm1", "xmm0"]}/>;
-        //this.frontPage;
+        //let rightPage = <Shift ref="shiftVec" direction="left" bitWidth={32} params={["xmm0", "xmm1", "2"]}/>
+        //let rightPage = <Arithmetic ref="shiftVec" bitWidth={32} base={10} params={["xmm0", "xmm1", "xmm0"]}/>;
+        let rightPage = this.frontPage;
 
         if (compiling) {
             rightPage = this.waitingScreen;

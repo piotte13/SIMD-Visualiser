@@ -2,7 +2,7 @@ import React, {Component} from "react";
 import Vector from "./Vector";
 import * as Registry from "../Utils/Registry";
 import {convert} from "../Utils/Converter";
-import {Row, Col} from 'reactstrap';
+import {Row, Col, Container} from 'reactstrap';
 import * as _ from "lodash";
 
 
@@ -57,8 +57,8 @@ export default class Arithmetic extends Component {
         this.vector1 = React.createRef();
         this.vector2 = React.createRef();
         this.vector3 = React.createRef();
-        this.outputNumbers = React.createRef();
-
+        this.vector4 = React.createRef();
+        this.equals = React.createRef();
     }
 
     getAnimation() {
@@ -74,11 +74,22 @@ export default class Arithmetic extends Component {
 
         timeline
             .add({
-                targets: this.vector3.current,
+                targets: this.equals.current,
                 opacity: [0, 1],
-                translateY: [-100, 0],
-                duration: 1000,
-                offset: 1000
+                duration: 500,
+                offset: 500
+            })
+            .add({
+                targets: this.vector3.current,
+                translateY: [-95, 0],
+                duration: 1500,
+                offset: "+=500"
+            })
+            .add({
+                targets: this.vector4.current,
+                translateY: [-258, -70],
+                duration: 1500,
+                offset: "-=1500"
             })
             .add({
                 targets: mock,
@@ -86,7 +97,10 @@ export default class Arithmetic extends Component {
                 nextTick: _.max(input2_converted.map((v, i) => Math.abs(output_converted[i] - v))),
                 duration: 2000,
                 round: 1,
-                offset: "+=800",
+                offset: "-=200",
+                begin: () => {
+                    this.setState({output: _.cloneDeep(this.state.input2)});
+                },
                 update: (animation) => {
                     //Update() is not called only upon update of the target... So we need to check if it changed...
                     if (animation.began && mock.nextTick !== mock.currentTick) {
@@ -112,31 +126,42 @@ export default class Arithmetic extends Component {
         let colCount = input1.length * 8 / bitWidth;
 
         return (
-            <div style={{"textAlign": 'center'}}>
+            <div style={{'height': '260px'}}>
                 <Vector type={type}
                         bitWidth={bitWidth}
                         base={base}
                         data={input1}
                         vectorRef={(ref) => this.vector1 = ref}
                 />
-                <Row>
-                    {_.times(colCount).map(i => <Col key={i}>+</Col>)}
-                </Row>
+                <Container>
+                    <Row>
+                        {_.times(colCount).map(i => <Col key={i}>+</Col>)}
+                    </Row>
+                </Container>
                 <Vector type={type}
                         bitWidth={bitWidth}
                         base={base}
                         data={input2}
                         vectorRef={(ref) => this.vector2 = ref}
                 />
-                <Row>
-                    {_.times(colCount).map(i => <Col key={i}>=</Col>)}
-                </Row>
+                <div ref={this.equals}>
+                    <Container>
+                        <Row>
+                            {_.times(colCount).map(i => <Col key={i}>=</Col>)}
+                        </Row>
+                    </Container>
+                </div>
                 <Vector type={type}
                         bitWidth={bitWidth}
                         base={base}
                         data={output}
                         vectorRef={(ref) => this.vector3 = ref}
-                        numbersRef={(ref) => this.outputNumbers = ref}
+                />
+                <Vector type={type}
+                        bitWidth={bitWidth}
+                        base={base}
+                        data={output}
+                        vectorRef={(ref) => this.vector4 = ref}
                 />
             </div>
         );

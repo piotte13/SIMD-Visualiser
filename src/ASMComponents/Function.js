@@ -27,6 +27,7 @@ export default class Function extends Component {
         return (
             <FunctionContainer>
                 <FunctionName>{this.props.name}</FunctionName>
+                <hr/>
             </FunctionContainer>
         );
     }

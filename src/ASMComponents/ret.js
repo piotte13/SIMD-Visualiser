@@ -1,34 +1,15 @@
 import React, {Component} from "react";
-import styled from "styled-components";
 import * as Registry from "../Utils/Registry";
 import Vector from "./Vector";
 import anime from 'animejs';
 
-
-const TdNumbers = styled.td`
-    width: ${({colLen}) => colLen}px;
-    height: ${({colHeight}) => colHeight}px;
-    text-align: center;
-    line-height: ${({colHeight}) => colHeight}px;
-`
-
-const TrNumbers = styled.tr`
-    position: relative;
-    top: ${({colHeight}) => -(colHeight)}px;
-    //font-size: 24px;
-    font-family: monospace;
-    display: inline-flex;
-`
-
-const RetContainer = styled.div`
-        border-radius: 3px;
-        width: ${({width}) => width}px;
-        margin: 0 auto;
-}
-`
-
-
 export default class Ret extends Component {
+
+    static defaultProps = {
+        type: "uint",
+        bitWidth: 32,
+        base: 16,
+    };
 
     constructor(props) {
         super(props);
@@ -36,18 +17,13 @@ export default class Ret extends Component {
         let registry = Registry.default;
         //Ret returns value on top of the stack.  For now we will assume the value is always 128 bits... (Xmm)
         let returnValue = registry.get('xmm0');
-        let nbCols = returnValue.length;
 
         this.state = {
-            colLen: 50,
-            colHeight: 50,
-            nbCols,
             returnValue,
         };
 
+        this.vector = React.createRef();
         this.computeCommand();
-        this.ref = React.createRef();
-
     }
 
     getAnimation() {
@@ -60,7 +36,7 @@ export default class Ret extends Component {
 
         timeline
             .add({
-                targets: this.ref.current,
+                targets: this.vector.current,
                 duration: 1000
             });
 
@@ -73,8 +49,8 @@ export default class Ret extends Component {
 
         eternalGlow // Creates the glow arround the returned vector (glowing box shadow)
             .add({
-                targets: this.ref.current,
-                boxShadow: ["0px 0px 20px 5px var(--main)", "0px 0px 2px 1px var(--main)"],
+                targets: this.vector.current,
+                filter: ["drop-shadow(0px 0px 10px rgba(42, 54, 59, 1))", "drop-shadow(0px 0px 1px rgba(42, 54, 59, .5))"],
                 duration: 1000
             });
 
@@ -87,18 +63,15 @@ export default class Ret extends Component {
     }
 
     render() {
-        let {nbCols, colLen, colHeight, returnValue} = this.state;
+        let {returnValue} = this.state;
+        let {type, bitWidth, base} = this.props;
 
         return (
-            <RetContainer ref={this.ref} width={colLen * nbCols}>
-                <Vector colLen={colLen} colHeight={colHeight} nbCols={nbCols}>
-                    <TrNumbers colHeight={colHeight}>
-                        {returnValue.map((e, i) =>
-                            <TdNumbers colLen={colLen} colHeight={colHeight} key={i}>{('0'+e.toString(16).toUpperCase()).substr(-2)}</TdNumbers>
-                        )}
-                    </TrNumbers>
-                </Vector>
-            </RetContainer>
+            <Vector type={type}
+                    bitWidth={bitWidth}
+                    base={base}
+                    data={returnValue}
+                    vectorRef={(ref) => this.vector = ref}/>
         );
     }
 }
