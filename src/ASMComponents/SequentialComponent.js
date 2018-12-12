@@ -3,8 +3,15 @@ import styled from "styled-components";
 import anime from 'animejs';
 
 const Container = styled.div`
-  margin: 20px 0;
+  margin: 40px 0 20px 0;
   opacity: 0;
+  text-align: center;
+  
+  
+  
+  :first-child, last-child{
+    margin: 20px 0;
+  }
 `
 
 export default class SequentialComponent extends React.Component {

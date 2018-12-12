@@ -1,0 +1,26 @@
+.vector-container {
+    fill: var(--main);
+    filter: drop-shadow(3px 3px 2px rgba(42, 54, 59, .5));
+    -webkit-filter: drop-shadow(3px 3px 2px rgba(42, 54, 59, .5));
+}
+
+.vector-line {
+    stroke: var(--gray);
+    stroke-width: 1;
+    shape-rendering: crispEdges;
+}
+
+.vector-values {
+    fill: var(--clear-text-color);
+    text-anchor: middle;
+}
+
+.shift-values-right {
+    fill: var(--five);
+    text-anchor: middle;
+}
+
+.shift-values-left {
+    fill: var(--two);
+    text-anchor: middle;
+}

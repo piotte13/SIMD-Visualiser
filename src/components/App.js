@@ -17,6 +17,12 @@ import {Pane, Tabs} from "../Utils/Tabs";
 import AsmVisualizer from "./ASMVisualizer";
 import {createBrowserHistory} from 'history';
 import * as qs from 'qs';
+import Vector from "../ASMComponents/Vector";
+import * as _ from "lodash";
+import anime from 'animejs';
+import Shift from "../ASMComponents/Shift";
+import Arithmetic from "../ASMComponents/Arithmetic";
+
 
 const Container = styled.div`
   display: flex;
@@ -27,7 +33,7 @@ const LeftContainer = styled.div`
   flex-direction: column;
   height: 100vh
   width: 50vw;
-  overflow: scroll;
+  overflow: auto;
 `
 
 const RightContainer = styled.div`
@@ -65,6 +71,7 @@ class App extends Component {
         this.waitingScreen = <WaitingScreen/>;
         this.asmVisualizer = null
         this.astVisualizer = null;
+
     }
 
     handleClear = (clearCode = true) => {
@@ -109,8 +116,9 @@ class App extends Component {
     componentDidMount() {
         this.asmVisualizer = <AsmVisualizer cm={this.cm} asm={this.state.asm}/>;
         this.astVisualizer = <AstVisualizer cm={this.cm} ast={this.state.ast}/>;
-    }
 
+        this.refs.shiftVec && this.refs.shiftVec.getAnimation().play()
+    }
 
     componentWillUpdate(nextProps, nextState) {
         localStorage.setItem("app-state", JSON.stringify(nextState));
@@ -138,7 +146,11 @@ class App extends Component {
 
     render() {
         const {code, disableButtons, status, compiling} = this.state;
+
+        //let rightPage = <Shift ref="shiftVec" direction="left" bitWidth={32} params={["xmm0", "xmm1", "2"]}/>
+        //let rightPage = <Arithmetic ref="shiftVec" bitWidth={32} base={10} params={["xmm0", "xmm1", "xmm0"]}/>;
         let rightPage = this.frontPage;
+
         if (compiling) {
             rightPage = this.waitingScreen;
         }

@@ -13,9 +13,7 @@ class Registry {
         // the array _keys contains NB_REGISTERS arrays
         // of size 512 / VAR_SIZE filled with byte-sized values (randomized)
         this._keys = new Array(NB_REGISTERS).fill(0).map(() =>
-            new Array(TYPE_LENGTH["z"]).fill(0).map(() =>
-                _.random(1, 255)
-            )
+            new Array(TYPE_LENGTH["z"]).fill(0).map((val, i) => i)
         );
     }
 

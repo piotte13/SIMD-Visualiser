@@ -1,26 +1,32 @@
 import React, {Component} from 'react';
-import Vpslldq from "../ASMComponents/vpslldq";
-import Vpaddd from "../ASMComponents/vpaddd";
 import Ret from "../ASMComponents/ret";
 import UnsupportedCommand from "../ASMComponents/UnsupportedCommand";
 import Function from "../ASMComponents/Function";
 import SequentialComponent from "../ASMComponents/SequentialComponent";
 import styled from "styled-components";
-import {Row, Col, Button} from 'reactstrap';
+import {Row, Col, Button, Container} from 'reactstrap';
 import '../css/ASMVisualizer.css'
+import Shift from "../ASMComponents/Shift";
+import Arithmetic from "../ASMComponents/Arithmetic";
 
 
 const ButtonContainer = styled.div`
     text-align: center;
 `
 
+const AnimationContainer = styled.div`
+   overflow: auto;
+   height: calc(100% - 40px);
+`
 
 function commandFactory(c) {
     switch (c.name) {
         case "vpslldq":
-            return <Vpslldq/>;
+            return <Shift direction="left" bitWidth={8}/>;
+        case "vpsrldq":
+            return <Shift direction="right" bitWidth={8}/>;
         case "vpaddd":
-            return <Vpaddd/>;
+            return <Arithmetic operation={"add"} bitWidth={32}/>;
         case "ret":
             return <Ret/>;
         default:
@@ -112,43 +118,46 @@ class AsmVisualizer extends Component {
         buttons.push({icon: <i className="fas fa-sync-alt"></i>, onClick: this.restart.bind(this)});
 
         return (
-
-            <Row>
-                {
-                    buttons.map((button, i) => (
-                        <Col key={i}>
-                            <ButtonContainer>
-                                <Button outline color="primary" onClick={button.onClick} className={'playback-button'}>
-                                    {button.icon}
-                                </Button>
-                            </ButtonContainer>
-                        </Col>
-                    ))
-                }
-            </Row>
+            <Container>
+                <Row>
+                    {
+                        buttons.map((button, i) => (
+                            <Col key={i}>
+                                <ButtonContainer>
+                                    <Button color="primary" outline onClick={button.onClick}
+                                            className={'playback-button'}>
+                                        {button.icon}
+                                    </Button>
+                                </ButtonContainer>
+                            </Col>
+                        ))
+                    }
+                </Row>
+            </Container>
         )
     };
 
     render() {
         return (
             this.props.asm.length > 0 ?
-                <div>
+                <div style={{"height": "inherit"}}>
 
                 {this.getButtons(this.state.play)}
-
-                {
-                    this.buildGraphicStack().map((func, index) => (
-                        <SequentialComponent
-                            key={index}
-                            index={index}
-                            component={func}
-                            play={this.state.play}
-                            shouldBeVisible={this.state.idx >= index}
-                            onComplete={this.componentDonePlaying.bind(this)}
-                            cm={this.props.cm}
-                        />
-                    ))
-                }
+                    <AnimationContainer>
+                        {
+                            this.buildGraphicStack().map((func, index) => (
+                                <SequentialComponent
+                                    key={index}
+                                    index={index}
+                                    component={func}
+                                    play={this.state.play}
+                                    shouldBeVisible={this.state.idx >= index}
+                                    onComplete={this.componentDonePlaying.bind(this)}
+                                    cm={this.props.cm}
+                                />
+                            ))
+                        }
+                    </AnimationContainer>
             </div>
                 :
                 []
