@@ -18,22 +18,20 @@ export class Tabs extends Component {
         });
     }
     _renderTitles = () => {
-        function labels(child, index) {
-            var activeClass = (this.state.selected === index ? 'active' : '');
-            return (
-                <li key={index}>
-                    <a href="#"
-                       className={activeClass}
-                       onClick={this.handleClick.bind(this, index)}>
-                        {child.props.label}
-                    </a>
-                </li>
-            );
-        }
 
         return (
             <ul className="tabs__labels">
-                {this.props.children.map(labels.bind(this))}
+                {
+                    this.props.children.map((child, index) => (
+                        <li key={index}>
+                            <a href="#"
+                               className={this.state.selected === index ? 'active' : ''}
+                               onClick={this.handleClick.bind(this, index)}>
+                                {child.props.label}
+                            </a>
+                        </li>
+                    ))
+                }
             </ul>
         );
     };

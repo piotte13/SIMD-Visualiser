@@ -1,13 +1,13 @@
 import React, {Component} from 'react';
 import styled from 'styled-components'
-import cog from "../Images/cog.svg";
 import anime from "animejs";
+import SvgCog from "../Images/Cog";
 
-const Cog = styled.div`
-    content: ${({url}) => 'url(' + url + ');'}
+const Container = styled.div`
     height: 40vh;
     margin: 30vh auto;
-    color: var(--dark-main)
+    color: var(--dark-main);
+    text-align: center;
 `
 
 export default class WaitingScreen extends Component {
@@ -29,6 +29,10 @@ export default class WaitingScreen extends Component {
     }
 
     render() {
-        return <Cog ref={this.cog} url={cog}/>
+        return (
+            <Container>
+                <SvgCog ref={this.cog} height="100%"/>
+            </Container>
+        );
     }
 }

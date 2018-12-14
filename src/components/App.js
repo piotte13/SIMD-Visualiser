@@ -67,11 +67,11 @@ class App extends Component {
             this.state.visualize = false;
         }
 
-        this.frontPage = <FrontPage/>;
-        this.waitingScreen = <WaitingScreen/>;
-        this.asmVisualizer = null
-        this.astVisualizer = null;
+        this.cm = React.createRef();
+    }
 
+    componentWillUpdate(nextProps, nextState) {
+        localStorage.setItem("app-state", JSON.stringify(nextState));
     }
 
     handleClear = (clearCode = true) => {
@@ -85,9 +85,9 @@ class App extends Component {
         if (this.state.codeWasModifiedSinceLastCompile) {
             this.setState((state) => {
                 Object.keys(state.ast).forEach(k => delete state.ast[k]);
-                Object.assign(state.ast, generateAST(this.cm.editor))
+                Object.assign(state.ast, generateAST(this.cm.current.editor))
             });
-            compile(this.cm.editor.getValue(), (error, asm, ast) => {
+            compile(this.cm.current.editor.getValue(), (error, asm, ast) => {
                 if (error.length === 0) {
                     asm = generateASM(asm);
                     this.setState((state) => {
@@ -95,6 +95,7 @@ class App extends Component {
                         asm.forEach(e => {
                             state.asm.push(e)
                         });
+
                         return {
                             compiling: false,
                             status: 'compiles',
@@ -106,23 +107,15 @@ class App extends Component {
                     });
                 }
                 else {
-                    this.setState({compiling: false, status: 'error', error, clangAst: {}, asm: {}});
+                    this.setState((state) => {
+                        state.asm.splice(0, state.asm.length);
+                        return {compiling: false, status: 'error', error, clangAst: {}}
+                    });
                 }
             })
         }
         else this.setState({compiling: false, visualize: true});
     };
-
-    componentDidMount() {
-        this.asmVisualizer = <AsmVisualizer cm={this.cm} asm={this.state.asm}/>;
-        this.astVisualizer = <AstVisualizer cm={this.cm} ast={this.state.ast}/>;
-
-        this.refs.shiftVec && this.refs.shiftVec.getAnimation().play()
-    }
-
-    componentWillUpdate(nextProps, nextState) {
-        localStorage.setItem("app-state", JSON.stringify(nextState));
-    }
 
     restart = () => {
         this.setState((state) => {
@@ -144,26 +137,72 @@ class App extends Component {
         //return window.location.origin + "/link" + qs.stringify(this.state)
     };
 
+    getCodeMirror() {
+        const {code} = this.state;
+
+        return (
+            <CodeMirror
+                ref={this.cm}
+                value={code}
+                options={{
+                    mode: 'text/x-csrc',
+                    theme: 'material',
+                    lineNumbers: true,
+                    lineWrapping: true,
+                    gutters: ["CodeMirror-lint-markers"],
+                }}
+                onBeforeChange={(editor, data, code) => {
+                    this.setState({codeWasModifiedSinceLastCompile: true});
+                    this.history.push(this.history.location.pathname);
+                    if (code === '') {
+                        this.handleClear(true)
+                    } else {
+                        this.setState({code});
+                        //this.myInterpreter = getInterpreter(code)
+                    }
+                }}
+                onPaste={() => {
+                    this.setState({codeWasModifiedSinceLastCompile: true});
+                    this.handleClear(false)
+                }}
+            />
+        )
+    }
+
+    getTabs() {
+        return (
+            <Tabs selected={0}>
+                <Pane label="Graphical">
+                    {/*<AsmVisualizer cm={this.cm} asm={this.state.asm}/>*/}
+                </Pane>
+                <Pane label="AST">
+                    {/*<AstVisualizer cm={this.cm} ast={this.state.ast}/>*/}
+                </Pane>
+            </Tabs>
+        )
+    }
+
     render() {
-        const {code, disableButtons, status, compiling} = this.state;
+        const {disableButtons, status, compiling, error} = this.state;
 
         //let rightPage = <Shift ref="shiftVec" direction="left" bitWidth={32} params={["xmm0", "xmm1", "2"]}/>
         //let rightPage = <Arithmetic ref="shiftVec" bitWidth={32} base={10} params={["xmm0", "xmm1", "xmm0"]}/>;
-        let rightPage = this.frontPage;
+
+        let rightPage = <FrontPage/>;
 
         if (compiling) {
-            rightPage = this.waitingScreen;
+            rightPage = <WaitingScreen/>;
         }
-        else if (this.state.error.length > 0) {
-            rightPage = <ErrorHandler cm={this.cm} error={this.state.error}/>
+        else if (error.length > 0) {
+            rightPage = <ErrorHandler cm={this.cm} error={error}/>
         }
         else if (this.state.visualize) {
             rightPage = <Tabs selected={0}>
                 <Pane label="Graphical">
-                    {this.asmVisualizer}
+                    <AsmVisualizer cm={this.cm} asm={this.state.asm}/>
                 </Pane>
                 <Pane label="AST">
-                    {this.astVisualizer}
+                    <AstVisualizer cm={this.cm} ast={this.state.ast}/>
                 </Pane>
             </Tabs>
         }
@@ -178,31 +217,9 @@ class App extends Component {
                         disabled={disableButtons}
                         status={status}
                     />
-                    <CodeMirror
-                        ref={(cm) => this.cm = cm}
-                        value={code}
-                        options={{
-                            mode: 'text/x-csrc',
-                            theme: 'material',
-                            lineNumbers: true,
-                            lineWrapping: true,
-                            gutters: ["CodeMirror-lint-markers"],
-                        }}
-                        onBeforeChange={(editor, data, code) => {
-                            this.setState({codeWasModifiedSinceLastCompile: true});
-                            this.history.push(this.history.location.pathname);
-                            if (code === '') {
-                                this.handleClear(true)
-                            } else {
-                                this.setState({code});
-                                //this.myInterpreter = getInterpreter(code)
-                            }
-                        }}
-                        onPaste={() => {
-                            this.setState({codeWasModifiedSinceLastCompile: true});
-                            this.handleClear(false)
-                        }}
-                    />
+                    {
+                        this.getCodeMirror()
+                    }
                 </LeftContainer>
                 <RightContainer>
                     {rightPage}

@@ -1,6 +1,6 @@
 import React, {Component} from 'react';
 import styled from "styled-components";
-import SadRobot from "../Images/cryingboy.svg";
+import SvgCryingboy from "../Images/Cryingboy";
 
 const ErrorPageContainer = styled.div`
     padding: 50px;
@@ -28,7 +28,7 @@ const ErrorPosition = styled.div`
     margin-bottom: 15px;
     margin-top: 25px;
 `
-const Robot = styled.img`
+const ImageContainer = styled.div`
     position: absolute;
     bottom: 0;
     right: 0;
@@ -37,11 +37,9 @@ const Robot = styled.img`
 
 class ErrorHandler extends Component {
 
-    constructor(props) {
-        super(props)
-        console.log(props.error)
-        if (props.error.length !== 0) {
-            this.highlightCode()
+    componentDidMount() {
+        if (this.props.error.length !== 0) {
+            this.highlightCode();
         }
     }
 
@@ -51,14 +49,18 @@ class ErrorHandler extends Component {
 
     highlightCode = () => {
         const line = this.props.error[0].tag.line - 1;
-        const lineLength = this.props.cm.editor.getLine(line).length;
-        this.props.cm.editor.doc.markText({line, ch: 0}, {line, ch: lineLength}, {
-            className: 'highlighted-code'
-        });
+        let cm = this.props.cm.current;
+        if (cm) {
+            const lineLength = cm.editor.getLine(line).length;
+            cm.editor.doc.markText({line, ch: 0}, {line, ch: lineLength}, {
+                className: 'highlighted-code'
+            });
+        }
     };
 
     clearHighlightedCode = () => {
-        this.props.cm.editor.doc.getAllMarks().forEach((m) => {
+        let cm = this.props.cm.current;
+        cm && cm.editor.doc.getAllMarks().forEach((m) => {
             m.clear()
         })
     };
@@ -84,7 +86,9 @@ class ErrorHandler extends Component {
                 <ErrorPosition>
                     {this.getErrorPosition()}
                 </ErrorPosition>
-                <Robot src={SadRobot}/>
+                <ImageContainer>
+                    <SvgCryingboy/>
+                </ImageContainer>
             </ErrorPageContainer>
         );
     }

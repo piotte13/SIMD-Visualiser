@@ -48,16 +48,22 @@ export default class SequentialComponent extends React.Component {
             complete: () => {
                 if (this.childAnimation) {
                     this.childAnimation.restart();
-                    this.timelineFinished = this.childAnimation.finished.then(() => this.allAnimationCompleted());
+                    this.childAnimation.finished.then(() => this.allAnimationCompleted());
                 }
-                else
-                    this.props.onComplete(this.props.index)
+                else this.allAnimationCompleted();
             }
         });
 
         if (this.props.shouldBeVisible) {
             this.animeRef.restart()
         }
+    }
+
+    componentWillUnmount() {
+        if (this.sequentialHighlight)
+            this.sequentialHighlight.clear();
+
+        anime.remove(this.container.current);
     }
 
     componentWillReceiveProps(nextProps) {
@@ -80,6 +86,7 @@ export default class SequentialComponent extends React.Component {
             this.animeRef.seek(0);
             if (this.childAnimation) {
                 this.childAnimation.seek(0);
+                anime.remove(this.childAnimation);
                 this.childAnimation = this.component.current.getAnimation()
             }
         }
@@ -94,9 +101,10 @@ export default class SequentialComponent extends React.Component {
 
     highlightCode = (isHover = false) => {
         let line = this.component.current.props.line;
-        if (line) {
-            const lineLength = this.props.cm.editor.getLine(line).length;
-            return this.props.cm.editor.doc.markText({line, ch: 0}, {line, ch: lineLength}, {
+        let cm = this.props.cm.current;
+        if (line && cm) {
+            const lineLength = cm.editor.getLine(line).length;
+            return cm.editor.doc.markText({line, ch: 0}, {line, ch: lineLength}, {
                 className: isHover ? 'highlighted-code' : 'sequential-highlighted-code'
             });
         }

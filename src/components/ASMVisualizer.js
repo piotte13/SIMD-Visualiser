@@ -46,7 +46,7 @@ class AsmVisualizer extends Component {
     }
 
     componentDidMount() {
-        this.props.cm.editor.doc.getAllMarks().forEach((m) => {
+        this.props.cm.current.editor.doc.getAllMarks().forEach((m) => {
             m.clear()
         })
     }
@@ -85,17 +85,17 @@ class AsmVisualizer extends Component {
         this.setState({play: false})
     }
 
-    forward() {
-        this.setState({idx: this.state.idx + 1});
-        //this.componentDonePlaying(this.state.idx - 1);
-    }
+    // forward() {
+    //     this.setState({idx: this.state.idx + 1});
+    //     //this.componentDonePlaying(this.state.idx - 1);
+    // }
 
-    backward() {
-        this.setState({idx: this.state.idx - 1});
-        setTimeout(() => {
-            this.componentDonePlaying(this.state.idx);
-        })
-    }
+    // backward() {
+    //     this.setState({idx: this.state.idx - 1});
+    //     setTimeout(() => {
+    //         this.componentDonePlaying(this.state.idx);
+    //     })
+    // }
 
     restart() {
         this.setState({idx: -1});

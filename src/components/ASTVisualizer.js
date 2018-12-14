@@ -151,7 +151,7 @@ class AstVisualizer extends Component {
     };
 
     highlightCode = (start, end) => {
-        let codeEditor = this.props.cm.editor.doc;
+        let codeEditor = this.props.cm.current.editor.doc;
         const fromIndex = codeEditor.posFromIndex(start);
         const toIndex = codeEditor.posFromIndex(end);
         codeEditor.markText(fromIndex, toIndex, {
@@ -160,7 +160,7 @@ class AstVisualizer extends Component {
     };
 
     clearHighlightedCode = () => {
-        this.props.cm.editor.doc.getAllMarks().forEach((m) => {
+        this.props.cm.current.editor.doc.getAllMarks().forEach((m) => {
             m.clear()
         })
     };

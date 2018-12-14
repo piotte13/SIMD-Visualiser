@@ -1,11 +1,10 @@
 import React, {Component} from 'react';
 import styled from 'styled-components'
-import CLogo from "../Images/c-programming.svg";
 import anime from "animejs";
+import SvgCProgramming from "../Images/CProgramming";
 
 
 const Image = styled.div`
-    content: ${({url}) => 'url(' + url + ');'}
     width: 40vmin;
     margin: 8vh auto;
 `
@@ -90,25 +89,27 @@ export default class FrontPage extends Component {
 
 
     render() {
-        return <Container>
+        return (
+            <Container>
 
-            <div ref={this.imageContainer}>
-                <Image url={CLogo} ref={this.image}/>
-            </div>
+                <Image ref={this.imageContainer}>
+                    <SvgCProgramming ref={this.image}/>
+                </Image>
 
-            <AppTitle>The Ultimate SIMD visualizer</AppTitle>
-            <AppDescription>
-                Built by <strong>Jérémie Piotte</strong>, <strong>Daniel Lemire</strong> and <strong>Pierre Marie
-                Ntang</strong>
-            </AppDescription>
-            <ButtonGroup>
-                <a href="https://github.com/piotte13/SIMD-Visualiser" target="_blank" rel="noopener noreferrer">
-                    <GHButton>View on GitHub</GHButton>
-                </a>
-                <iframe
-                    src="https://ghbtns.com/github-btn.html?user=piotte13&repo=SIMD-Visualiser&type=star&count=true&size=large"
-                    frameBorder="0" scrolling="0" width="160px" height="30px"/>
-            </ButtonGroup>
-        </Container>;
+                <AppTitle>The Ultimate SIMD visualizer</AppTitle>
+                <AppDescription>
+                    Built by <strong>Jérémie Piotte</strong>, <strong>Daniel Lemire</strong> and <strong>Pierre Marie
+                    Ntang</strong>
+                </AppDescription>
+                <ButtonGroup>
+                    <a href="https://github.com/piotte13/SIMD-Visualiser" target="_blank" rel="noopener noreferrer">
+                        <GHButton>View on GitHub</GHButton>
+                    </a>
+                    <iframe
+                        src="https://ghbtns.com/github-btn.html?user=piotte13&repo=SIMD-Visualiser&type=star&count=true&size=large"
+                        frameBorder="0" scrolling="0" width="160px" height="30px"/>
+                </ButtonGroup>
+            </Container>
+        )
     }
 }

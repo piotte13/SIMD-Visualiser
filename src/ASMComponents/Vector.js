@@ -70,7 +70,7 @@ export default class Vector extends Component {
                     <g ref={this.numbersRef}>
                         {
                             values.map((number, i) => {
-                                let x = (rectLen / elCount) * i;
+                                const x = (rectLen / elCount) * i;
                                 return (
                                     <svg key={i} width={rectLen / elCount} height={rectHeight} x={x}>
                                             <text x="50%" y="50%" dy=".3em" className="vector-values">{number}</text>
@@ -80,8 +80,8 @@ export default class Vector extends Component {
                         }
                         {
                             shiftValues.map((number, i) => {
-                                let x = (rectLen / elCount) * i;
-                                let offset = (rectLen / elCount) * shiftValues.length;
+                                const x = (rectLen / elCount) * i;
+                                const offset = (rectLen / elCount) * shiftValues.length;
                                 return (
                                     <React.Fragment key={i}>
                                         <svg width={rectLen / elCount} height={rectHeight} x={x + rectLen}>
