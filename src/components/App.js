@@ -17,11 +17,7 @@ import {Pane, Tabs} from "../Utils/Tabs";
 import AsmVisualizer from "./ASMVisualizer";
 import {createBrowserHistory} from 'history';
 import * as qs from 'qs';
-import Vector from "../ASMComponents/Vector";
-import * as _ from "lodash";
-import anime from 'animejs';
-import Shift from "../ASMComponents/Shift";
-import Arithmetic from "../ASMComponents/Arithmetic";
+import ParametersPage from "./ParametersPage";
 
 
 const Container = styled.div`
@@ -57,7 +53,8 @@ class App extends Component {
             clangAst: {},
             asm: [],
             error: [],
-            visualize: false
+            visualize: false,
+            parametersChosen: false
         };
         if (this.props.match.params.code) {
             this.state.code = qs.parse(this.props.match.params.code).code
@@ -65,6 +62,7 @@ class App extends Component {
         else if (savedState) {
             this.state = JSON.parse(savedState);
             this.state.visualize = false;
+            this.state.parametersChosen = false;
         }
 
         this.cm = React.createRef();
@@ -102,7 +100,8 @@ class App extends Component {
                             error,
                             clangAst: ast,
                             codeWasModifiedSinceLastCompile: false,
-                            visualize: true
+                            visualize: true,
+                            parametersChosen: false
                         }
                     });
                 }
@@ -126,15 +125,20 @@ class App extends Component {
                 codeWasModifiedSinceLastCompile: true,
                 clangAst: {},
                 error: [],
-                visualize: false
+                visualize: false,
+                parametersChosen: false
             }
         });
     };
 
+    onParametersChosen() {
+        this.setState({parametersChosen: true});
+    }
+
     getShareLink = () => {
         //We need to specify the whole URL since we are in dev and bitly cannot work with localhost links.
         return 'https://piotte13.github.io/SIMD-Visualiser/#/link/' + qs.stringify({code: this.state.code})
-        //return window.location.origin + "/link" + qs.stringify(this.state)
+        //return window.location.origin + "#/link" + qs.stringify(this.state)
     };
 
     getCodeMirror() {
@@ -158,7 +162,6 @@ class App extends Component {
                         this.handleClear(true)
                     } else {
                         this.setState({code});
-                        //this.myInterpreter = getInterpreter(code)
                     }
                 }}
                 onPaste={() => {
@@ -169,26 +172,10 @@ class App extends Component {
         )
     }
 
-    getTabs() {
-        return (
-            <Tabs selected={0}>
-                <Pane label="Graphical">
-                    {/*<AsmVisualizer cm={this.cm} asm={this.state.asm}/>*/}
-                </Pane>
-                <Pane label="AST">
-                    {/*<AstVisualizer cm={this.cm} ast={this.state.ast}/>*/}
-                </Pane>
-            </Tabs>
-        )
-    }
-
     render() {
-        const {disableButtons, status, compiling, error} = this.state;
+        const {disableButtons, status, compiling, error, visualize, parametersChosen} = this.state;
 
-        //let rightPage = <Shift ref="shiftVec" direction="left" bitWidth={32} params={["xmm0", "xmm1", "2"]}/>
-        //let rightPage = <Arithmetic ref="shiftVec" bitWidth={32} base={10} params={["xmm0", "xmm1", "xmm0"]}/>;
-
-        let rightPage = <FrontPage/>;
+        let rightPage = <ParametersPage asm={this.state.asm} onComplete={this.onParametersChosen.bind(this)}/>//<FrontPage/>;
 
         if (compiling) {
             rightPage = <WaitingScreen/>;
@@ -196,7 +183,7 @@ class App extends Component {
         else if (error.length > 0) {
             rightPage = <ErrorHandler cm={this.cm} error={error}/>
         }
-        else if (this.state.visualize) {
+        else if (visualize && parametersChosen) {
             rightPage = <Tabs selected={0}>
                 <Pane label="Graphical">
                     <AsmVisualizer cm={this.cm} asm={this.state.asm}/>
@@ -205,6 +192,9 @@ class App extends Component {
                     <AstVisualizer cm={this.cm} ast={this.state.ast}/>
                 </Pane>
             </Tabs>
+        }
+        else if (visualize) {
+            rightPage = <ParametersPage asm={this.state.asm} onComplete={this.onParametersChosen.bind(this)}/>
         }
 
         return (

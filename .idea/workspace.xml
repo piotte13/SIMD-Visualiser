@@ -2,21 +2,13 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="d93bb96c-a6c2-4df9-9ab0-9872ebe56e56" name="Default Changelist" comment="Prototype version of SVG. Ready for merge.">
-      <change afterPath="$PROJECT_DIR$/src/Images/CProgramming.js" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/Images/Cog.js" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/Images/Cryingboy.js" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/components/ParametersPage.js" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/package-lock.json" beforeDir="false" afterPath="$PROJECT_DIR$/package-lock.json" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/package.json" beforeDir="false" afterPath="$PROJECT_DIR$/package.json" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/ASMComponents/SequentialComponent.js" beforeDir="false" afterPath="$PROJECT_DIR$/src/ASMComponents/SequentialComponent.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/ASMComponents/Vector.js" beforeDir="false" afterPath="$PROJECT_DIR$/src/ASMComponents/Vector.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/Utils/Tabs.js" beforeDir="false" afterPath="$PROJECT_DIR$/src/Utils/Tabs.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/components/ASMVisualizer.js" beforeDir="false" afterPath="$PROJECT_DIR$/src/components/ASMVisualizer.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/components/ASTVisualizer.js" beforeDir="false" afterPath="$PROJECT_DIR$/src/components/ASTVisualizer.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/Utils/Compiler.js" beforeDir="false" afterPath="$PROJECT_DIR$/src/Utils/Compiler.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/Utils/Parser.js" beforeDir="false" afterPath="$PROJECT_DIR$/src/Utils/Parser.js" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/components/App.js" beforeDir="false" afterPath="$PROJECT_DIR$/src/components/App.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/components/ErrorHandler.js" beforeDir="false" afterPath="$PROJECT_DIR$/src/components/ErrorHandler.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/components/FrontPage.js" beforeDir="false" afterPath="$PROJECT_DIR$/src/components/FrontPage.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/components/WaitingScreen.js" beforeDir="false" afterPath="$PROJECT_DIR$/src/components/WaitingScreen.js" afterDir="false" />
     </list>
     <ignored path="$PROJECT_DIR$/.tmp/" />
     <ignored path="$PROJECT_DIR$/temp/" />
@@ -106,31 +98,31 @@
       </usages-collector>
       <usages-collector id="statistics.file.extensions.edit">
         <counts>
-          <entry key="css" value="509" />
+          <entry key="css" value="517" />
           <entry key="gitignore" value="6" />
           <entry key="html" value="1" />
-          <entry key="js" value="17110" />
+          <entry key="js" value="19454" />
           <entry key="md" value="35" />
           <entry key="txt" value="942" />
         </counts>
       </usages-collector>
       <usages-collector id="statistics.file.types.edit">
         <counts>
-          <entry key="CSS" value="509" />
-          <entry key="HTML" value="3" />
-          <entry key="JavaScript" value="17108" />
+          <entry key="CSS" value="517" />
+          <entry key="HTML" value="4" />
+          <entry key="JavaScript" value="19451" />
           <entry key="Markdown" value="35" />
           <entry key="PLAIN_TEXT" value="948" />
         </counts>
       </usages-collector>
       <usages-collector id="statistics.file.extensions.open">
         <counts>
-          <entry key="css" value="17" />
+          <entry key="css" value="19" />
           <entry key="gif" value="1" />
           <entry key="gitignore" value="1" />
           <entry key="html" value="1" />
           <entry key="ico" value="2" />
-          <entry key="js" value="74" />
+          <entry key="js" value="79" />
           <entry key="json" value="1" />
           <entry key="md" value="1" />
           <entry key="png" value="1" />
@@ -139,11 +131,11 @@
       </usages-collector>
       <usages-collector id="statistics.file.types.open">
         <counts>
-          <entry key="CSS" value="17" />
+          <entry key="CSS" value="19" />
           <entry key="HTML" value="1" />
           <entry key="Image" value="4" />
           <entry key="JSON" value="1" />
-          <entry key="JavaScript" value="74" />
+          <entry key="JavaScript" value="79" />
           <entry key="Markdown" value="1" />
           <entry key="PLAIN_TEXT" value="1" />
           <entry key="SVG" value="4" />
@@ -159,56 +151,19 @@
   <component name="FileEditorManager">
     <leaf SIDE_TABS_SIZE_LIMIT_KEY="300">
       <file pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/src/components/App.js">
-          <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="412">
-              <caret line="198" column="37" selection-start-line="198" selection-start-column="28" selection-end-line="198" selection-end-column="37" />
-              <folding>
-                <element signature="e#0#39#0" expanded="true" />
-                <marker date="1544745247505" expanded="true" signature="176:270" ph="..." />
-              </folding>
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/src/Utils/Tabs.js">
-          <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="269">
-              <caret line="23" column="17" lean-forward="true" selection-start-line="23" selection-start-column="17" selection-end-line="23" selection-end-column="17" />
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/src/ASMComponents/ret.js">
-          <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="575">
-              <caret line="62" column="5" selection-start-line="62" selection-start-column="5" selection-end-line="62" selection-end-column="5" />
-              <folding>
-                <element signature="e#0#39#0" expanded="true" />
-              </folding>
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/src/components/ASMVisualizer.js">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="568">
-              <caret line="69" column="31" selection-start-line="69" selection-start-column="31" selection-end-line="69" selection-end-column="31" />
-              <folding>
-                <element signature="e#0#39#0" expanded="true" />
-              </folding>
+            <state relative-caret-position="161">
+              <caret line="7" column="33" selection-start-line="7" selection-start-column="33" selection-end-line="7" selection-end-column="33" />
             </state>
           </provider>
         </entry>
       </file>
       <file pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/src/components/FrontPage.js">
+        <entry file="file://$PROJECT_DIR$/src/components/App.js">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="368">
-              <caret line="85" column="22" lean-forward="true" selection-start-line="85" selection-start-column="22" selection-end-line="85" selection-end-column="22" />
+            <state relative-caret-position="393">
+              <caret line="180" column="41" lean-forward="true" selection-start-line="180" selection-start-column="41" selection-end-line="180" selection-end-column="41" />
               <folding>
                 <element signature="e#0#39#0" expanded="true" />
               </folding>
@@ -219,8 +174,59 @@
       <file pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/src/components/ASTVisualizer.js">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="400">
+            <state relative-caret-position="3726">
               <caret line="162" column="30" selection-start-line="162" selection-start-column="30" selection-end-line="162" selection-end-column="30" />
+              <folding>
+                <element signature="e#0#39#0" expanded="true" />
+              </folding>
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/src/components/ButtonPanel.js">
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="1495">
+              <caret line="77" lean-forward="true" selection-start-line="77" selection-end-line="77" />
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/src/ASMComponents/Vector.js">
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="92">
+              <caret line="4" selection-start-line="4" selection-end-line="4" />
+              <folding>
+                <element signature="e#0#39#0" expanded="true" />
+              </folding>
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/src/css/Vector.css">
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="345">
+              <caret line="15" column="1" lean-forward="true" selection-start-line="15" selection-start-column="1" selection-end-line="15" selection-end-column="1" />
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/src/Utils/Parser.js">
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="207">
+              <caret line="57" column="58" selection-start-line="57" selection-start-column="58" selection-end-line="57" selection-end-column="58" />
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file pinned="false" current-in-tab="true">
+        <entry file="file://$PROJECT_DIR$/src/components/ParametersPage.js">
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="368">
+              <caret line="64" column="4" selection-start-line="64" selection-start-column="4" selection-end-line="64" selection-end-column="4" />
               <folding>
                 <element signature="e#0#39#0" expanded="true" />
               </folding>
@@ -231,26 +237,8 @@
       <file pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/src/components/ErrorHandler.js">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="23">
-              <caret line="1" column="39" selection-start-line="1" selection-start-column="39" selection-end-line="1" selection-end-column="39" />
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/src/components/WaitingScreen.js">
-          <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="23">
-              <caret line="1" column="38" selection-start-line="1" selection-start-column="38" selection-end-line="1" selection-end-column="38" />
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/src/ASMComponents/Vector.js">
-          <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="200">
-              <caret line="72" column="37" selection-start-line="72" selection-start-column="32" selection-end-line="72" selection-end-column="37" />
+            <state relative-caret-position="414">
+              <caret line="18" column="27" lean-forward="true" selection-start-line="16" selection-start-column="4" selection-end-line="18" selection-end-column="27" />
               <folding>
                 <element signature="e#0#39#0" expanded="true" />
               </folding>
@@ -258,14 +246,11 @@
           </provider>
         </entry>
       </file>
-      <file pinned="false" current-in-tab="true">
-        <entry file="file://$PROJECT_DIR$/src/ASMComponents/SequentialComponent.js">
+      <file pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/src/css/GlobalVariables.css">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="460">
-              <caret line="62" column="8" lean-forward="true" selection-start-line="62" selection-start-column="8" selection-end-line="65" selection-end-column="45" />
-              <folding>
-                <element signature="e#0#26#0" expanded="true" />
-              </folding>
+            <state relative-caret-position="253">
+              <caret line="11" column="1" selection-start-line="11" selection-start-column="1" selection-end-line="11" selection-end-column="1" />
             </state>
           </provider>
         </entry>
@@ -323,7 +308,6 @@
         <option value="$PROJECT_DIR$/src/Images/cog.svg" />
         <option value="$PROJECT_DIR$/src/css/WaitingScreen.css" />
         <option value="$PROJECT_DIR$/public/manifest.json" />
-        <option value="$PROJECT_DIR$/src/Utils/Compiler.js" />
         <option value="$PROJECT_DIR$/package.json" />
         <option value="$PROJECT_DIR$/build/static/js/1.7d645394.chunk.js" />
         <option value="$PROJECT_DIR$/src/index.css" />
@@ -338,8 +322,6 @@
         <option value="$PROJECT_DIR$/src/css/GlobalVariables.css" />
         <option value="$PROJECT_DIR$/src/components/ButtonPanel.js" />
         <option value="$PROJECT_DIR$/src/css/ASMVisualizer.css" />
-        <option value="$PROJECT_DIR$/src/Utils/Parser.js" />
-        <option value="$PROJECT_DIR$/src/css/Vector.css" />
         <option value="$PROJECT_DIR$/src/ASMComponents/vpslldq.js" />
         <option value="$PROJECT_DIR$/src/Utils/Registry.js" />
         <option value="$PROJECT_DIR$/src/Utils/Converter.js" />
@@ -354,11 +336,15 @@
         <option value="$PROJECT_DIR$/src/components/ErrorHandler.js" />
         <option value="$PROJECT_DIR$/src/components/WaitingScreen.js" />
         <option value="$PROJECT_DIR$/src/Utils/Tabs.js" />
-        <option value="$PROJECT_DIR$/src/components/App.js" />
         <option value="$PROJECT_DIR$/src/ASMComponents/Vector.js" />
         <option value="$PROJECT_DIR$/src/components/ASMVisualizer.js" />
         <option value="$PROJECT_DIR$/src/ASMComponents/ret.js" />
         <option value="$PROJECT_DIR$/src/ASMComponents/SequentialComponent.js" />
+        <option value="$PROJECT_DIR$/src/Utils/Compiler.js" />
+        <option value="$PROJECT_DIR$/src/Utils/Parser.js" />
+        <option value="$PROJECT_DIR$/src/components/App.js" />
+        <option value="$PROJECT_DIR$/src/css/Vector.css" />
+        <option value="$PROJECT_DIR$/src/components/ParametersPage.js" />
       </list>
     </option>
   </component>
@@ -462,7 +448,7 @@
               <item name="SIMD-Visualiser" type="3d21c010:ScopeViewTreeModel$ProjectNode" />
               <item name="" type="442cc68d:ScopeViewTreeModel$RootNode" />
               <item name="src" type="9f88c78c:ScopeViewTreeModel$FileNode" />
-              <item name="Images" type="9f88c78c:ScopeViewTreeModel$FileNode" />
+              <item name="css" type="9f88c78c:ScopeViewTreeModel$FileNode" />
             </path>
             <path>
               <item name="SIMD-Visualiser" type="3d21c010:ScopeViewTreeModel$ProjectNode" />
@@ -831,7 +817,7 @@
     <servers />
   </component>
   <component name="TimeTrackingManager">
-    <option name="totallyTimeSpent" value="416991000" />
+    <option name="totallyTimeSpent" value="434725000" />
   </component>
   <component name="ToolWindowManager">
     <frame x="0" y="25" width="1720" height="1350" extended-state="4" />
@@ -843,15 +829,15 @@
       <window_info id="Favorites" order="3" side_tool="true" />
       <window_info anchor="bottom" id="Message" order="0" />
       <window_info anchor="bottom" id="Find" order="1" weight="0.3275862" />
-      <window_info anchor="bottom" id="Run" order="2" sideWeight="0.49940476" visible="true" weight="0.32676518" />
+      <window_info anchor="bottom" id="Run" order="2" sideWeight="0.49940476" weight="0.32676518" />
       <window_info anchor="bottom" id="Debug" order="3" weight="0.4" />
       <window_info anchor="bottom" id="Cvs" order="4" weight="0.25" />
       <window_info anchor="bottom" id="Inspection" order="5" weight="0.4" />
       <window_info anchor="bottom" id="TODO" order="6" />
       <window_info anchor="bottom" id="Docker" order="7" show_stripe_button="false" />
-      <window_info anchor="bottom" id="Version Control" order="8" show_stripe_button="false" />
+      <window_info anchor="bottom" id="Version Control" order="8" weight="0.32922825" />
       <window_info anchor="bottom" id="Event Log" order="9" sideWeight="0.5014732" side_tool="true" weight="0.20409836" />
-      <window_info anchor="bottom" id="Terminal" order="10" sideWeight="0.4985268" weight="0.21346469" />
+      <window_info anchor="bottom" id="Terminal" order="10" sideWeight="0.4985268" visible="true" weight="0.21346469" />
       <window_info anchor="bottom" id="Messages" order="11" />
       <window_info anchor="right" id="Commander" internal_type="SLIDING" order="0" type="SLIDING" weight="0.4" />
       <window_info anchor="right" id="Ant Build" order="1" weight="0.25" />
@@ -920,7 +906,6 @@
     <option name="REFORMAT_BEFORE_PROJECT_COMMIT" value="true" />
   </component>
   <component name="editorHistoryManager">
-    <entry file="file://$PROJECT_DIR$/src/components/App.test.js" />
     <entry file="file://$PROJECT_DIR$/node_modules/jointjs/dist/joint.js" />
     <entry file="file://$PROJECT_DIR$/src/Images/1_copy.png" />
     <entry file="file://$PROJECT_DIR$/src/css/WaitingScreen.css" />
@@ -1012,13 +997,6 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/src/components/ButtonPanel.js">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="391">
-          <caret line="77" lean-forward="true" selection-start-line="77" selection-end-line="77" />
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/src/Images/c-programming.png" />
     <entry file="file://$PROJECT_DIR$/src/css/ASTVisualizer.css">
       <provider selected="true" editor-type-id="text-editor">
@@ -1027,24 +1005,10 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/src/Utils/Parser.js">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="177">
-          <caret line="33" column="6" lean-forward="true" selection-start-line="33" selection-start-column="6" selection-end-line="33" selection-end-column="6" />
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/src/css/App.css">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="654">
+        <state relative-caret-position="782">
           <caret line="34" column="1" selection-start-line="34" selection-start-column="1" selection-end-line="34" selection-end-column="1" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/css/GlobalVariables.css">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="23">
-          <caret line="1" column="19" lean-forward="true" selection-start-line="1" selection-start-column="13" selection-end-line="1" selection-end-column="19" />
         </state>
       </provider>
     </entry>
@@ -1057,13 +1021,6 @@
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/src/ASMComponents/vpaddd.js" />
-    <entry file="file://$PROJECT_DIR$/src/Utils/Compiler.js">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="805">
-          <caret line="35" column="6" selection-start-line="35" selection-start-column="6" selection-end-line="35" selection-end-column="6" />
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/src/Utils/Converter.js">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="1028">
@@ -1071,17 +1028,10 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/src/css/Vector.css">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="46">
-          <caret line="2" column="56" selection-start-line="2" selection-start-column="24" selection-end-line="2" selection-end-column="56" />
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/src/css/Tabs.css">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="-53">
-          <caret line="7" column="15" lean-forward="true" selection-start-line="7" selection-start-column="15" selection-end-line="7" selection-end-column="15" />
+        <state relative-caret-position="506">
+          <caret line="22" column="1" selection-start-line="22" selection-start-column="1" selection-end-line="22" selection-end-column="1" />
         </state>
       </provider>
     </entry>
@@ -1089,9 +1039,6 @@
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="1104">
           <caret line="52" column="31" selection-start-line="52" selection-start-column="31" selection-end-line="52" selection-end-column="31" />
-          <folding>
-            <element signature="e#0#39#0" expanded="true" />
-          </folding>
         </state>
       </provider>
     </entry>
@@ -1116,9 +1063,6 @@
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="322">
           <caret line="80" column="14" lean-forward="true" selection-start-line="80" selection-start-column="14" selection-end-line="80" selection-end-column="14" />
-          <folding>
-            <element signature="e#0#39#0" expanded="true" />
-          </folding>
         </state>
       </provider>
     </entry>
@@ -1154,25 +1098,8 @@
     </entry>
     <entry file="file://$PROJECT_DIR$/src/css/ASMVisualizer.css">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="391">
-          <caret line="17" column="41" lean-forward="true" selection-start-line="17" selection-start-column="41" selection-end-line="17" selection-end-column="41" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/components/ASTVisualizer.js">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="400">
-          <caret line="162" column="30" selection-start-line="162" selection-start-column="30" selection-end-line="162" selection-end-column="30" />
-          <folding>
-            <element signature="e#0#39#0" expanded="true" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/components/ErrorHandler.js">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="23">
-          <caret line="1" column="39" selection-start-line="1" selection-start-column="39" selection-end-line="1" selection-end-column="39" />
+        <state relative-caret-position="414">
+          <caret line="18" column="1" selection-start-line="18" selection-start-column="1" selection-end-line="18" selection-end-column="1" />
         </state>
       </provider>
     </entry>
@@ -1183,51 +1110,10 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/src/components/FrontPage.js">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="368">
-          <caret line="85" column="22" lean-forward="true" selection-start-line="85" selection-start-column="22" selection-end-line="85" selection-end-column="22" />
-          <folding>
-            <element signature="e#0#39#0" expanded="true" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/src/Utils/Tabs.js">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="269">
           <caret line="23" column="17" lean-forward="true" selection-start-line="23" selection-start-column="17" selection-end-line="23" selection-end-column="17" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/ASMComponents/Vector.js">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="200">
-          <caret line="72" column="37" selection-start-line="72" selection-start-column="32" selection-end-line="72" selection-end-column="37" />
-          <folding>
-            <element signature="e#0#39#0" expanded="true" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/components/ASMVisualizer.js">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="568">
-          <caret line="69" column="31" selection-start-line="69" selection-start-column="31" selection-end-line="69" selection-end-column="31" />
-          <folding>
-            <element signature="e#0#39#0" expanded="true" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/components/App.js">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="412">
-          <caret line="198" column="37" selection-start-line="198" selection-start-column="28" selection-end-line="198" selection-end-column="37" />
-          <folding>
-            <element signature="e#0#39#0" expanded="true" />
-            <marker date="1544745247505" expanded="true" signature="176:270" ph="..." />
-          </folding>
         </state>
       </provider>
     </entry>
@@ -1247,6 +1133,108 @@
           <caret line="62" column="8" lean-forward="true" selection-start-line="62" selection-start-column="8" selection-end-line="65" selection-end-column="45" />
           <folding>
             <element signature="e#0#26#0" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/Utils/Compiler.js">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="322">
+          <caret line="14" column="33" selection-start-line="14" selection-start-column="33" selection-end-line="14" selection-end-column="33" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/components/FrontPage.js">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="529">
+          <caret line="68" column="5" selection-end-line="114" selection-end-column="1" />
+          <folding>
+            <element signature="e#0#39#0" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/css/GlobalVariables.css">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="253">
+          <caret line="11" column="1" selection-start-line="11" selection-start-column="1" selection-end-line="11" selection-end-column="1" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/components/App.js">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="393">
+          <caret line="180" column="41" lean-forward="true" selection-start-line="180" selection-start-column="41" selection-end-line="180" selection-end-column="41" />
+          <folding>
+            <element signature="e#0#39#0" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/Utils/Parser.js">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="207">
+          <caret line="57" column="58" selection-start-line="57" selection-start-column="58" selection-end-line="57" selection-end-column="58" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/components/ASMVisualizer.js">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="161">
+          <caret line="7" column="33" selection-start-line="7" selection-start-column="33" selection-end-line="7" selection-end-column="33" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/components/ButtonPanel.js">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="1495">
+          <caret line="77" lean-forward="true" selection-start-line="77" selection-end-line="77" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/components/ASTVisualizer.js">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="3726">
+          <caret line="162" column="30" selection-start-line="162" selection-start-column="30" selection-end-line="162" selection-end-column="30" />
+          <folding>
+            <element signature="e#0#39#0" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/components/ErrorHandler.js">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="414">
+          <caret line="18" column="27" lean-forward="true" selection-start-line="16" selection-start-column="4" selection-end-line="18" selection-end-column="27" />
+          <folding>
+            <element signature="e#0#39#0" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/ASMComponents/Vector.js">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="92">
+          <caret line="4" selection-start-line="4" selection-end-line="4" />
+          <folding>
+            <element signature="e#0#39#0" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/css/Vector.css">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="345">
+          <caret line="15" column="1" lean-forward="true" selection-start-line="15" selection-start-column="1" selection-end-line="15" selection-end-column="1" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/components/ParametersPage.js">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="368">
+          <caret line="64" column="4" selection-start-line="64" selection-start-column="4" selection-end-line="64" selection-end-column="4" />
+          <folding>
+            <element signature="e#0#39#0" expanded="true" />
           </folding>
         </state>
       </provider>
