@@ -2,15 +2,16 @@ import React, {Component} from 'react';
 import styled from 'styled-components'
 import {
     Button, Card, CardImg, CardText, CardBody, CardLink,
-    CardTitle, CardSubtitle
+    CardTitle, CardSubtitle, Row, Col, Container, ButtonGroup
 } from 'reactstrap';
+import * as _ from "lodash";
 import Slider from 'rc-slider';
 import 'rc-slider/assets/index.css';
 import 'rc-tooltip/assets/bootstrap.css';
+import * as Registry from "../Utils/Registry";
 
-const Container = styled.div`
+const PageContainer = styled.div`
     padding: 50px;
-    
 `
 
 const Title = styled.div`
@@ -48,7 +49,11 @@ const ParameterContainer = styled.div`
     
     .card-body{
         padding: 1rem;
-    }
+        
+        .row{
+            margin-bottom: 10px;
+        }
+    
 `
 
 const RandomizeButton = styled.div`
@@ -58,24 +63,86 @@ const RandomizeButton = styled.div`
     font-size: 1.7rem;
 `
 
-const VectorContainer = styled.div`
-    width: 96%;
+const VectorContainer = styled(Container)`
+    width: 96% !important;
     height: 50px;
     background-color: var(--main);
     border-radius: 3px;
-    margin: 0 2%;
+    //margin: 0 2%;
     box-shadow: 3px 3px 2px rgba(0,0,0,.4);
+    
+    .row{
+        height: 100%;
+    
+        .col{
+            text-align: center;
+            padding: 0;
+            
+            input{
+                width: 100%;
+                height: 100%;
+                color: var(--clear-text-color);
+                text-align: center;
+                border-radius: 0;
+                border: none;
+                background-color: inherit;
+                border-right: solid 1px var(--gray);
+            }
+            
+            :last-child input{
+                    border-right: none;
+                }
+        }
+    }
 }
 `;
 
 export default class ParametersPage extends Component {
-    constructor() {
-        super();
-
+    constructor(props) {
+        super(props);
+        this.state = {
+            typeList: new Array(props.asm.length)
+        }
+        console.log(this.props.asm)
     }
 
     componentDidMount() {
 
+    }
+
+    getSliderMarks(paramBitLen) {
+        const minLaneWidth = 4;
+        const maxLaneWidth = _.min([paramBitLen, 64]);
+        const nbOfMarks = Math.log(maxLaneWidth) / Math.log(2) - 1;
+        let marks = {};
+        _.times(nbOfMarks).forEach(i => {
+            const percentage = 100 * (i + 1) / nbOfMarks;
+            marks[percentage] = Math.pow(2, i + 2);
+        });
+
+        return marks
+    };
+
+    onTypeChange(selected, functionNumber, paramNumber) {
+        this.props.asm[functionNumber].params[paramNumber].type = selected;
+        this.forceUpdate();
+    }
+
+    onWidthChange(newWidth, functionNumber, paramNumber) {
+        const bitLen = this.props.asm[functionNumber].params[paramNumber].bitWidth *
+            this.props.asm[functionNumber].params[paramNumber].lanes;
+        this.props.asm[functionNumber].params[paramNumber].bitWidth = newWidth;
+        this.props.asm[functionNumber].params[paramNumber].lanes = bitLen / newWidth;
+        this.forceUpdate();
+    }
+
+    onBaseChange(selected, functionNumber, paramNumber) {
+        this.props.asm[functionNumber].params[paramNumber].base = selected;
+        this.forceUpdate();
+    }
+
+    onVectorValueChange(val) {
+        //console.log(val);
     }
 
     buildContent() {
@@ -86,36 +153,86 @@ export default class ParametersPage extends Component {
                     <FunctionName>{func.name}</FunctionName>
                     <hr/>
                     {
-                        func.params.map((param, i) =>
-                            <ParameterContainer key={i}>
+                        func.params.map((param, j) => {
+                            const paramBitLen = param.bitWidth * param.lanes;
+                            const marks = this.getSliderMarks(paramBitLen);
+                            //const registry = Registry.default;
+
+                            return <ParameterContainer key={j}>
                                 <Card>
                                     <CardBody>
                                         <CardTitle>
-                                            {`Parameter ${i + 1}:`}&nbsp;&nbsp;
-                                            <strong>{`${param.bitWidth * param.lanes} bits`}</strong>
+                                            {`Parameter ${j + 1}:`}&nbsp;&nbsp;
+                                            <strong>{`${paramBitLen} bits`}</strong>
                                             <RandomizeButton><i className="fas fa-dice"></i></RandomizeButton>
                                         </CardTitle>
                                     </CardBody>
-                                    <VectorContainer/>
+                                    <VectorContainer>
+                                        <Row>
+                                            {
+                                                _.times(param.lanes).map(i => (
+                                                    <Col>
+                                                        <input type="text"
+                                                               value={_.padStart(i + 1, param.bitWidth / 4, '0')}
+                                                               onChange={this.onVectorValueChange}/>
+                                                    </Col>
+                                                ))
+                                            }
+                                        </Row>
+                                    </VectorContainer>
                                     <CardBody>
-                                        <CardText>
-                                            <Slider style={{margin: "20px auto"}}
-                                                    handleStyle={{
-                                                        height: 20,
-                                                        width: 20,
-                                                        marginLeft: -10,
-                                                        marginTop: -8,
-                                                    }}
-                                                    min={0}
-                                                    defaultValue={param.bitWidth}
-                                                    marks={{20: 4, 40: 8, 60: 16, 80: 32, 100: 64}}
-                                                    step={null}/>
-                                        </CardText>
-
+                                        <Container>
+                                            <Row>
+                                                <Col xs="3" sm="2">Lane Width: &nbsp;</Col>
+                                                <Col>
+                                                    <Slider style={{margin: "20px auto"}}
+                                                            handleStyle={{
+                                                                height: 20,
+                                                                width: 20,
+                                                                marginLeft: -10,
+                                                                marginTop: -8,
+                                                            }}
+                                                            min={0}
+                                                            defaultValue={_.invert(marks)[param.bitWidth]}
+                                                            marks={marks}
+                                                            step={null}
+                                                            onChange={(val) => this.onWidthChange(marks[val], i, j)}/>
+                                                </Col>
+                                            </Row>
+                                            <Row>
+                                                <Col xs="3" sm="2">Type: </Col>
+                                                <Col>
+                                                    <ButtonGroup>
+                                                        <Button color="info"
+                                                                onClick={() => this.onTypeChange('int', i, j)}
+                                                                active={param.type === 'int'}>Integer</Button>
+                                                        <Button color="info"
+                                                                onClick={() => this.onTypeChange('float', i, j)}
+                                                                active={param.type === 'float'}>Floating Point</Button>
+                                                    </ButtonGroup>
+                                                </Col>
+                                            </Row>
+                                            <Row>
+                                                <Col xs="3" sm="2">Base: </Col>
+                                                <Col>
+                                                    <ButtonGroup>
+                                                        <Button color="info"
+                                                                onClick={() => this.onBaseChange('binary', i, j)}
+                                                                active={param.base === 'binary'}>Binary</Button>
+                                                        <Button color="info"
+                                                                onClick={() => this.onBaseChange('decimal', i, j)}
+                                                                active={param.base === 'decimal'}>Decimal</Button>
+                                                        <Button color="info"
+                                                                onClick={() => this.onBaseChange('hexadecimal', i, j)}
+                                                                active={param.base === 'hexadecimal'}>Hexadecimal</Button>
+                                                    </ButtonGroup>
+                                                </Col>
+                                            </Row>
+                                        </Container>
                                     </CardBody>
                                 </Card>
                             </ParameterContainer>
-                        )
+                        })
                     }
                 </FunctionContainer>
             )
@@ -126,8 +243,9 @@ export default class ParametersPage extends Component {
 
     render() {
         const {asm, onComplete} = this.props;
+        console.log(asm);
         return (
-            <Container>
+            <PageContainer>
                 <Title>Choose your parameters</Title>
                 {
                     this.buildContent()
@@ -135,7 +253,7 @@ export default class ParametersPage extends Component {
                 <SubmitButton>
                     <Button color="info" onClick={onComplete}>Let's go</Button>
                 </SubmitButton>
-            </Container>
+            </PageContainer>
         )
     }
 }

@@ -43,6 +43,13 @@ const getBitWidth = (type) => {
     }
 };
 
+const simplifyType = (complexType) => {
+    if (complexType === 'double' || complexType === 'float')
+        return 'float';
+    else
+        return 'int'
+};
+
 const functionName = /([\w]+)\(.* # @.*/;
 const functionParams = /\b[^()]+\((.*)\)$/;
 const vectorParam = /(.*)[ ](__vector\(([0-9]+)\))/;
@@ -63,15 +70,17 @@ export function generateASM(rawAsm) {
                     const parsedParam = vectorParam.exec(p);
                     parsedParams.push({
                         lanes: +parsedParam[3],
-                        type: parsedParam[1],
-                        bitWidth: getBitWidth(parsedParam[1])
+                        type: simplifyType(parsedParam[1]),
+                        bitWidth: getBitWidth(parsedParam[1]),
+                        base: 'decimal'
                     })
                 }
                 else {
                     parsedParams.push({
                         lanes: 1,
-                        type: p,
-                        bitWidth: getBitWidth(p)
+                        type: simplifyType(p),
+                        bitWidth: getBitWidth(p),
+                        base: 'decimal'
                     })
                 }
             });
