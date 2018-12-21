@@ -7,7 +7,8 @@ import * as _ from "lodash";
 import Slider from 'rc-slider';
 import 'rc-slider/assets/index.css';
 import 'rc-tooltip/assets/bootstrap.css';
-import Registry, {FAST_CALL_REGISTERS, TYPE_LENGTH} from "../Utils/Registry";
+import {FAST_CALL_REGISTERS, TYPE_LENGTH} from "../Utils/Registry";
+import {convert} from "../Utils/Converter";
 
 const PageContainer = styled.div`
     padding: 50px;
@@ -24,7 +25,8 @@ const Title = styled.div`
 const SubmitButton = styled.div`
     position: absolute;
     bottom: 50px;
-    left: 75%;
+    left: calc(75% - 55px);
+    button{font-size: 1.5rem};
 `
 const FunctionContainer = styled.div`
 
@@ -105,7 +107,6 @@ export default class ParametersPage extends Component {
     constructor(props) {
         super(props);
         this.setRegistersNamesAndValues();
-        console.log(this.props.asm)
     }
 
     componentDidMount() {
@@ -153,10 +154,12 @@ export default class ParametersPage extends Component {
     }
 
     onWidthChange(newWidth, functionNumber, paramNumber) {
-        const bitLen = this.props.asm[functionNumber].params[paramNumber].bitWidth *
-            this.props.asm[functionNumber].params[paramNumber].lanes;
-        this.props.asm[functionNumber].params[paramNumber].bitWidth = newWidth;
-        this.props.asm[functionNumber].params[paramNumber].lanes = bitLen / newWidth;
+        let param = this.props.asm[functionNumber].params[paramNumber];
+        const bitLen = param.bitWidth * param.lanes;
+        param.value = convert(param.value, param.type, newWidth, param.type, param.bitWidth);
+        param.bitWidth = newWidth;
+        param.lanes = bitLen / newWidth;
+
         this.forceUpdate();
     }
 
@@ -166,18 +169,18 @@ export default class ParametersPage extends Component {
     }
 
     onVectorValueChange(val, functionNumber, paramNumber, lane) {
-        const bitWidth = this.props.asm[functionNumber].params[paramNumber].bitWidth
-        this.props.asm[functionNumber].params[paramNumber].value[lane] = _.min([val, Math.pow(2, bitWidth - 1)]);
+        let param = this.props.asm[functionNumber].params[paramNumber];
+        param.value[lane] = _.min([parseInt(val, param.base), Math.pow(2, param.bitWidth - 1)]);
         this.forceUpdate();
     }
 
     randomizeRegister(functionNumber, paramNumber) {
         let param = this.props.asm[functionNumber].params[paramNumber];
         if (param.lanes === 1) {
-            param.value = [_.random(1, Math.pow(2, _.min([31, param.bitWidth - 1])))];
+            param.value = [_.random(1, Math.pow(2, _.min([8, param.bitWidth - 1])))];
         }
         else {
-            param.value = new Array(param.lanes).fill(0).map(() => _.random(1, Math.pow(2, 4)));
+            param.value = new Array(param.lanes).fill(0).map(() => _.random(1, Math.pow(2, _.min([8, param.bitWidth - 1]))));
         }
     }
 
@@ -214,7 +217,7 @@ export default class ParametersPage extends Component {
                                                 param.value.map((val, k) => (
                                                     <Col key={k}>
                                                         <input type="text"
-                                                               value={val}
+                                                               value={val.toString(param.base)}
                                                                onChange={(e) => this.onVectorValueChange(e.target.value, i, j, k)}/>
                                                     </Col>
                                                 ))
@@ -245,10 +248,12 @@ export default class ParametersPage extends Component {
                                                 <ParameterOptionTitle xs="3" sm="2">Type: </ParameterOptionTitle>
                                                 <Col>
                                                     <ButtonGroup>
-                                                        <Button color="info"
+                                                        <Button disabled
+                                                                color="info"
                                                                 onClick={() => this.onTypeChange('int', i, j)}
                                                                 active={param.type === 'int'}>Integer</Button>
-                                                        <Button color="info"
+                                                        <Button disabled
+                                                                color="info"
                                                                 onClick={() => this.onTypeChange('float', i, j)}
                                                                 active={param.type === 'float'}>Floating Point</Button>
                                                     </ButtonGroup>
@@ -258,15 +263,16 @@ export default class ParametersPage extends Component {
                                                 <ParameterOptionTitle xs="3" sm="2">Base: </ParameterOptionTitle>
                                                 <Col>
                                                     <ButtonGroup>
+                                                        <Button disabled
+                                                                color="info"
+                                                                onClick={() => this.onBaseChange(2, i, j)}
+                                                                active={param.base === 2}>Binary</Button>
                                                         <Button color="info"
-                                                                onClick={() => this.onBaseChange('binary', i, j)}
-                                                                active={param.base === 'binary'}>Binary</Button>
+                                                                onClick={() => this.onBaseChange(10, i, j)}
+                                                                active={param.base === 10}>Decimal</Button>
                                                         <Button color="info"
-                                                                onClick={() => this.onBaseChange('decimal', i, j)}
-                                                                active={param.base === 'decimal'}>Decimal</Button>
-                                                        <Button color="info"
-                                                                onClick={() => this.onBaseChange('hexadecimal', i, j)}
-                                                                active={param.base === 'hexadecimal'}>Hexadecimal</Button>
+                                                                onClick={() => this.onBaseChange(16, i, j)}
+                                                                active={param.base === 16}>Hexadecimal</Button>
                                                     </ButtonGroup>
                                                 </Col>
                                             </Row>
@@ -284,8 +290,6 @@ export default class ParametersPage extends Component {
     }
 
     render() {
-        const {asm, onComplete} = this.props;
-        console.log(asm);
         return (
             <PageContainer>
                 <Title>Choose your parameters</Title>
@@ -293,7 +297,7 @@ export default class ParametersPage extends Component {
                     this.buildContent()
                 }
                 <SubmitButton>
-                    <Button color="info" onClick={onComplete}>Let's go</Button>
+                    <Button outline color="primary" onClick={this.props.onComplete}>Let's go</Button>
                 </SubmitButton>
             </PageContainer>
         )

@@ -8,7 +8,7 @@ export default class Ret extends Component {
     static defaultProps = {
         type: "uint",
         bitWidth: 32,
-        base: 16,
+        base: 10,
     };
 
     constructor(props) {

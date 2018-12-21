@@ -180,7 +180,7 @@ class App extends Component {
     render() {
         const {disableButtons, status, compiling, error, visualize, parametersChosen} = this.state;
 
-        let rightPage = <ParametersPage asm={this.state.asm} onComplete={this.onParametersChosen.bind(this)}/>//<FrontPage/>;
+        let rightPage = <FrontPage/>;
 
         if (compiling) {
             rightPage = <WaitingScreen/>;
@@ -191,7 +191,8 @@ class App extends Component {
         else if (visualize && parametersChosen) {
             rightPage = <Tabs selected={0}>
                 <Pane label="Graphical">
-                    <AsmVisualizer cm={this.cm} asm={this.state.asm}/>
+                    <AsmVisualizer cm={this.cm} asm={this.state.asm}
+                                   onGoToParameters={() => this.setState({parametersChosen: false})}/>
                 </Pane>
                 <Pane label="AST">
                     <AstVisualizer cm={this.cm} ast={this.state.ast}/>

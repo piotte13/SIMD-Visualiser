@@ -1,6 +1,7 @@
 import React, {Component} from "react";
 import styled from "styled-components";
 import Registry from "../Utils/Registry";
+import {convert} from "../Utils/Converter";
 
 const FunctionContainer = styled.div`
 `
@@ -18,7 +19,11 @@ export default class Function extends Component {
         super(props);
 
         //Reset the registry because this is a new function!
-        Registry.clear()
+        Registry.clear();
+
+        props.params.forEach(param => {
+            Registry.set(param.register, convert(param.value, 'uint', 8, 'uint', param.bitWidth));
+        })
     }
 
 

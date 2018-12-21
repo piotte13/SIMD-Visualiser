@@ -72,7 +72,7 @@ export function generateASM(rawAsm) {
                         lanes: +parsedParam[3],
                         type: simplifyType(parsedParam[1]),
                         bitWidth: getBitWidth(parsedParam[1]),
-                        base: 'decimal'
+                        base: 10 //decimal
                     })
                 }
                 else {
@@ -80,7 +80,7 @@ export function generateASM(rawAsm) {
                         lanes: 1,
                         type: simplifyType(p),
                         bitWidth: getBitWidth(p),
-                        base: 'decimal'
+                        base: 10 //decimal
                     })
                 }
             });
