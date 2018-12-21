@@ -1,5 +1,5 @@
 import React, {Component} from "react";
-import * as Registry from "../Utils/Registry";
+import Registry from "../Utils/Registry";
 import Vector from "./Vector";
 import anime from 'animejs';
 
@@ -14,9 +14,8 @@ export default class Ret extends Component {
     constructor(props) {
         super(props);
 
-        let registry = Registry.default;
         //Ret returns value on top of the stack.  For now we will assume the value is always 128 bits... (Xmm)
-        let returnValue = registry.get('xmm0');
+        let returnValue = Registry.get('xmm0');
 
         this.state = {
             returnValue,

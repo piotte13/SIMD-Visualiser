@@ -18,6 +18,8 @@ import AsmVisualizer from "./ASMVisualizer";
 import {createBrowserHistory} from 'history';
 import * as qs from 'qs';
 import ParametersPage from "./ParametersPage";
+import * as _ from "lodash";
+
 
 
 const Container = styled.div`
@@ -60,7 +62,8 @@ class App extends Component {
             this.state.code = qs.parse(this.props.match.params.code).code
         }
         else if (savedState) {
-            this.state = JSON.parse(savedState);
+            // React wants us to mutate the state or it will lose the right reference...
+            _.assign(this.state, JSON.parse(savedState));
             this.state.visualize = false;
             this.state.parametersChosen = false;
         }
@@ -68,8 +71,8 @@ class App extends Component {
         this.cm = React.createRef();
     }
 
-    componentWillUpdate(nextProps, nextState) {
-        localStorage.setItem("app-state", JSON.stringify(nextState));
+    componentDidUpdate() {
+        localStorage.setItem("app-state", JSON.stringify(this.state));
     }
 
     handleClear = (clearCode = true) => {
@@ -113,7 +116,9 @@ class App extends Component {
                 }
             })
         }
-        else this.setState({compiling: false, visualize: true});
+        else {
+            this.setState({compiling: false, visualize: true})
+        }
     };
 
     restart = () => {
@@ -156,12 +161,12 @@ class App extends Component {
                     gutters: ["CodeMirror-lint-markers"],
                 }}
                 onBeforeChange={(editor, data, code) => {
-                    this.setState({codeWasModifiedSinceLastCompile: true});
                     this.history.push(this.history.location.pathname);
                     if (code === '') {
-                        this.handleClear(true)
+                        this.handleClear(true);
+                        this.setState({codeWasModifiedSinceLastCompile: true});
                     } else {
-                        this.setState({code});
+                        this.setState({code, codeWasModifiedSinceLastCompile: true});
                     }
                 }}
                 onPaste={() => {

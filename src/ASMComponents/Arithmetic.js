@@ -1,6 +1,6 @@
 import React, {Component} from "react";
 import Vector from "./Vector";
-import * as Registry from "../Utils/Registry";
+import Registry from "../Utils/Registry";
 import {convert} from "../Utils/Converter";
 import {Row, Col, Container} from 'reactstrap';
 import * as _ from "lodash";
@@ -24,9 +24,8 @@ export default class Arithmetic extends Component {
     constructor(props) {
         super(props);
 
-        let registry = Registry.default;
-        let input1 = registry.get(props.params[INPUT1_INDEX]);
-        let input2 = registry.get(props.params[INPUT2_INDEX]);
+        let input1 = Registry.get(props.params[INPUT1_INDEX]);
+        let input2 = Registry.get(props.params[INPUT2_INDEX]);
         let input1_converted = convert(input1, props.type, props.bitWidth, 'uint', 8);
         let input2_converted = convert(input2, props.type, props.bitWidth, 'uint', 8);
         let output_converted = new Array(input1_converted.length);
@@ -35,7 +34,7 @@ export default class Arithmetic extends Component {
             output_converted[i] = uint32.addMod32(input1_converted[i], input2_converted[i])
         }
         let output = convert(output_converted, 'uint', 8, props.type, props.bitWidth);
-        registry.set(props.params[OUTPUT_INDEX], output);
+        Registry.set(props.params[OUTPUT_INDEX], output);
 
         this.state = {
             input1,

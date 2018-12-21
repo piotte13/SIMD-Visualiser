@@ -1,14 +1,13 @@
 import React, {Component} from 'react';
 import styled from 'styled-components'
 import {
-    Button, Card, CardImg, CardText, CardBody, CardLink,
-    CardTitle, CardSubtitle, Row, Col, Container, ButtonGroup
+    Button, Card, CardBody, CardTitle, Row, Col, Container, ButtonGroup
 } from 'reactstrap';
 import * as _ from "lodash";
 import Slider from 'rc-slider';
 import 'rc-slider/assets/index.css';
 import 'rc-tooltip/assets/bootstrap.css';
-import * as Registry from "../Utils/Registry";
+import Registry, {FAST_CALL_REGISTERS, TYPE_LENGTH} from "../Utils/Registry";
 
 const PageContainer = styled.div`
     padding: 50px;
@@ -56,6 +55,11 @@ const ParameterContainer = styled.div`
     
 `
 
+const ParameterOptionTitle = styled(Col)`
+    align-self: center;
+    height: 1.5rem;
+`
+
 const RandomizeButton = styled.div`
     float: right;
     cursor: pointer;
@@ -100,9 +104,7 @@ const VectorContainer = styled(Container)`
 export default class ParametersPage extends Component {
     constructor(props) {
         super(props);
-        this.state = {
-            typeList: new Array(props.asm.length)
-        }
+        this.setRegistersNamesAndValues();
         console.log(this.props.asm)
     }
 
@@ -110,10 +112,32 @@ export default class ParametersPage extends Component {
 
     }
 
+    setRegistersNamesAndValues() {
+        this.props.asm.forEach((func, i) => {
+            let generalPurposeRegisterCount = 0;
+            let simdRegisterCount = 0;
+            func.params.forEach((param, j) => {
+                //if param.lanes === 1, it means we have a general purpose register. (it's not a vector)
+                if (param.lanes === 1) {
+                    param.register = FAST_CALL_REGISTERS[generalPurposeRegisterCount];
+                    generalPurposeRegisterCount++;
+                }
+                else {
+                    //reconstruct the SIMD register name.
+                    param.register = _.invert(TYPE_LENGTH)[(param.bitWidth * param.lanes) / 8] + "mm" + simdRegisterCount;
+                    simdRegisterCount++;
+                }
+                this.randomizeRegister(i, j)
+            })
+        })
+    }
+
     getSliderMarks(paramBitLen) {
-        const minLaneWidth = 4;
-        const maxLaneWidth = _.min([paramBitLen, 64]);
-        const nbOfMarks = Math.log(maxLaneWidth) / Math.log(2) - 1;
+        //Make sure laneWidth cannot be smaller than 4 bits
+        paramBitLen = _.max([4, paramBitLen]);
+        //Make sure laneWidth cannot be bigger than 64 bits
+        paramBitLen = _.min([paramBitLen, 64]);
+        const nbOfMarks = Math.log(paramBitLen) / Math.log(2) - 1;
         let marks = {};
         _.times(nbOfMarks).forEach(i => {
             const percentage = 100 * (i + 1) / nbOfMarks;
@@ -141,8 +165,20 @@ export default class ParametersPage extends Component {
         this.forceUpdate();
     }
 
-    onVectorValueChange(val) {
-        //console.log(val);
+    onVectorValueChange(val, functionNumber, paramNumber, lane) {
+        const bitWidth = this.props.asm[functionNumber].params[paramNumber].bitWidth
+        this.props.asm[functionNumber].params[paramNumber].value[lane] = _.min([val, Math.pow(2, bitWidth - 1)]);
+        this.forceUpdate();
+    }
+
+    randomizeRegister(functionNumber, paramNumber) {
+        let param = this.props.asm[functionNumber].params[paramNumber];
+        if (param.lanes === 1) {
+            param.value = [_.random(1, Math.pow(2, _.min([31, param.bitWidth - 1])))];
+        }
+        else {
+            param.value = new Array(param.lanes).fill(0).map(() => _.random(1, Math.pow(2, 4)));
+        }
     }
 
     buildContent() {
@@ -156,7 +192,7 @@ export default class ParametersPage extends Component {
                         func.params.map((param, j) => {
                             const paramBitLen = param.bitWidth * param.lanes;
                             const marks = this.getSliderMarks(paramBitLen);
-                            //const registry = Registry.default;
+
 
                             return <ParameterContainer key={j}>
                                 <Card>
@@ -164,17 +200,22 @@ export default class ParametersPage extends Component {
                                         <CardTitle>
                                             {`Parameter ${j + 1}:`}&nbsp;&nbsp;
                                             <strong>{`${paramBitLen} bits`}</strong>
-                                            <RandomizeButton><i className="fas fa-dice"></i></RandomizeButton>
+                                            <RandomizeButton onClick={() => {
+                                                this.randomizeRegister(i, j);
+                                                this.forceUpdate()
+                                            }}>
+                                                <i className="fas fa-dice"></i>
+                                            </RandomizeButton>
                                         </CardTitle>
                                     </CardBody>
                                     <VectorContainer>
                                         <Row>
                                             {
-                                                _.times(param.lanes).map(i => (
-                                                    <Col>
+                                                param.value.map((val, k) => (
+                                                    <Col key={k}>
                                                         <input type="text"
-                                                               value={_.padStart(i + 1, param.bitWidth / 4, '0')}
-                                                               onChange={this.onVectorValueChange}/>
+                                                               value={val}
+                                                               onChange={(e) => this.onVectorValueChange(e.target.value, i, j, k)}/>
                                                     </Col>
                                                 ))
                                             }
@@ -183,7 +224,8 @@ export default class ParametersPage extends Component {
                                     <CardBody>
                                         <Container>
                                             <Row>
-                                                <Col xs="3" sm="2">Lane Width: &nbsp;</Col>
+                                                <ParameterOptionTitle xs="3" sm="2">Lane
+                                                    Width: &nbsp;</ParameterOptionTitle>
                                                 <Col>
                                                     <Slider style={{margin: "20px auto"}}
                                                             handleStyle={{
@@ -193,14 +235,14 @@ export default class ParametersPage extends Component {
                                                                 marginTop: -8,
                                                             }}
                                                             min={0}
-                                                            defaultValue={_.invert(marks)[param.bitWidth]}
+                                                            defaultValue={+_.invert(marks)[param.bitWidth]}
                                                             marks={marks}
                                                             step={null}
                                                             onChange={(val) => this.onWidthChange(marks[val], i, j)}/>
                                                 </Col>
                                             </Row>
                                             <Row>
-                                                <Col xs="3" sm="2">Type: </Col>
+                                                <ParameterOptionTitle xs="3" sm="2">Type: </ParameterOptionTitle>
                                                 <Col>
                                                     <ButtonGroup>
                                                         <Button color="info"
@@ -213,7 +255,7 @@ export default class ParametersPage extends Component {
                                                 </Col>
                                             </Row>
                                             <Row>
-                                                <Col xs="3" sm="2">Base: </Col>
+                                                <ParameterOptionTitle xs="3" sm="2">Base: </ParameterOptionTitle>
                                                 <Col>
                                                     <ButtonGroup>
                                                         <Button color="info"

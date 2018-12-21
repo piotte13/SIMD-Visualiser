@@ -1,6 +1,6 @@
 import React, {Component} from "react";
 import styled from "styled-components";
-import * as Registry from "../Utils/Registry";
+import Registry from "../Utils/Registry";
 
 const FunctionContainer = styled.div`
 `
@@ -18,8 +18,7 @@ export default class Function extends Component {
         super(props);
 
         //Reset the registry because this is a new function!
-        let registry = Registry.default;
-        registry.clear()
+        Registry.clear()
     }
 
 

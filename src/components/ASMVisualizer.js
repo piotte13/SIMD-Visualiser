@@ -55,7 +55,7 @@ class AsmVisualizer extends Component {
         let stack = [];
         this.props.asm.forEach((func) => {
             let commands = func.body;
-            stack.push(<Function name={func.name}/>);
+            stack.push(<Function name={func.name} params={func.params}/>);
             commands.forEach(c => {
                 let command = commandFactory(c);
                 stack.push(
