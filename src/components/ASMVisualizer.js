@@ -8,6 +8,7 @@ import {Row, Col, Button, Container} from 'reactstrap';
 import '../css/ASMVisualizer.css'
 import Shift from "../ASMComponents/Shift";
 import Arithmetic from "../ASMComponents/Arithmetic";
+import * as _ from "lodash";
 
 
 const ButtonContainer = styled.div`
@@ -55,12 +56,13 @@ class AsmVisualizer extends Component {
         let stack = [];
         this.props.asm.forEach((func) => {
             let commands = func.body;
-            stack.push(<Function name={func.name}/>);
+            stack.push(<Function name={func.name} params={func.params}/>);
             commands.forEach(c => {
                 let command = commandFactory(c);
+                const defaultValues = _.filter(func.params, param => c.params.some(e => e === param.register));
                 stack.push(
                     //c.line - 1 because line number starts at 1 and we need to start at 0.
-                    React.cloneElement(command, {name: c.name, params: c.params, line: c.line - 1})
+                    React.cloneElement(command, {name: c.name, params: c.params, line: c.line - 1, defaultValues})
                 );
             });
         });
@@ -109,6 +111,8 @@ class AsmVisualizer extends Component {
         let buttons = [];
         //buttons.push(<FontAwesomeIcon icon="backward" onClick={this.backward.bind(this)}/>);
 
+        buttons.push({icon: <i className="fas fa-sliders-h"></i>, onClick: this.props.onGoToParameters});
+
         play === true ?
             buttons.push({icon: <i className="fas fa-pause"></i>, onClick: this.pause.bind(this)})
             :
@@ -118,7 +122,7 @@ class AsmVisualizer extends Component {
         buttons.push({icon: <i className="fas fa-sync-alt"></i>, onClick: this.restart.bind(this)});
 
         return (
-            <Container>
+            <Container style={{"marginBottom": "30px"}}>
                 <Row>
                     {
                         buttons.map((button, i) => (

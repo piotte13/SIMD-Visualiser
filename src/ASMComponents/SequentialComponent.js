@@ -6,8 +6,7 @@ const Container = styled.div`
   margin: 40px 0 20px 0;
   opacity: 0;
   text-align: center;
-  
-  
+  pointer-events: none;
   
   :first-child, last-child{
     margin: 20px 0;
@@ -18,9 +17,14 @@ export default class SequentialComponent extends React.Component {
 
     constructor() {
         super();
+        this.state = {
+            touchable: false
+        };
+
         // create li DOM reference
         this.container = React.createRef();
         this.component = React.createRef();
+
     }
 
     allAnimationCompleted() {
@@ -46,11 +50,18 @@ export default class SequentialComponent extends React.Component {
             delay: 800,
             opacity: 1,
             complete: () => {
+
                 if (this.childAnimation) {
                     this.childAnimation.restart();
-                    this.childAnimation.finished.then(() => this.allAnimationCompleted());
+                    this.childAnimation.finished.then(() => {
+                        this.allAnimationCompleted()
+                        this.setState({touchable: true});
+                    });
                 }
-                else this.allAnimationCompleted();
+                else {
+                    this.setState({touchable: true});
+                    this.allAnimationCompleted();
+                }
             }
         });
 
@@ -81,6 +92,7 @@ export default class SequentialComponent extends React.Component {
 
         if (!nextProps.shouldBeVisible && this.props.shouldBeVisible) {
             //Component is being hidden. Rewind animation.
+            this.setState({touchable: false});
             if (this.sequentialHighlight)
                 this.sequentialHighlight.clear();
             this.animeRef.seek(0);
@@ -132,6 +144,7 @@ export default class SequentialComponent extends React.Component {
     render() {
         return (
             <Container
+                style={this.state.touchable ? {'pointerEvents': 'all'} : {}}
                 ref={this.container}
                 onMouseEnter={this.onEnter}
                 onMouseLeave={this.onLeave}

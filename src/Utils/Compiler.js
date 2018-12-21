@@ -4,7 +4,7 @@ import * as request from 'request';
 //Callback must be -> callback(error, asm, ast)
 export function compile(code, callback) {
     let options = {
-        url: 'https://godbolt.org/api/compiler/cclang700/compile',
+        url: 'https://godbolt.org/api/compiler/clang700/compile',
         method: 'POST',
         headers: {
             'content-type': 'application/json'
@@ -12,7 +12,7 @@ export function compile(code, callback) {
         json: true,
         body: {
             "source": code,
-            "compiler": "cclang700",
+            "compiler": "clang700",
             "options": {
                 "userArguments": "-O3 -march=native",
                 "compilerOptions": {
@@ -29,9 +29,10 @@ export function compile(code, callback) {
                     "trim": true,
                     "intel": true,
                     "demangle": true
-                }
+                },
+                "tools": []
             },
-            "lang": "c"
+            "lang": "c++"
         }
     };
     request(options, (error, response, body) => {

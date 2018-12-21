@@ -17,11 +17,9 @@ import {Pane, Tabs} from "../Utils/Tabs";
 import AsmVisualizer from "./ASMVisualizer";
 import {createBrowserHistory} from 'history';
 import * as qs from 'qs';
-import Vector from "../ASMComponents/Vector";
+import ParametersPage from "./ParametersPage";
 import * as _ from "lodash";
-import anime from 'animejs';
-import Shift from "../ASMComponents/Shift";
-import Arithmetic from "../ASMComponents/Arithmetic";
+
 
 
 const Container = styled.div`
@@ -57,21 +55,24 @@ class App extends Component {
             clangAst: {},
             asm: [],
             error: [],
-            visualize: false
+            visualize: false,
+            parametersChosen: false
         };
         if (this.props.match.params.code) {
             this.state.code = qs.parse(this.props.match.params.code).code
         }
         else if (savedState) {
-            this.state = JSON.parse(savedState);
+            // React wants us to mutate the state or it will lose the right reference...
+            _.assign(this.state, JSON.parse(savedState));
             this.state.visualize = false;
+            this.state.parametersChosen = false;
         }
 
         this.cm = React.createRef();
     }
 
-    componentWillUpdate(nextProps, nextState) {
-        localStorage.setItem("app-state", JSON.stringify(nextState));
+    componentDidUpdate() {
+        localStorage.setItem("app-state", JSON.stringify(this.state));
     }
 
     handleClear = (clearCode = true) => {
@@ -102,7 +103,8 @@ class App extends Component {
                             error,
                             clangAst: ast,
                             codeWasModifiedSinceLastCompile: false,
-                            visualize: true
+                            visualize: true,
+                            parametersChosen: false
                         }
                     });
                 }
@@ -114,7 +116,9 @@ class App extends Component {
                 }
             })
         }
-        else this.setState({compiling: false, visualize: true});
+        else {
+            this.setState({compiling: false, visualize: true})
+        }
     };
 
     restart = () => {
@@ -126,15 +130,20 @@ class App extends Component {
                 codeWasModifiedSinceLastCompile: true,
                 clangAst: {},
                 error: [],
-                visualize: false
+                visualize: false,
+                parametersChosen: false
             }
         });
     };
 
+    onParametersChosen() {
+        this.setState({parametersChosen: true});
+    }
+
     getShareLink = () => {
         //We need to specify the whole URL since we are in dev and bitly cannot work with localhost links.
         return 'https://piotte13.github.io/SIMD-Visualiser/#/link/' + qs.stringify({code: this.state.code})
-        //return window.location.origin + "/link" + qs.stringify(this.state)
+        //return window.location.origin + "#/link" + qs.stringify(this.state)
     };
 
     getCodeMirror() {
@@ -152,13 +161,12 @@ class App extends Component {
                     gutters: ["CodeMirror-lint-markers"],
                 }}
                 onBeforeChange={(editor, data, code) => {
-                    this.setState({codeWasModifiedSinceLastCompile: true});
                     this.history.push(this.history.location.pathname);
                     if (code === '') {
-                        this.handleClear(true)
+                        this.handleClear(true);
+                        this.setState({codeWasModifiedSinceLastCompile: true});
                     } else {
-                        this.setState({code});
-                        //this.myInterpreter = getInterpreter(code)
+                        this.setState({code, codeWasModifiedSinceLastCompile: true});
                     }
                 }}
                 onPaste={() => {
@@ -169,24 +177,8 @@ class App extends Component {
         )
     }
 
-    getTabs() {
-        return (
-            <Tabs selected={0}>
-                <Pane label="Graphical">
-                    {/*<AsmVisualizer cm={this.cm} asm={this.state.asm}/>*/}
-                </Pane>
-                <Pane label="AST">
-                    {/*<AstVisualizer cm={this.cm} ast={this.state.ast}/>*/}
-                </Pane>
-            </Tabs>
-        )
-    }
-
     render() {
-        const {disableButtons, status, compiling, error} = this.state;
-
-        //let rightPage = <Shift ref="shiftVec" direction="left" bitWidth={32} params={["xmm0", "xmm1", "2"]}/>
-        //let rightPage = <Arithmetic ref="shiftVec" bitWidth={32} base={10} params={["xmm0", "xmm1", "xmm0"]}/>;
+        const {disableButtons, status, compiling, error, visualize, parametersChosen} = this.state;
 
         let rightPage = <FrontPage/>;
 
@@ -196,15 +188,19 @@ class App extends Component {
         else if (error.length > 0) {
             rightPage = <ErrorHandler cm={this.cm} error={error}/>
         }
-        else if (this.state.visualize) {
+        else if (visualize && parametersChosen) {
             rightPage = <Tabs selected={0}>
                 <Pane label="Graphical">
-                    <AsmVisualizer cm={this.cm} asm={this.state.asm}/>
+                    <AsmVisualizer cm={this.cm} asm={this.state.asm}
+                                   onGoToParameters={() => this.setState({parametersChosen: false})}/>
                 </Pane>
                 <Pane label="AST">
                     <AstVisualizer cm={this.cm} ast={this.state.ast}/>
                 </Pane>
             </Tabs>
+        }
+        else if (visualize) {
+            rightPage = <ParametersPage asm={this.state.asm} onComplete={this.onParametersChosen.bind(this)}/>
         }
 
         return (

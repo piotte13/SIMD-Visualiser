@@ -1,6 +1,6 @@
 import React, {Component} from "react";
 import Vector from "./Vector";
-import * as Registry from "../Utils/Registry";
+import Registry from "../Utils/Registry";
 import {convert} from "../Utils/Converter";
 import {Row, Col, Container} from 'reactstrap';
 import * as _ from "lodash";
@@ -24,18 +24,22 @@ export default class Arithmetic extends Component {
     constructor(props) {
         super(props);
 
-        let registry = Registry.default;
-        let input1 = registry.get(props.params[INPUT1_INDEX]);
-        let input2 = registry.get(props.params[INPUT2_INDEX]);
+        let input1 = Registry.get(props.params[INPUT1_INDEX]);
+        let input2 = Registry.get(props.params[INPUT2_INDEX]);
         let input1_converted = convert(input1, props.type, props.bitWidth, 'uint', 8);
         let input2_converted = convert(input2, props.type, props.bitWidth, 'uint', 8);
-        let output_converted = new Array(input1_converted.length);
+        let output_converted = [];
         // why not do the computation in the constructor? This seems simpler. No multiple render calls.
-        for (var i = 0; i < input1_converted.length; i++) {
-            output_converted[i] = uint32.addMod32(input1_converted[i], input2_converted[i])
-        }
+
+        input1_converted.forEach((val, i) => {
+            output_converted.push((val + input2_converted[i]) % Math.pow(2, props.bitWidth))
+        });
+
         let output = convert(output_converted, 'uint', 8, props.type, props.bitWidth);
-        registry.set(props.params[OUTPUT_INDEX], output);
+        Registry.set(props.params[OUTPUT_INDEX], output);
+
+        const defaultBitWidth = props.defaultValues.length > 0 ? props.defaultValues[0].bitWidth : props.bitWidth;
+        const defaultBase = props.defaultValues.length > 0 ? props.defaultValues[0].base : props.base;
 
         this.state = {
             input1,
@@ -44,15 +48,11 @@ export default class Arithmetic extends Component {
             input1_converted,
             input2_converted,
             output_converted,
+            defaultBitWidth,
+            defaultBase,
             showOutput: false
         };
-        this.state.output = _.cloneDeep(input2);
-        // console.log(input1_converted, output_converted);
-        // let test1 = convert(input1_converted, 'uint', 8, props.type, props.bitWidth);
-        // let test2 = convert(output_converted, 'uint', 8, props.type, props.bitWidth);
-        // test1 = convert(test1, props.type, props.bitWidth, 'uint', 8);
-        // test2 = convert(test2, props.type, props.bitWidth, 'uint', 8);
-        // console.log(test1, test2);
+        this.state.output = _.cloneDeep(input1);
 
         this.vector1 = React.createRef();
         this.vector2 = React.createRef();
@@ -69,7 +69,7 @@ export default class Arithmetic extends Component {
             autoplay: false
         });
         let {output_converted} = this.state;
-        let input2_converted = _.cloneDeep(this.state.input2_converted);
+        let input1_converted = _.cloneDeep(this.state.input1_converted);
         let mock = {nextTick: 0, currentTick: 0};
 
         timeline
@@ -94,24 +94,29 @@ export default class Arithmetic extends Component {
             .add({
                 targets: mock,
                 //find the maximum difference between input and output. this tells us the range of the animation (number of ticks).
-                nextTick: _.max(input2_converted.map((v, i) => Math.abs(output_converted[i] - v))),
+                nextTick: _.max(input1_converted.map((v, i) => Math.abs(output_converted[i] - v))),
+                easing: "linear",
                 duration: 2000,
                 round: 1,
                 offset: "-=200",
                 begin: () => {
-                    this.setState({output: _.cloneDeep(this.state.input2)});
+                    this.setState({output: _.cloneDeep(this.state.input1)});
                 },
                 update: (animation) => {
                     //Update() is not called only upon update of the target... So we need to check if it changed...
                     if (animation.began && mock.nextTick !== mock.currentTick) {
-                        input2_converted = input2_converted.map((val, i) => {
-                            let diff = output_converted[i] - val;
-                            if (diff > 0) return val + 1;
-                            if (diff < 0) return val - 1;
-                            return val;
+                        input1_converted = input1_converted.map((val, i) => {
+
+                            //TODO: Temporary disable of the animation... it's broken and I don't have the time to fix it right now
+                            //let diff = output_converted[i] - val;
+                            // if (diff > 0) return val + 1;
+                            // if (diff < 0) return val - 1;
+                            //return val;
+                            return output_converted[i];
                         });
                         mock.currentTick = mock.nextTick;
-                        this.setState({output: convert(input2_converted, 'uint', 8, this.props.type, this.props.bitWidth)});
+                        this.setState({output: convert(input1_converted, 'uint', 8, this.props.type, this.props.bitWidth)});
+
                     }
                 }
             });
@@ -121,7 +126,7 @@ export default class Arithmetic extends Component {
 
 
     render() {
-        let {input1, input2, output} = this.state;
+        let {input1, input2, output, defaultBase} = this.state;
         let {type, bitWidth, base} = this.props;
         let colCount = input1.length * 8 / bitWidth;
 
@@ -129,7 +134,7 @@ export default class Arithmetic extends Component {
             <div style={{'height': '260px'}}>
                 <Vector type={type}
                         bitWidth={bitWidth}
-                        base={base}
+                        base={defaultBase}
                         data={input1}
                         vectorRef={(ref) => this.vector1 = ref}
                 />
@@ -140,7 +145,7 @@ export default class Arithmetic extends Component {
                 </Container>
                 <Vector type={type}
                         bitWidth={bitWidth}
-                        base={base}
+                        base={defaultBase}
                         data={input2}
                         vectorRef={(ref) => this.vector2 = ref}
                 />
@@ -153,13 +158,13 @@ export default class Arithmetic extends Component {
                 </div>
                 <Vector type={type}
                         bitWidth={bitWidth}
-                        base={base}
-                        data={output}
+                        base={defaultBase}
+                        data={input2}
                         vectorRef={(ref) => this.vector3 = ref}
                 />
                 <Vector type={type}
                         bitWidth={bitWidth}
-                        base={base}
+                        base={defaultBase}
                         data={output}
                         vectorRef={(ref) => this.vector4 = ref}
                 />

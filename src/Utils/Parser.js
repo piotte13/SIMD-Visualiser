@@ -24,8 +24,35 @@ export function generateAST(editor) {
     return JSON.parse(testASR)
 }
 
-const functionName = /([\w]+): # @.*/;
+const getBitWidth = (type) => {
+    switch (type.replace(/unsigned /g, '')) {
+        case "long":
+        case "long long":
+        case "double":
+            return 64;
+        case "float":
+        case "int":
+            return 32;
+        case "short":
+            return 16;
+        case "char":
+            return 8;
+        default:
+            console.log(`hmm... I don't know this type: ${type}...`);
+            return null;
+    }
+};
 
+const simplifyType = (complexType) => {
+    if (complexType === 'double' || complexType === 'float')
+        return 'float';
+    else
+        return 'int'
+};
+
+const functionName = /([\w]+)\(.* # @.*/;
+const functionParams = /\b[^()]+\((.*)\)$/;
+const vectorParam = /(.*)[ ](__vector\(([0-9]+)\))/;
 
 export function generateASM(rawAsm) {
     let asm = [];
@@ -35,8 +62,31 @@ export function generateASM(rawAsm) {
     rawAsm.forEach(line => {
         if (functionName.test(line.text)) {
             let name = functionName.exec(line.text)[1];
+            let func = rawAsm[0].text.replace(/:.*/g, '');
+            let params = functionParams.exec(func)[1].split(", ");
+            let parsedParams = [];
+            params.forEach((p) => {
+                if (vectorParam.test(p)) {
+                    const parsedParam = vectorParam.exec(p);
+                    parsedParams.push({
+                        lanes: +parsedParam[3],
+                        type: simplifyType(parsedParam[1]),
+                        bitWidth: getBitWidth(parsedParam[1]),
+                        base: 10 //decimal
+                    })
+                }
+                else {
+                    parsedParams.push({
+                        lanes: 1,
+                        type: simplifyType(p),
+                        bitWidth: getBitWidth(p),
+                        base: 10 //decimal
+                    })
+                }
+            });
             currentFunction = new Node("Function", name, 0);
             currentFunction.body = [];
+            currentFunction.params = parsedParams;
             asm.push(currentFunction);
         }
         else if (line.text.length > 0 && line.source) {

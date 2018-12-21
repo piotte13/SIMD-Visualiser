@@ -1,6 +1,6 @@
 // should be in a distinct file
-import * as _ from "lodash";
 import uint32 from "uint32";
+import * as _ from "lodash";
 
 
 let toUINT = (array, toBitWidth, fromType, fromBitWidth) => {
@@ -48,19 +48,57 @@ let toDouble = (array, toBitWidth, fromType, fromBitWidth) => {
 export function convert(data, toType, toBitWidth, fromType, fromBitWidth) {
     let values = [];
 
-    switch (toType) {
-        case "uint":
-            values = toUINT(data, toBitWidth, fromType, fromBitWidth);
-            break;
-        case "int":
-            values = toINT(data, toBitWidth, fromType, fromBitWidth);
-            break;
-        case "double":
-            values = toDouble(data, toBitWidth, fromType, fromBitWidth);
-            break;
-        default:
-            values = data.slice(0);
+    //if (toBitWidth === 64 || fromBitWidth === 64) return null;
+
+    if (toBitWidth < fromBitWidth) {
+        _.forEach(data, lane => {
+            let newLanes = [];
+
+            _.times(fromBitWidth / toBitWidth).forEach(i => {
+                const mask = _.padEnd("0b", toBitWidth + 2, '1');
+                newLanes.push((lane >> (i * toBitWidth)) & mask);
+            });
+
+            _.forEachRight(newLanes, nl => {
+                values.push(nl)
+            });
+        });
     }
+
+    //TODO: overflow bug in conversion! see the Arithmetic animation..
+    else if (toBitWidth > fromBitWidth) {
+        const newNbOfLanes = (data.length * fromBitWidth) / toBitWidth;
+        const nbOfOldLanesInOneNewLane = data.length / newNbOfLanes;
+        _.times(newNbOfLanes).forEach(i => {
+            const currentPosition = i * nbOfOldLanesInOneNewLane;
+            const lanesToMerge = _.slice(data, currentPosition, currentPosition + nbOfOldLanesInOneNewLane);
+            let newLane = 0;
+            const mask = _.padEnd("0b", fromBitWidth + 2, '1');
+
+            _.forEach(lanesToMerge, (laneToMerge, i) => {
+                let safeFromBitWidthNumber = laneToMerge & mask;
+                newLane = (newLane << (i * fromBitWidth)) | safeFromBitWidthNumber;
+            });
+
+            values.push(newLane);
+        });
+    }
+
+    else values = data.slice(0);
+
+    // switch (toType) {
+    //     case "uint":
+    //         values = toUINT(data, toBitWidth, fromType, fromBitWidth);
+    //         break;
+    //     case "int":
+    //         values = toINT(data, toBitWidth, fromType, fromBitWidth);
+    //         break;
+    //     case "double":
+    //         values = toDouble(data, toBitWidth, fromType, fromBitWidth);
+    //         break;
+    //     default:
+    //         values = data.slice(0);
+    // }
 
     return values;
 }
@@ -77,7 +115,7 @@ export function convertToStrings(data, toType, toBitWidth, base = 16, precision 
         _.chain(value)
             .round(precision)
             .toBase(base)
-            .padStart(toBitWidth / 4, '0')  //to be perfected.
+            //.padStart(toBitWidth / 4, '0')  //to be perfected.
             .toUpper()
             .value()
     );
