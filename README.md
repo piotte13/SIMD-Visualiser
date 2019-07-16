@@ -5,10 +5,10 @@
 ![](doc/SIMD-Visualizer-Demo.gif)
 ( This is a Prototype version, we are still in development! Thanks for your support  :-) 
 # But wait, what is SIMD?
-SIMD (pronounced "seem-dee") is short for **Single Instruction/Multiple Data** which is one [classification of computer architectures](https://en.wikipedia.org/wiki/Flynn%27s_taxonomy "classification of computer architectures"). SIMD allows one same operation to be performed on multiple data points resulting in data level parallelism and thus performance gains, for example for 3D graphics and video processing, physics simulations or cryptography, and other domains.
+SIMD (pronounced "seem-dee") is short for **Single Instruction/Multiple Data** which is one [classification of computer architectures](https://en.wikipedia.org/wiki/Flynn%27s_taxonomy "classification of computer architectures"). SIMD allows one operation to be performed on multiple data points simultaneously. Data level parallelism improves the performance of many tasks, including 3D graphics and video processing, physics simulations, and cryptography.
 
 # Why would one need to visualize it?
-The first time I saw SIMD code, I almost had a heart attack.  My brain was overwhelmed, my stress level rose, my face turned white like a sheet of paper and cold sweats started to flow all over my body.  SIMD code is not designed to be easily understood by human brain, it's similar to assembly code, it's made for machines.
+The first time I saw SIMD code, I almost had a heart attack.  My brain was overwhelmed, my stress level rose, my face turned white like a sheet of paper and cold sweats started to flow all over my body.  SIMD code is not designed to be easily understood by the human brain: it's made for machines.
 
 The thing is, we still need SIMD. It's powerful and once you understand what it does, it's quite simple. So, how do we understand what it does then?  We visualize it!  We make it look simple with animations, colors and graphics!
 
