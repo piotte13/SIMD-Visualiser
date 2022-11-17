@@ -23,7 +23,7 @@
     "react-dom": "^16.6.0",
     "react-rangeslider": "^2.2.0",
     "react-router-dom": "^4.3.1",
-    "react-scripts": "2.0.5",
+    "react-scripts": "5.0.1",
     "react-sortable-tree": "^2.3.0",
     "react-transition-group": "^2.5.0",
     "reactstrap": "^6.5.0",
