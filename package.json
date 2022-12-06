@@ -15,7 +15,7 @@
     "node-sass": "^4.10.0",
     "npm": "^6.4.1",
     "prop-types": "^15.6.2",
-    "qs": "^6.6.0",
+    "qs": "^6.6.1",
     "rc-slider": "^8.6.4",
     "react": "^16.6.3",
     "react-codemirror2": "^5.1.0",
